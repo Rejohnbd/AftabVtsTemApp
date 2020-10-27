@@ -1,0 +1,105 @@
+@extends('layouts.admin-master')
+
+@section('title', 'Trip List')
+
+@section('content')
+<div class="container  content-area">
+    <div class="section">
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url('/dashboards') }}"><i class="fe fe-life-buoy mr-1"></i> Dashboard</a></li>
+                <li class="breadcrumb-item" aria-current="page">Trip List</li>
+            </ol>
+            <div class="ml-auto">
+                <a href="{{ route('trips.create') }}" class="btn btn-primary btn-icon btn-sm text-white mr-2">
+                    <span>
+                        <i class="fe fe-plus"></i>
+                    </span> Add Trip
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Trip List Table</h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table card-table table-vcenter text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Sl.</th>
+                                    <th>Trip Date</th>
+                                    <th>Vehicle Regi. No.</th>
+                                    <th>Driver Name</th>
+                                    <th>Trip Location</th>
+                                    <th>Trip Details</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($datas as $data)
+                                <tr>
+                                    <th scope="row">{{ $loop->iteration }}</th>
+                                    <td>{{ date('d/m/Y', strtotime($data->trip_date)) }}</td>
+                                    <td>{{ $data->vehicle->vehicle_plate_number }}</td>
+                                    <td>{{ $data->driver->driver_first_name }} {{ $data->driver->driver_last_name }}</td>
+                                    <td>{{ $data->trip_from }} to {{ $data->trip_to }}</td>
+                                    <td>{{ $data->trip_details }}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>@if($data->status == 1) Yet to Start @elseif($data->status == 2) Started @else Completed @endif</td>
+                                    <td>
+                                        <div class="btn-list">
+                                            <a href="{{ route('trips.edit', $data->trip_id) }}" class="btn btn-icon btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Trip"><i class="fe fe-edit"></i></a>
+                                            <button type="button" class="btn btn-icon btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Trip"><i class="fe fe-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <th colspan="10" class="text-center">No Trips Added Now.</th>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('styles')
+<link rel="stylesheet" href="{{ asset('plugins/sweet-alert/sweetalert.css') }}" />
+@endsection
+
+@section('scripts')
+<script src="{{ asset('plugins/sweet-alert/sweetalert.min.js') }}"></script>
+@if(session('success'))
+<script>
+    $(document).ready(function() {
+        swal('Congratulations!', "{{ session('success') }}", 'success');
+    });
+</script>
+@endif
+@if(session('error'))
+<script>
+    $(document).ready(function() {
+        swal({
+            title: "Alert",
+            text: "{{ session('error') }}",
+            type: "error",
+            showCancelButton: true,
+            confirmButtonText: 'Exit',
+            cancelButtonText: 'Stay on the page'
+        });
+    });
+</script>
+@endif
+@endsection
