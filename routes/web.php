@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('helpers', 'HelperController');
     Route::resource('helpers', 'HelperController');
     Route::resource('trips', 'TripController');
+    Route::get('maps', 'MapController@index')->name('maps');
     Route::get('vehicle-device', 'VehicleDeviceController@index')->name('vehicle-device');
     Route::get('vehicle-device-create/{id}', 'VehicleDeviceController@create')->name('vehicle-device-create');
     Route::post('vehicle-device-store', 'VehicleDeviceController@store')->name('vehicle-device-store');

@@ -44,7 +44,7 @@
                                 @forelse($datas as $data)
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
-                                    <td>{{ $data->expensesType->expense_type_name }}</td> -
+                                    <td>{{ $data->expensesType->expense_type_name }}</td>
                                     <td>{{ date('d/m/Y', strtotime($data->trip->trip_date)) }}</td>
                                     <td>{{ $data->trip->trip_from }} to {{ $data->trip->trip_to }}</td>
                                     <td>{{ $data->expense_description }}</td>
