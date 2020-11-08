@@ -49,7 +49,7 @@
                                     <td>{{ date('d/m/Y', strtotime($data->vehicle_tax_token_expire_date)) }}</td>
                                     <td>
                                         <div class="btn-list">
-                                            <button type="button" class="btn btn-icon btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="View Vehicle Location"><i class="fa fa-map-marker"></i></button>
+                                            <a href="" class="btn btn-icon btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="View Vehicle Location"><i class="fa fa-map-marker"></i></a>
                                             <a href="{{ route('vehicles.show', $data->vehicle_id) }}" class="btn btn-icon btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="View Vehicle Details"><i class="fa fa-eye"></i></a>
                                             {{-- <a href="{{ route('vehicle-device-create', $data->vehicle_id) }}" class="btn btn-icon btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add Device To Vehicle"><i class="fa fa-plus"></i></a> --}}
                                             <a href="{{ route('vehicles.edit', $data->vehicle_id) }}" class="btn btn-icon btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Vehicle"><i class="fe fe-edit"></i></a>

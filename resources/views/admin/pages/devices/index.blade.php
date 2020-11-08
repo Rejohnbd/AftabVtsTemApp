@@ -51,6 +51,11 @@
                                     <td>@if($device->status == 1) Active @else Intactive @endif</td>
                                     <td>
                                         <div class="btn-list">
+                                            @if($device->deviceType->device_type_name == 'VTS Device')
+                                            <a href="{{ route('device-map',$device->device_unique_id) }}" class="btn btn-icon btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="View Vehicle Location"><i class="fa fa-map-marker"></i></a>
+                                            @else
+                                            <a href="{{ route('temp-device', $device->device_unique_id) }}" class="btn btn-icon btn-dark btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="View Device Tempareture Info"><i class="wi wi-thermometer"></i></a>
+                                            @endif
                                             <a href="{{ route('devices.edit', $device->device_id) }}" class="btn btn-icon btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Device"><i class="fe fe-edit"></i></a>
                                             <button type="button" class="btn btn-icon btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Device"><i class="fe fe-trash"></i></button>
                                         </div>

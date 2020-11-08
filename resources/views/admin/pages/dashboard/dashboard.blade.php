@@ -11,7 +11,6 @@
             </ol>
         </div>
     </div>
-    @include('admin.pages.dashboard.all-type-info')
     @include('admin.pages.dashboard.all-info-summary')
 
 </div>

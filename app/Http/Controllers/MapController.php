@@ -82,4 +82,13 @@ class MapController extends Controller
     {
         //
     }
+
+    public function deviceMap($id)
+    {
+        $data = [
+            'title'     => 'Device Location',
+            'device_id' => $id
+        ];
+        return view('admin.pages.map.single-item', compact('data'));
+    }
 }

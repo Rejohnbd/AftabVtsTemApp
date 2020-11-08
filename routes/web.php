@@ -29,9 +29,13 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('helpers', 'HelperController');
     Route::resource('trips', 'TripController');
     Route::get('maps', 'MapController@index')->name('maps');
+    Route::get('device-map/{id}', 'MapController@deviceMap')->name('device-map');
     Route::get('vehicle-device', 'VehicleDeviceController@index')->name('vehicle-device');
     Route::get('vehicle-device-create/{id}', 'VehicleDeviceController@create')->name('vehicle-device-create');
     Route::post('vehicle-device-store', 'VehicleDeviceController@store')->name('vehicle-device-store');
     Route::get('vehicle-device-edit/{id}', 'VehicleDeviceController@edit')->name('vehicle-device-edit');
     Route::post('vehicle-device-update', 'VehicleDeviceController@update')->name('vehicle-device-update');
+    Route::get('temp-device/{id}', 'TemperatureDeviceDataController@tempDevice')->name('temp-device');
+    Route::post('get-temp-device-data', 'TemperatureDeviceDataController@getTempDevice')->name('get-temp-device-data');
+    Route::get('temp-device-report/{id}', 'TemperatureDeviceDataController@tempDeviceReport')->name('temp-device-report');
 });
