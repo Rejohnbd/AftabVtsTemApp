@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Driver\StoreDriverRequest;
 use App\Http\Requests\Driver\UpdateDriverRequest;
 use App\Models\Driver;
+use App\Models\Trip;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -158,5 +159,16 @@ class DriverController extends Controller
     public function destroy(Driver $driver)
     {
         //
+    }
+
+    public function destroyDriver(Request $request)
+    {
+        $driverInfo =  Driver::findOrFail($request->driverId);
+        if (Trip::where('driver_user_id', $driverInfo->driver_user_id)->count() > 0) {
+            return response(['result' => false]);
+        } else {
+            // Driver::where('driver_id', $request->driverId)->delete();
+            return response(['result' => true]);
+        }
     }
 }

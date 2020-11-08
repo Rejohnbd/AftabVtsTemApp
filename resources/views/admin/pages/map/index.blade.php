@@ -17,7 +17,7 @@
                                 <div class="list-group list-lg-group list-group-flush br-4">
                                     <a class="list-group-item list-group-item-action p-3" href="{{ route('device-map', '0353701093500920') }}">
                                         <div class="media mt-0">
-                                            <span class="avatar brround cover-image" style="background-image: url(' {{asset('img/car.jpg')}} ')">
+                                            <span class="avatar brround cover-image" style='background-image: url("{{asset('img/car.jpg')}} ");'>
                                                 <span class="avatar-status bg-red"></span>
                                             </span>
                                             <div class="media-body ml-2">
@@ -32,7 +32,7 @@
                                     </a>
                                     <a class="list-group-item list-group-item-action p-3" href="{{ route('device-map', '0353701093511364') }}">
                                         <div class="media mt-0">
-                                            <span class="avatar brround cover-image" style="background-image: url(' {{asset('img/car.jpg')}} ')">
+                                            <span class="avatar brround cover-image" style='background-image: url("{{asset('img/car.jpg')}} ");'>
                                                 <span class="avatar-status bg-red"></span>
                                             </span>
                                             <div class="media-body ml-2">
@@ -47,7 +47,7 @@
                                     </a>
                                     <a class="list-group-item list-group-item-action p-3" href="{{ route('device-map', '0353701093513915') }}">
                                         <div class="media mt-0">
-                                            <span class="avatar brround cover-image" style="background-image: url(' {{asset('img/car.jpg')}} ')">
+                                            <span class="avatar brround cover-image" style='background-image: url("{{asset('img/car.jpg')}} ");'>
                                                 <span class="avatar-status bg-red"></span>
                                             </span>
                                             <div class="media-body ml-2">
@@ -62,7 +62,7 @@
                                     </a>
                                     <a class="list-group-item list-group-item-action p-3" href="{{ route('device-map', '0353701093518682') }}">
                                         <div class="media mt-0">
-                                            <span class="avatar brround cover-image" style="background-image: url(' {{asset('img/car.jpg')}} ')">
+                                            <span class="avatar brround cover-image" style='background-image: url("{{asset('img/car.jpg')}} ");'>
                                                 <span class="avatar-status bg-red"></span>
                                             </span>
                                             <div class="media-body ml-2">
@@ -104,6 +104,9 @@
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+
+
+
 
 <!-- new try -->
 <script>

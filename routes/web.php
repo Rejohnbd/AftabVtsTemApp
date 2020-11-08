@@ -25,7 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('expenses-type', 'ExpensesTypeController');
     Route::resource('all-expenses', 'ExpensesController');
     Route::resource('drivers', 'DriverController');
-    Route::resource('helpers', 'HelperController');
+    Route::post('driver-delete', 'DriverController@destroyDriver')->name('driver-delete');
     Route::resource('helpers', 'HelperController');
     Route::resource('trips', 'TripController');
     Route::get('maps', 'MapController@index')->name('maps');

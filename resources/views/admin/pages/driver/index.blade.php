@@ -40,7 +40,7 @@
                             </thead>
                             <tbody>
                                 @forelse($datas as $data)
-                                <tr>
+                                <tr id="driverId-{{ $data->driver_id }}">
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $data->driver_first_name }} {{ $data->driver_last_name }}</td>
                                     <td>{{ $data->user->email }}</td>
@@ -51,7 +51,7 @@
                                         <div class="btn-list">
                                             <button type="button" class="btn btn-icon btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="View Driver Details"><i class="fa fa-eye"></i></button>
                                             <a href="{{ route('drivers.edit', $data->driver_id) }}" class="btn btn-icon btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Driver"><i class="fe fe-edit"></i></a>
-                                            <button type="button" class="btn btn-icon btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Driver"><i class="fe fe-trash"></i></button>
+                                            <button type="button" data-id="{{ $data->driver_id }}" class="btn btn-icon btn-danger btn-sm delete-driver" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Driver"><i class="fe fe-trash"></i></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -75,11 +75,11 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('plugins/sweet-alert/sweetalert.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 @if(session('success'))
 <script>
     $(document).ready(function() {
-        swal('Congratulations!', "{{ session('success') }}", 'success');
+        Swal.fire('Congratulations!', "{{ session('success') }}", 'success');
     });
 </script>
 @endif
@@ -87,10 +87,10 @@
 @if(session('error'))
 <script>
     $(document).ready(function() {
-        swal({
+        Swal.fire({
             title: "Alert",
             text: "{{ session('error') }}",
-            type: "error",
+            icon: "error",
             showCancelButton: true,
             confirmButtonText: 'Exit',
             cancelButtonText: 'Stay on the page'
@@ -98,4 +98,57 @@
     });
 </script>
 @endif
+<script>
+    $(document).ready(function() {
+        $('.delete-driver').on('click', function() {
+            var id = $(this).attr('data-id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "{{ url('driver-delete') }}",
+                        method: 'POST',
+                        data: {
+                            driverId: id,
+                            _token: '{{csrf_token()}}',
+                        },
+                        success: function(response) {
+                            // $('#videoId-' + id).remove();
+                            console.log(response.response);
+                            if (response.result) {
+                                $('#driverId-' + id).remove();
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Driver Deleted Successfully',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+                            if (!response.result) {
+                                Swal.fire({
+                                    title: "Alert",
+                                    text: "This Driver Info Used in System",
+                                    icon: "error",
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Exit',
+                                    cancelButtonText: 'Stay on the page'
+                                });
+                            }
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    })
+                }
+            });
+        });
+    });
+</script>
 @endsection
