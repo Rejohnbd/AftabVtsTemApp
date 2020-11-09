@@ -131,4 +131,14 @@ class VehicleController extends Controller
     {
         //
     }
+
+    public function destroyVehicle(Request $request)
+    {
+        if (VehicleDevice::where('vehicle_id', $request->vehicleId)->count() > 0) {
+            return response(['result' => false]);
+        } else {
+            Vehicle::where('vehicle_id', $request->vehicleId)->delete();
+            return response(['result' => true]);
+        }
+    }
 }

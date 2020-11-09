@@ -54,8 +54,8 @@
                                         @else
                                         <a href="{{ route('temp-device', $data->device->device_unique_id) }}" class="btn btn-icon btn-dark btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="View Device Tempareture Info"><i class="wi wi-thermometer"></i></a>
                                         @endif
-                                        <a href="{{ route('vehicle-device-edit', $data->vehicle_device_id) }}" class="btn btn-icon btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Vehicle"><i class="fe fe-edit"></i></a>
-                                        <button type="button" class="btn btn-icon btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Vehicle Device"><i class="fe fe-trash"></i></button>
+                                        {{-- <a href="{{ route('vehicle-device-edit', $data->vehicle_device_id) }}" class="btn btn-icon btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Vehicle"><i class="fe fe-edit"></i></a>
+                                        <button type="button" class="btn btn-icon btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Vehicle Device"><i class="fe fe-trash"></i></button> --}}
                                     </div>
                                 </td>
                             </tr>

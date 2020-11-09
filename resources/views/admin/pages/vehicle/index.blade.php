@@ -40,7 +40,7 @@
                             </thead>
                             <tbody>
                                 @forelse($datas as $data)
-                                <tr>
+                                <tr id="vehicleId-{{ $data->vehicle_id }}">
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $data->vehicleType->vehicle_type_name }}</td>
                                     <td>{{ $data->vehicle_plate_number }}</td>
@@ -53,7 +53,7 @@
                                             <a href="{{ route('vehicles.show', $data->vehicle_id) }}" class="btn btn-icon btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="View Vehicle Details"><i class="fa fa-eye"></i></a>
                                             {{-- <a href="{{ route('vehicle-device-create', $data->vehicle_id) }}" class="btn btn-icon btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add Device To Vehicle"><i class="fa fa-plus"></i></a> --}}
                                             <a href="{{ route('vehicles.edit', $data->vehicle_id) }}" class="btn btn-icon btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Vehicle"><i class="fe fe-edit"></i></a>
-                                            <button type="button" class="btn btn-icon btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Vehicle"><i class="fe fe-trash"></i></button>
+                                            <button type="button" data-id="{{ $data->vehicle_id }}" class="btn btn-icon btn-danger btn-sm delete-vehicle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Vehicle"><i class="fe fe-trash"></i></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -77,11 +77,11 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('plugins/sweet-alert/sweetalert.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 @if(session('success'))
 <script>
     $(document).ready(function() {
-        swal('Congratulations!', "{{ session('success') }}", 'success');
+        Swal.fire('Congratulations!', "{{ session('success') }}", 'success');
     });
 </script>
 @endif
@@ -89,10 +89,10 @@
 @if(session('error'))
 <script>
     $(document).ready(function() {
-        swal({
+        Swal.fire({
             title: "Alert",
             text: "{{ session('error') }}",
-            type: "error",
+            icon: "error",
             showCancelButton: true,
             confirmButtonText: 'Exit',
             cancelButtonText: 'Stay on the page'
@@ -100,4 +100,55 @@
     });
 </script>
 @endif
+<script>
+    $(document).ready(function() {
+        $('.delete-vehicle').on('click', function() {
+            var id = $(this).attr('data-id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "{{ url('vehicles-delete') }}",
+                        method: 'POST',
+                        data: {
+                            vehicleId: id,
+                            _token: '{{csrf_token()}}',
+                        },
+                        success: function(response) {
+                            if (response.result) {
+                                $('#vehicleId-' + id).remove();
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Vehicle Deleted Successfully',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                            if (!response.result) {
+                                Swal.fire({
+                                    title: "Alert",
+                                    text: "This Vehicle Info Used in System",
+                                    icon: "error",
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Exit',
+                                    cancelButtonText: 'Stay on the page'
+                                });
+                            }
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
 @endsection

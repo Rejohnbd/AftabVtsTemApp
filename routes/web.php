@@ -25,6 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('vehicle-type', 'VehicleTypeController');
     Route::post('vehicle-type-delete', 'VehicleTypeController@destroyVehicleType')->name('vehicle-type-delete');
     Route::resource('vehicles', 'VehicleController');
+    Route::post('vehicles-delete', 'VehicleController@destroyVehicle')->name('vehicles-delete');
     Route::resource('expenses-type', 'ExpensesTypeController');
     Route::post('expenses-type-delete', 'ExpensesTypeController@destroyExpensesType')->name('expenses-type-delete');
     Route::resource('all-expenses', 'ExpensesController');
