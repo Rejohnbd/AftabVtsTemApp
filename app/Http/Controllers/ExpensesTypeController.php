@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ExpensesType\StoreExpensesTypeRequest;
 use App\Http\Requests\ExpensesType\UpdateExpensesTypeRequest;
+use App\Models\Expenses;
 use App\Models\ExpensesType;
 use Illuminate\Http\Request;
 
@@ -106,5 +107,15 @@ class ExpensesTypeController extends Controller
     public function destroy(ExpensesType $expensesType)
     {
         //
+    }
+
+    public function destroyExpensesType(Request $request)
+    {
+        if (Expenses::where('expense_type_id', $request->expensesTypeId)->count() > 0) {
+            return response(['result' => false]);
+        } else {
+            ExpensesType::where('expense_type_id', $request->expensesTypeId)->delete();
+            return response(['result' => true]);
+        }
     }
 }
