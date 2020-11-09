@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DeviceType as AppDeviceType;
 use App\Http\Requests\DeviceType\StoreDeviceTypeRequest;
 use App\Http\Requests\DeviceType\UpdateDeviceTypeRequest;
+use App\Models\Device;
 use App\Models\DeviceType;
 use Illuminate\Http\Request;
 
@@ -93,5 +94,15 @@ class DeviceTypeController extends Controller
     public function destroy(DeviceType $deviceType)
     {
         //
+    }
+
+    public function destroDeviceType(Request $request)
+    {
+        if (Device::where('device_type_id', $request->deviceTypeId)->count() > 0) {
+            return response(['result' => false]);
+        } else {
+            DeviceType::where('device_type_id', $request->deviceTypeId)->delete();
+            return response(['result' => true]);
+        }
     }
 }

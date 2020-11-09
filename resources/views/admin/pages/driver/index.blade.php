@@ -120,8 +120,6 @@
                             _token: '{{csrf_token()}}',
                         },
                         success: function(response) {
-                            // $('#videoId-' + id).remove();
-                            console.log(response.response);
                             if (response.result) {
                                 $('#driverId-' + id).remove();
                                 Swal.fire({

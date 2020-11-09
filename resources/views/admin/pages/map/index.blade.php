@@ -106,7 +106,173 @@
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
 
 
+<script>
+    /*
+    let map;
+    var marker;
+    var newVehicleList = [];
 
+    function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+            center: {
+                lat: 24.7953,
+                lng: 90.3563
+            },
+            zoom: 7,
+            zoomControl: true,
+            fullscreenControl: true,
+            streetViewControl: true,
+            // disableDefaultUI: true,
+            // rotateControl: true
+            // mapTypeControl: true
+        });
+
+        const trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
+
+        // Temporary Use Firebase 
+        // Start Here
+        //Decode Mehtod start
+        function dex_to_degrees(dex) {
+            return parseInt(dex, 16) / 1800000;
+        };
+        //Decode Mehtod End
+        var locations = {};
+        var deviceOldData = {};
+        var deviceNewData = {};
+        var position = null;
+        var moveDeviceOldData;
+
+        firebase.initializeApp(config);
+        var database = firebase.database();
+
+        database.ref('Devices/').once('value').then(function(snapshot) {
+            var allDevicesSnapshot = snapshot.val();
+            var i = 0;
+            for (var key in allDevicesSnapshot) {
+                if (allDevicesSnapshot.hasOwnProperty(key)) {
+                    deviceOldData[i] = {
+                        'imei': key,
+                        'lat': dex_to_degrees(allDevicesSnapshot[key].Data.lat),
+                        'lng': dex_to_degrees(allDevicesSnapshot[key].Data.lng),
+                        'speed': allDevicesSnapshot[key].Data.speed,
+                        'status': allDevicesSnapshot[key].Data.status,
+                    }
+                }
+                i++;
+            }
+            // for (var key in allDevices) {
+            //     if (allDevices.hasOwnProperty(key)) {
+            //         marker = new google.maps.Marker({
+            //             position: new google.maps.LatLng(allDevices[key].lat, allDevices[key].lng),
+            //             icon: "{{ asset('img/car.jpg') }}",
+            //             map: map
+            //         })
+            //     }
+            // } 
+            $.each(deviceOldData, function(key, data) {
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(data.lat, data.lng),
+                    icon: "{{ asset('img/car.jpg') }}",
+                    map: map
+                })
+            });
+        });
+
+
+        console.log(deviceOldData, 'Old Device Data');
+        console.log(marker);
+        var oldLat;
+        var oldLng;
+        var changeImei;
+        // Change Lat Lng
+        database.ref('Devices/').on('child_changed', function(snapshot) {
+            var changeData = snapshot.val();
+            // console.log(snapshot.ref.key);
+            $.each(deviceOldData, function(key, data) {
+                deviceNewData[key] = data;
+                if (data.imei == snapshot.ref.key) {
+                    console.log(data.imei, 'changed Imei')
+                    console.log(data.lat, 'changed lat')
+                    console.log(data.lng, 'changed lng')
+                    oldLat = data.lat;
+                    oldLng = data.lng;
+                    changeImei = data.imei;
+
+                    deviceNewData[key] = {
+                        'imei': data.imei,
+                        'lat': dex_to_degrees(changeData.Data.lat),
+                        'lng': dex_to_degrees(changeData.Data.lng),
+                        'speed': changeData.Data.speed,
+                        'status': changeData.Data.status,
+                    };
+                    position = [dex_to_degrees(changeData.Data.lat), dex_to_degrees(changeData.Data.lng)];
+                }
+            });
+            console.log(deviceNewData, 'device new Data')
+            var result = [oldLat, oldLng, changeImei]
+            transition(result);
+
+            // $.each(deviceNewData, function(key, data) {
+            //     marker = new google.maps.Marker({
+            //         position: new google.maps.LatLng(data.lat, data.lng),
+            //         icon: "{{ asset('img/car.jpg') }}",
+            //         map: map
+            //     })
+            // })
+
+
+
+
+            // for (var key in allDevices) {
+            //     if (allDevices.hasOwnProperty(key)) {
+            //         if (allDevices[key].imei == snapshot.ref.key) {
+            //             moveDeviceOldData = allDevices[key];
+            //             // console.log(dex_to_degrees(changeData.Data.lat));
+            //             // console.log(allDevices[key].imei, 'imei')
+            //             // console.log('G')
+            //             // console.log(snapshot.ref.key, 'snapshotkey')
+            //             position = [dex_to_degrees(changeData.Data.lat), dex_to_degrees(changeData.Data.lng)];
+            //             // console.log(position)
+
+            //         }
+            //     }
+            // }
+
+
+
+
+            // var result = [moveDeviceOldData.lat, moveDeviceOldData.lng, moveDeviceOldData.imei]
+            // transition(result);
+        });
+
+
+        // Variable for Transition or Move marker
+        var numDeltas = 100;
+        var delay = 10; //milliseconds
+        var i = 0;
+        var deltaLat;
+        var deltaLng;
+
+        function transition(result) {
+            i = 0;
+            deltaLat = (result[0] - position[0]) / numDeltas;
+            deltaLng = (result[1] - position[1]) / numDeltas;
+            moveMarker(result[2]);
+        }
+
+        function moveMarker(result) {
+            position[0] += deltaLat;
+            position[1] += deltaLng;
+            var latlng = new google.maps.LatLng(position[0], position[1]);
+            marker.setPosition(latlng);
+            if (i != numDeltas) {
+                i++;
+                setTimeout(moveMarker, delay);
+            }
+        }
+    }*/
+</script>
 
 <!-- new try -->
 <script>

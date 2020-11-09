@@ -19,6 +19,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', 'AdminController@index')->name('dasbboard');
     Route::resource('device-type', 'DeviceTypeController');
+    Route::Post('device-type-delete', 'DeviceTypeController@destroDeviceType')->name('device-type-delete');
     Route::resource('devices', 'DeviceController');
     Route::resource('vehicle-type', 'VehicleTypeController');
     Route::resource('vehicles', 'VehicleController');

@@ -167,7 +167,7 @@ class DriverController extends Controller
         if (Trip::where('driver_user_id', $driverInfo->driver_user_id)->count() > 0) {
             return response(['result' => false]);
         } else {
-            // Driver::where('driver_id', $request->driverId)->delete();
+            Driver::where('driver_id', $request->driverId)->delete();
             return response(['result' => true]);
         }
     }
