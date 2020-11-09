@@ -42,7 +42,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('vehicle-device-store', 'VehicleDeviceController@store')->name('vehicle-device-store');
     Route::get('vehicle-device-edit/{id}', 'VehicleDeviceController@edit')->name('vehicle-device-edit');
     Route::post('vehicle-device-update', 'VehicleDeviceController@update')->name('vehicle-device-update');
-    Route::get('temp-device/{id}', 'TemperatureDeviceDataController@tempDevice')->name('temp-device');
+    Route::get('device-temp-data/{id}', 'TemperatureDeviceDataController@tempDevice')->name('device-temp-data');
     Route::post('get-temp-device-data', 'TemperatureDeviceDataController@getTempDevice')->name('get-temp-device-data');
     Route::get('temp-device-report/{id}', 'TemperatureDeviceDataController@tempDeviceReport')->name('temp-device-report');
+    Route::post('device-temp-data-paginate', 'TemperatureDeviceDataController@tempDeviceDataPaginate')->name('device-temp-data-paginate');
+    Route::post('device-temp-dated-data', 'TemperatureDeviceDataController@tempDeviceDatedData')->name('device-temp-dated-data');
+    Route::post('device-temp-export-as-excel', 'TemperatureDeviceDataController@tempDeviceDataExcelExport')->name('device-temp-export-as-excel');
 });

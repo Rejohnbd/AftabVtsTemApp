@@ -1,6 +1,6 @@
 @extends('layouts.admin-master')
 
-@section('title', $data['title'])
+@section('title', 'Temperature Device Data')
 
 @section('content')
 <div class="container  content-area">
@@ -8,10 +8,10 @@
         <div class="page-header">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/dashboards') }}"><i class="fe fe-life-buoy mr-1"></i> Dashboard</a></li>
-                <li class="breadcrumb-item" aria-current="page">{{ $data['title'] }}</li>
+                <li class="breadcrumb-item" aria-current="page">Temperature Device Preset Data</li>
             </ol>
             <div class="ml-auto">
-                <a href="{{ route('temp-device-report', $data['temp_device_id']) }}" class="btn btn-primary btn-icon btn-sm text-white mr-2">
+                <a href="{{ route('temp-device-report', $tempDeviceInfo->device_id) }}" class="btn btn-primary btn-icon btn-sm text-white mr-2">
                     <span>
                         <i class="fe fe-plus"></i>
                     </span> Reports
@@ -23,7 +23,7 @@
             <div class="col-md-12 col-lg-4">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Temerature: <span id="tempText"></span> <sup>o</sup>C</h3>
+                        <h3 class="card-title">Temerature: <span id="tempText">{{ $tempDeviceLastData->temperature }}</span> <sup>o</sup>C</h3>
                     </div>
                     <div class="card-body" style="height: 400px;">
                         <div id="tempCalcu" class="text-center"></div>
@@ -33,7 +33,7 @@
             <div class="col-md-12 col-lg-4">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Humidity: <span id="humiText"></span> %</h3>
+                        <h3 class="card-title">Humidity: <span id="humiText">{{ $tempDeviceLastData->humidity }}</span> %</h3>
                     </div>
                     <div class="card-body" style="height: 400px;">
                         <div id="deviceTemp" class="text-center mt-5"></div>
@@ -43,10 +43,43 @@
             <div class="col-md-12 col-lg-4">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Status: <span id="statusText">ON</span></h3>
+                        <h3 class="card-title">Status: <span id="statusText">@if($tempDeviceLastData->comp_status == 1) ON @else OFF @endif</span></h3>
                     </div>
                     <div class="card-body text-center" style="height: 400px;">
-                        <img id="compStatus" src="{{ asset('img/off.jpg') }}" />
+                        <img id="compStatus" src="@if($tempDeviceLastData->comp_status == 1) {{ asset('img/on.jpg') }} @else {{ asset('img/off.jpg') }} @endif" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-6 col-sm-6 pr-0 pl-0 border-right">
+                            <div class="card-body text-center">
+                                <h6 class="mb-0">Device Model</h6>
+                                <h2 class="mb-1 mt-2 number-font"><span class="counter">{{ $tempDeviceInfo->device_model }}</span></h2>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-sm-6 pr-0 pl-0 border-right">
+                            <div class="card-body text-center">
+                                <h6 class="mb-0">Device IMEI No</h6>
+                                <h2 class="mb-1 mt-2 number-font"><span class="counter">{{ $tempDeviceInfo->device_unique_id }}</span></h2>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-sm-6 pr-0 pl-0 border-right">
+                            <div class="card-body text-center">
+                                <h6 class="mb-0">Device SIM Number</h6>
+                                <h2 class="mb-1 mt-2 number-font"><span class="counter">{{ $tempDeviceInfo->device_sim_number }}</span></h2>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-6 col-sm-6 pr-0 pl-0">
+                            <div class="card-body text-center">
+                                <h6 class="mb-0">Device SIM Type</h6>
+                                <h2 class="mb-1 mt-2 number-font"><span class="counter">{{ $tempDeviceInfo->device_sim_type }}</span></h2>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -140,7 +173,7 @@
                 url: "{{ route('get-temp-device-data') }}",
                 method: 'POST',
                 data: {
-                    deviceId: "{{ $data['temp_device_id'] }}",
+                    deviceId: "{{ $tempDeviceInfo->device_unique_id }}",
                     _token: '{{csrf_token()}}',
                 },
                 success: function(response) {

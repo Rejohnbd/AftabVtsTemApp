@@ -20,7 +20,8 @@
         @endforeach
     </tbody>
 </table>
-<br />
 <div class="d-flex justify-content-center mt-2">
     {!! $reports->links() !!}
 </div>
+<br />
+<br />
