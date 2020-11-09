@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Trips\StoreTripsRequest;
 use App\Http\Requests\Trips\UpdateTripsRequest;
 use App\Models\Driver;
+use App\Models\Expenses;
 use App\Models\Trip;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
@@ -122,5 +123,15 @@ class TripController extends Controller
     public function destroy(Trip $trip)
     {
         //
+    }
+
+    public function destroyTrip(Request $request)
+    {
+        if (Expenses::where('trip_id', $request->tripId)->count() > 0) {
+            return response(['result' => false]);
+        } else {
+            Trip::where('trip_id', $request->tripId)->delete();
+            return response(['result' => true]);
+        }
     }
 }

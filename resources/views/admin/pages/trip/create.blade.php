@@ -113,7 +113,7 @@
                                             <option label="Choose one"></option>
                                             <option value="1">Yet to Start</option>
                                             <option value="2">Started</option>
-                                            <option value="2">Completed</option>
+                                            <option value="3">Completed</option>
                                         </select>
                                         @error('trip_status')
                                         <span class="invalid-feedback" role="alert">

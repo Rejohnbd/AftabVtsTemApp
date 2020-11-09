@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('driver-delete', 'DriverController@destroyDriver')->name('driver-delete');
     Route::resource('helpers', 'HelperController');
     Route::resource('trips', 'TripController');
+    Route::post('trips-delete', 'TripController@destroyTrip')->name('trips-delete');
     Route::get('maps', 'MapController@index')->name('maps');
     Route::get('device-map/{id}', 'MapController@deviceMap')->name('device-map');
     Route::get('vehicle-device', 'VehicleDeviceController@index')->name('vehicle-device');

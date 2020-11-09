@@ -43,7 +43,7 @@
                             </thead>
                             <tbody>
                                 @forelse($datas as $data)
-                                <tr>
+                                <tr id="tripId-{{ $data->trip_id }}">
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ date('d/m/Y', strtotime($data->trip_date)) }}</td>
                                     <td>{{ $data->vehicle->vehicle_plate_number }}</td>
@@ -52,11 +52,11 @@
                                     <td>{{ $data->trip_details }}</td>
                                     <td></td>
                                     <td></td>
-                                    <td>@if($data->status == 1) Yet to Start @elseif($data->status == 2) Started @else Completed @endif</td>
+                                    <td>@if($data->trip_status == 1) Yet to Start @elseif($data->trip_status == 2) Started @else Completed @endif</td>
                                     <td>
                                         <div class="btn-list">
                                             <a href="{{ route('trips.edit', $data->trip_id) }}" class="btn btn-icon btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Trip"><i class="fe fe-edit"></i></a>
-                                            <button type="button" class="btn btn-icon btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Trip"><i class="fe fe-trash"></i></button>
+                                            <button type="button" data-id="{{ $data->trip_id }}" class="btn btn-icon btn-danger btn-sm delete-trip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Trip"><i class="fe fe-trash"></i></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -80,21 +80,21 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('plugins/sweet-alert/sweetalert.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 @if(session('success'))
 <script>
     $(document).ready(function() {
-        swal('Congratulations!', "{{ session('success') }}", 'success');
+        Swal.fire('Congratulations!', "{{ session('success') }}", 'success');
     });
 </script>
 @endif
 @if(session('error'))
 <script>
     $(document).ready(function() {
-        swal({
+        Swal.fire({
             title: "Alert",
             text: "{{ session('error') }}",
-            type: "error",
+            icon: "error",
             showCancelButton: true,
             confirmButtonText: 'Exit',
             cancelButtonText: 'Stay on the page'
@@ -102,4 +102,55 @@
     });
 </script>
 @endif
+<script>
+    $(document).ready(function() {
+        $('.delete-trip').on('click', function() {
+            var id = $(this).attr('data-id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "{{ url('trips-delete') }}",
+                        method: 'POST',
+                        data: {
+                            tripId: id,
+                            _token: '{{csrf_token()}}',
+                        },
+                        success: function(response) {
+                            if (response.result) {
+                                $('#tripId-' + id).remove();
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Trip Deleted Successfully',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                            if (!response.result) {
+                                Swal.fire({
+                                    title: "Alert",
+                                    text: "This Trip Info Used in System",
+                                    icon: "error",
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Exit',
+                                    cancelButtonText: 'Stay on the page'
+                                });
+                            }
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
 @endsection
