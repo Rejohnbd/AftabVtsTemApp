@@ -76,7 +76,7 @@
     });
 </script>
 @endif
-delete-device-type
+
 <script>
     $(document).ready(function() {
         $('.delete-device-type').on('click', function() {

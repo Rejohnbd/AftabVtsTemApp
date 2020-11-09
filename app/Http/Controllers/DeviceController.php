@@ -122,7 +122,6 @@ class DeviceController extends Controller
 
     public function destroyDevice(Request $request)
     {
-        // dd($request->all());
         if (VehicleDevice::where('device_id', $request->deviceId)->count() > 0) {
             return response(['result' => false]);
         } else {

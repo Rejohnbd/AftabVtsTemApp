@@ -37,14 +37,14 @@
                             </thead>
                             <tbody>
                                 @forelse($datas as $data)
-                                <tr>
+                                <tr id="vehicleType-{{ $data->vehicle_type_id }}">
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $data->vehicle_type_name }}</td>
                                     <td>@if($data->status == 1) {{ 'Active' }} @else {{ 'Inactive' }} @endif</td>
                                     <td>
                                         <div class="btn-list">
                                             <a href="{{ route('vehicle-type.edit', $data->vehicle_type_id) }}" class="btn btn-icon btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Vehicle Type"><i class="fe fe-edit"></i></a>
-                                            <button type="button" class="btn btn-icon btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Vehicle Type"><i class="fe fe-trash"></i></button>
+                                            <button type="button" data-id="{{ $data->vehicle_type_id }}" class="btn btn-icon btn-danger btn-sm delete-vehicle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Vehicle Type"><i class="fe fe-trash"></i></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -68,21 +68,21 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('plugins/sweet-alert/sweetalert.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 @if(session('success'))
 <script>
     $(document).ready(function() {
-        swal('Congratulations!', "{{ session('success') }}", 'success');
+        Swal.fire('Congratulations!', "{{ session('success') }}", 'success');
     });
 </script>
 @endif
 @if(session('error'))
 <script>
     $(document).ready(function() {
-        swal({
+        Swal.fire({
             title: "Alert",
             text: "{{ session('error') }}",
-            type: "error",
+            icon: "error",
             showCancelButton: true,
             confirmButtonText: 'Exit',
             cancelButtonText: 'Stay on the page'
@@ -90,4 +90,55 @@
     });
 </script>
 @endif
+<script>
+    $(document).ready(function() {
+        $('.delete-vehicle').on('click', function() {
+            var id = $(this).attr('data-id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "{{ url('vehicle-type-delete') }}",
+                        method: 'POST',
+                        data: {
+                            vehicleTypeId: id,
+                            _token: '{{csrf_token()}}',
+                        },
+                        success: function(response) {
+                            if (response.result) {
+                                $('#vehicleType-' + id).remove();
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Vehicle Type Deleted Successfully',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                            if (!response.result) {
+                                Swal.fire({
+                                    title: "Alert",
+                                    text: "This Vehicle Type Info Used in System",
+                                    icon: "error",
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Exit',
+                                    cancelButtonText: 'Stay on the page'
+                                });
+                            }
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
 @endsection

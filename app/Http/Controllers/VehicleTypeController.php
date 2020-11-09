@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\VehiceType\StoreVehicleTypeRequest;
 use App\Http\Requests\VehiceType\UpdateVehicleTypeRequest;
+use App\Models\Vehicle;
 use App\Models\VehicleType;
 use Illuminate\Http\Request;
 
@@ -106,5 +107,15 @@ class VehicleTypeController extends Controller
     public function destroy(VehicleType $vehicleType)
     {
         //
+    }
+
+    public function destroyVehicleType(Request $request)
+    {
+        if (Vehicle::where('vehicle_type_id', $request->vehicleTypeId)->count() > 0) {
+            return response(['result' => false]);
+        } else {
+            VehicleType::where('vehicle_type_id', $request->vehicleTypeId)->delete();
+            return response(['result' => true]);
+        }
     }
 }
