@@ -124,4 +124,11 @@ class ExpensesController extends Controller
     {
         //
     }
+
+    public function destroyAllExpenses(Request $request)
+    {
+        if (Expenses::where('expense_id', $request->expensesId)->delete()) {
+            return response(['result' => true]);
+        }
+    }
 }

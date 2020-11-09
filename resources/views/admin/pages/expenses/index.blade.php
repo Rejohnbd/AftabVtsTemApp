@@ -42,7 +42,7 @@
                             </thead>
                             <tbody>
                                 @forelse($datas as $data)
-                                <tr>
+                                <tr id="expensesId-{{ $data->expense_id }}">
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $data->expensesType->expense_type_name }}</td>
                                     <td>{{ date('d/m/Y', strtotime($data->trip->trip_date)) }}</td>
@@ -54,7 +54,7 @@
                                     <td>
                                         <div class="btn-list">
                                             <a href="{{ route('all-expenses.edit', $data->expense_id) }}" class="btn btn-icon btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Expenses"><i class="fe fe-edit"></i></a>
-                                            <button type="button" class="btn btn-icon btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Expenses"><i class="fe fe-trash"></i></button>
+                                            <button type="button" data-id="{{ $data->expense_id }}" class="btn btn-icon btn-danger btn-sm delete-all-expenses" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Expenses"><i class="fe fe-trash"></i></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -78,21 +78,21 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('plugins/sweet-alert/sweetalert.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 @if(session('success'))
 <script>
     $(document).ready(function() {
-        swal('Congratulations!', "{{ session('success') }}", 'success');
+        Swal.fire('Congratulations!', "{{ session('success') }}", 'success');
     });
 </script>
 @endif
 @if(session('error'))
 <script>
     $(document).ready(function() {
-        swal({
+        Swal.fire({
             title: "Alert",
             text: "{{ session('error') }}",
-            type: "error",
+            icon: "error",
             showCancelButton: true,
             confirmButtonText: 'Exit',
             cancelButtonText: 'Stay on the page'
@@ -100,4 +100,45 @@
     });
 </script>
 @endif
+<script>
+    $(document).ready(function() {
+        $('.delete-all-expenses').on('click', function() {
+            var id = $(this).attr('data-id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "{{ url('all-expenses-delete') }}",
+                        method: 'POST',
+                        data: {
+                            expensesId: id,
+                            _token: '{{csrf_token()}}',
+                        },
+                        success: function(response) {
+                            if (response.result) {
+                                $('#expensesId-' + id).remove();
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Expenses Deleted Successfully',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
 @endsection

@@ -94,7 +94,6 @@
     $(document).ready(function() {
         $('.expeses-type-delete').on('click', function() {
             var id = $(this).attr('data-id');
-            // console.log(id);
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
