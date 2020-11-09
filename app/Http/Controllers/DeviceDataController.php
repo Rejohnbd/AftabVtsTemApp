@@ -15,9 +15,11 @@ class DeviceDataController extends Controller
 
         $device = new DeviceData();
         $device_id = $device->findDeviceIdFromApi($data->imei);
+        $vehicle_id = $device->findVehicleIdFromApi($device_id);
 
         $saveData = DeviceData::create([
             'device_id'         => $device_id,
+            'vehicle_id'        => $vehicle_id,
             'latitude'          => $data->lat,
             'longitude'         => $data->lng,
             'status'            => $data->status,

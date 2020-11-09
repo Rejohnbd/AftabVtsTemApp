@@ -15,4 +15,10 @@ class DeviceData extends Model
         $deviceInfo = Device::select('device_id')->where('device_unique_id', $imei)->first();
         return $deviceInfo->device_id;
     }
+
+    public function findVehicleIdFromApi($deviceId)
+    {
+        $vehicleInfo = VehicleDevice::select('vehicle_id')->where('device_id', $deviceId)->first();
+        return $vehicleInfo->vehicle_id;
+    }
 }
