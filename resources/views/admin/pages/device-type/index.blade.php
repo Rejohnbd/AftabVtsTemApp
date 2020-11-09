@@ -106,7 +106,7 @@ delete-device-type
                                     title: 'Device Type Deleted Successfully',
                                     showConfirmButton: false,
                                     timer: 1500
-                                })
+                                });
                             }
                             if (!response.result) {
                                 Swal.fire({

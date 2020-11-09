@@ -41,7 +41,7 @@
                             </thead>
                             <tbody>
                                 @forelse($allDevices as $device)
-                                <tr>
+                                <tr id="deviceId-{{$device->device_id}}">
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $device->deviceType->device_type_name }}</td>
                                     <td>{{ $device->device_unique_id }}</td>
@@ -57,7 +57,7 @@
                                             <a href="{{ route('temp-device', $device->device_unique_id) }}" class="btn btn-icon btn-dark btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="View Device Tempareture Info"><i class="wi wi-thermometer"></i></a>
                                             @endif
                                             <a href="{{ route('devices.edit', $device->device_id) }}" class="btn btn-icon btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Device"><i class="fe fe-edit"></i></a>
-                                            <button type="button" class="btn btn-icon btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Device"><i class="fe fe-trash"></i></button>
+                                            <button type="button" data-id="{{$device->device_id}}" class="btn btn-icon btn-danger btn-sm delete-device" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Device"><i class="fe fe-trash"></i></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -81,11 +81,11 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('plugins/sweet-alert/sweetalert.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 @if(session('success'))
 <script>
     $(document).ready(function() {
-        swal('Congratulations!', "{{ session('success') }}", 'success');
+        Swal.fire('Congratulations!', "{{ session('success') }}", 'success');
     });
 </script>
 @endif
@@ -93,10 +93,10 @@
 @if(session('error'))
 <script>
     $(document).ready(function() {
-        swal({
+        Swal.fire({
             title: "Alert",
             text: "{{ session('error') }}",
-            type: "error",
+            icon: "error",
             showCancelButton: true,
             confirmButtonText: 'Exit',
             cancelButtonText: 'Stay on the page'
@@ -104,4 +104,55 @@
     });
 </script>
 @endif
+<script>
+    $(document).ready(function() {
+        $('.delete-device').on('click', function() {
+            var id = $(this).attr('data-id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "{{ url('devices-delete') }}",
+                        method: 'POST',
+                        data: {
+                            deviceId: id,
+                            _token: '{{csrf_token()}}',
+                        },
+                        success: function(response) {
+                            if (response.result) {
+                                $('#deviceId-' + id).remove();
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Device Deleted Successfully',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                            if (!response.result) {
+                                Swal.fire({
+                                    title: "Alert",
+                                    text: "This Device Info Used in System",
+                                    icon: "error",
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Exit',
+                                    cancelButtonText: 'Stay on the page'
+                                });
+                            }
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
 @endsection

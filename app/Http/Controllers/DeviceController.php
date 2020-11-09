@@ -6,6 +6,7 @@ use App\Http\Requests\Device\StoreDeviceRequest;
 use App\Http\Requests\Device\UpdateDeviceRequest;
 use App\Models\Device;
 use App\Models\DeviceType;
+use App\Models\VehicleDevice;
 use Illuminate\Http\Request;
 
 class DeviceController extends Controller
@@ -117,5 +118,16 @@ class DeviceController extends Controller
     public function destroy(Device $device)
     {
         //
+    }
+
+    public function destroyDevice(Request $request)
+    {
+        // dd($request->all());
+        if (VehicleDevice::where('device_id', $request->deviceId)->count() > 0) {
+            return response(['result' => false]);
+        } else {
+            Device::where('device_id', $request->deviceId)->delete();
+            return response(['result' => true]);
+        }
     }
 }
