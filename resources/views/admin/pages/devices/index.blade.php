@@ -52,7 +52,7 @@
                                     <td>
                                         <div class="btn-list">
                                             @if($device->deviceType->device_type_name == 'VTS Device')
-                                            <a href="{{ route('device-location',$device->device_id) }}" class="btn btn-icon btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="View Vehicle Location"><i class="fa fa-map-marker"></i></a>
+                                            <a href="{{ route('device-location',$device->device_id) }}" class="btn btn-icon btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="View Device Location"><i class="fa fa-map-marker"></i></a>
                                             @else
                                             <a href="{{ route('device-temp-data', $device->device_id) }}" class="btn btn-icon btn-dark btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="View Device Tempareture Info"><i class="wi wi-thermometer"></i></a>
                                             @endif

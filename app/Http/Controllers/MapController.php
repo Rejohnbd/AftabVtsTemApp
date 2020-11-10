@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Device;
 use App\Models\Map;
+use App\Models\VehicleDevice;
 use Illuminate\Http\Request;
 
 class MapController extends Controller
@@ -15,6 +16,7 @@ class MapController extends Controller
      */
     public function index()
     {
+
         return view('admin.pages.map.index');
     }
 
@@ -86,7 +88,14 @@ class MapController extends Controller
 
     public function deviceLocation($id)
     {
-        $tempDeviceInfo = Device::findOrFail($id);
-        return view('admin.pages.map.single-item', compact('tempDeviceInfo'));
+        $deviceInfo = Device::findOrFail($id);
+        return view('admin.pages.map.device-show', compact('deviceInfo'));
+    }
+
+    public function vehicleLocation($id)
+    {
+        $vehicleDeviceInfo = VehicleDevice::select('device_id')->where('vehicle_id', $id)->first();
+        $deviceInfo = Device::where('device_id', $vehicleDeviceInfo->device_id)->first();
+        return view('admin.pages.map.vehicle-show', compact('deviceInfo'));
     }
 }

@@ -77,7 +77,7 @@
     database.ref('Devices/').on('value', function(snapshot) {
         var allDevicesInfo = snapshot.val();
         $.each(allDevicesInfo, function(key, data) {
-            if (key == <?= $tempDeviceInfo->device_unique_id ?>) {
+            if (key == <?= $deviceInfo->device_unique_id ?>) {
                 deviceData = {
                     'imei': key,
                     'lat': dex_to_degrees(allDevicesInfo[key].Data.lat),
