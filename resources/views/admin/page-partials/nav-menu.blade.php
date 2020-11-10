@@ -29,7 +29,7 @@
                         </ul>
                     </li>
                     <li aria-haspopup="true"><a href="{{ route('trips.index') }}" class="sub-icon"><i class="fa fa-road"></i> Trips</a></li>
-                    <li aria-haspopup="true"><a href="{{ route('maps') }}" class="sub-icon"><i class="fa fa-map-marker"></i> Maps</a></li>
+                    <li aria-haspopup="true"><a href="{{ route('all-vehicle-location') }}" class="sub-icon"><i class="fa fa-map-marker"></i> Maps</a></li>
 
                     {{--
                      <li aria-haspopup="true"><a href="#" class="sub-icon active"><i class="fe fe-life-buoy"></i> Pages <i class="fa fa-angle-down horizontal-icon"></i></a>

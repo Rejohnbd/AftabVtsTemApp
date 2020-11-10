@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Device;
 use App\Models\Map;
 use Illuminate\Http\Request;
 
@@ -83,12 +84,9 @@ class MapController extends Controller
         //
     }
 
-    public function deviceMap($id)
+    public function deviceLocation($id)
     {
-        $data = [
-            'title'     => 'Device Location',
-            'device_id' => $id
-        ];
-        return view('admin.pages.map.single-item', compact('data'));
+        $tempDeviceInfo = Device::findOrFail($id);
+        return view('admin.pages.map.single-item', compact('tempDeviceInfo'));
     }
 }

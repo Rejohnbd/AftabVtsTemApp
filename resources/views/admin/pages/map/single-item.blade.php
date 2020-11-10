@@ -1,6 +1,6 @@
 @extends('layouts.admin-master')
 
-@section('title', $data['title'])
+@section('title', 'Device Location')
 
 @section('content')
 <div class="container-fluid content-area">
@@ -8,7 +8,7 @@
         <div class="page-header">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/dashboards') }}"><i class="fe fe-life-buoy mr-1"></i> Dashboard</a></li>
-                <li class="breadcrumb-item" aria-current="page">{{$data['title']}}</li>
+                <li class="breadcrumb-item" aria-current="page">Device Location</li>
             </ol>
             <div class="ml-auto">
                 <a href="#" class="btn btn-primary btn-icon btn-sm text-white mr-2">
@@ -77,7 +77,7 @@
     database.ref('Devices/').on('value', function(snapshot) {
         var allDevicesInfo = snapshot.val();
         $.each(allDevicesInfo, function(key, data) {
-            if (key == <?= $data['device_id'] ?>) {
+            if (key == <?= $tempDeviceInfo->device_unique_id ?>) {
                 deviceData = {
                     'imei': key,
                     'lat': dex_to_degrees(allDevicesInfo[key].Data.lat),

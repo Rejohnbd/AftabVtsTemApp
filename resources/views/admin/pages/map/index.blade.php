@@ -15,7 +15,7 @@
                         <div class="card-body">
                             <div class="content vscroll" style="height: 67vh !important;">
                                 <div class="list-group list-lg-group list-group-flush br-4">
-                                    <a class="list-group-item list-group-item-action p-3" href="{{ route('device-map', '0353701093500920') }}">
+                                    <a class="list-group-item list-group-item-action p-3" href="#">
                                         <div class="media mt-0">
                                             <span class="avatar brround cover-image" style='background-image: url("{{asset('img/car.jpg')}} ");'>
                                                 <span class="avatar-status bg-red"></span>
@@ -30,7 +30,7 @@
                                             </div>
                                         </div>
                                     </a>
-                                    <a class="list-group-item list-group-item-action p-3" href="{{ route('device-map', '0353701093511364') }}">
+                                    <a class="list-group-item list-group-item-action p-3" href="#">
                                         <div class="media mt-0">
                                             <span class="avatar brround cover-image" style='background-image: url("{{asset('img/car.jpg')}} ");'>
                                                 <span class="avatar-status bg-red"></span>
@@ -45,7 +45,7 @@
                                             </div>
                                         </div>
                                     </a>
-                                    <a class="list-group-item list-group-item-action p-3" href="{{ route('device-map', '0353701093513915') }}">
+                                    <a class="list-group-item list-group-item-action p-3" href="#">
                                         <div class="media mt-0">
                                             <span class="avatar brround cover-image" style='background-image: url("{{asset('img/car.jpg')}} ");'>
                                                 <span class="avatar-status bg-red"></span>
@@ -60,7 +60,7 @@
                                             </div>
                                         </div>
                                     </a>
-                                    <a class="list-group-item list-group-item-action p-3" href="{{ route('device-map', '0353701093518682') }}">
+                                    <a class="list-group-item list-group-item-action p-3" href="#">
                                         <div class="media mt-0">
                                             <span class="avatar brround cover-image" style='background-image: url("{{asset('img/car.jpg')}} ");'>
                                                 <span class="avatar-status bg-red"></span>
