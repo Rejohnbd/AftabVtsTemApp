@@ -28,8 +28,11 @@
     <div class="page">
         <div class="page-main">
             @include('admin.page-partials.nav-top')
-
+            @if(Auth::user()->type == 'admin')
             @include('admin.page-partials.nav-menu')
+            @elseif(Auth::user()->type == 'driver')
+            @include('driver.page-partials.nav-menu')
+            @endif
 
             @yield('content')
         </div>

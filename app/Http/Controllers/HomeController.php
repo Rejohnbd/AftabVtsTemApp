@@ -25,6 +25,10 @@ class HomeController extends Controller
     public function index()
     {
         // return view('home');
-        return redirect()->route('dasbboard');
+        if (Auth::user()->type == 'admin') :
+            return redirect()->route('dasbboard');
+        else :
+            return redirect()->route('driver-dashboard');
+        endif;
     }
 }

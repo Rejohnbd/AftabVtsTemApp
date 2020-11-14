@@ -7,7 +7,7 @@
     <div class="section">
         <div class="page-header">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('/dashboards') }}"><i class="fe fe-life-buoy mr-1"></i> Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}"><i class="fe fe-life-buoy mr-1"></i> Dashboard</a></li>
                 <li class="breadcrumb-item" aria-current="page">All Device List</li>
             </ol>
             <div class="ml-auto">
@@ -51,7 +51,7 @@
                                     <td>@if($device->status == 1) Active @else Intactive @endif</td>
                                     <td>
                                         <div class="btn-list">
-                                            @if($device->deviceType->device_type_name == 'VTS Device')
+                                            @if($device->deviceType->device_type_id == 5)
                                             <a href="{{ route('device-location',$device->device_id) }}" class="btn btn-icon btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="View Device Location"><i class="fa fa-map-marker"></i></a>
                                             @else
                                             <a href="{{ route('device-temp-data', $device->device_id) }}" class="btn btn-icon btn-dark btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="View Device Tempareture Info"><i class="wi wi-thermometer"></i></a>

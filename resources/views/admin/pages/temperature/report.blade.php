@@ -7,7 +7,7 @@
     <div class="section">
         <div class="page-header">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('/dashboards') }}"><i class="fe fe-life-buoy mr-1"></i> Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}"><i class="fe fe-life-buoy mr-1"></i> Dashboard</a></li>
                 <li class="breadcrumb-item" aria-current="page">Temperature Device Report</li>
             </ol>
         </div>

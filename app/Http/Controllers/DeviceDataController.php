@@ -4,10 +4,83 @@ namespace App\Http\Controllers;
 
 use App\Models\Device;
 use App\Models\DeviceData;
+use App\Models\Vehicle;
+use App\Models\VehicleDevice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use PDF;
 
 class DeviceDataController extends Controller
 {
+
+    public function index($id)
+    {
+        $vehicleInfo = Vehicle::where('vehicle_id', $id)->first();
+        $vehicleDeviceInfo = VehicleDevice::select('device_id')->where('vehicle_id', $id)->first();
+        $deviceInfo = Device::where('device_id', $vehicleDeviceInfo->device_id)->first();
+        $deviceDataInfo = DeviceData::select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed')->where('device_id', $deviceInfo->device_id)->orderBy('created_at', 'desc')->first();
+        return view('admin.pages.reports.index')->with('vehicleInfo', $vehicleInfo)->with('deviceInfo', $deviceInfo)->with('deviceDataInfo', $deviceDataInfo);
+    }
+
+    public function datedReport(Request $request)
+    {
+        $date = $request->selectedDate;
+        $datas = DB::table('device_data')->select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed', 'created_at')->where('vehicle_id', $request->vehicleId)->whereDate('created_at', $date)->get();
+        return response()->view('admin.pages.reports.daily-distance-report-web', compact('datas'));
+    }
+
+    public function datedReportDownload(Request $request)
+    {
+        $date = $request->selectedDate;
+        $datas = DB::table('device_data')->select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed', 'created_at')->where('vehicle_id', $request->vehicleId)->whereDate('created_at', $date)->get();
+        $pdf = PDF::loadView('admin.pages.reports.daily-distance-report', [
+            'datas' => $datas
+        ]);
+        $pdf->setPaper('A4');
+        return $pdf->download('Daily_Reports.pdf');
+    }
+
+    public function datedEngineStatusReport(Request $request)
+    {
+        $date = $request->selectedDate;
+        $datas = DB::table('device_data')->select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed', 'created_at')->where('vehicle_id', $request->vehicleId)->whereDate('created_at', $date)->get();
+        return response()->view('admin.pages.reports.daily-status-report-web', compact('datas'));
+    }
+
+    public function datedEngineStatusDownload(Request $request)
+    {
+        $date = $request->selectedDate;
+        $datas = DB::table('device_data')->select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed', 'created_at')->where('vehicle_id', $request->vehicleId)->whereDate('created_at', $date)->get();
+        $pdf = PDF::loadView('admin.pages.reports.daily-status-report', [
+            'datas' => $datas
+        ]);
+        $pdf->setPaper('A4');
+        return $pdf->download('Daily_Status_Reports.pdf');
+    }
+
+    public function monthlyReport(Request $request)
+    {
+        $date = strtotime($request->selectedDate);
+        $month = date("m", $date);
+        $year = date("Y", $date);
+        $datas = DB::table('device_data')->select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed', 'created_at')->where('vehicle_id', $request->vehicleId)->whereYear('created_at', $year)->whereMonth('created_at', $month)->get();
+        return response()->view('admin.pages.reports.monthly-report-web', compact('datas'));
+    }
+
+    public function monthlyReportDownload(Request $request)
+    {
+        $date = strtotime($request->selectedDate);
+        $month = date("m", $date);
+        $year = date("Y", $date);
+        $datas = DB::table('device_data')->select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed', 'created_at')->where('vehicle_id', $request->vehicleId)->whereYear('created_at', $year)->whereMonth('created_at', $month)->get();
+        $pdf = PDF::loadView('admin.pages.reports.monthly-report', [
+            'datas' => $datas
+        ]);
+        $pdf->setPaper('A4');
+        return $pdf->download('Monthly_Reports.pdf');
+    }
+
+
     public function deviceApiPostData(Request $request)
     {
         $device_data_json = trim(file_get_contents("php://input"));

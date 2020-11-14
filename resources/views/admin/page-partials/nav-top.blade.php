@@ -7,14 +7,7 @@
                 <a class="header-desktop" href="{{ url('/dashboard') }}"></a>
                 <a class="header-mobile" href="{{ url('/dashboard') }}"></a>
             </div>
-            <div class="">
-                <form class="form-inline">
-                    <div class="search-element">
-                        <input type="search" class="form-control header-search" placeholder="Search…" aria-label="Search" tabindex="1">
-                        <button class="btn btn-primary-color" type="submit"><i class="fe fe-search"></i></button>
-                    </div>
-                </form>
-            </div>
+
             <a class="header-brand header-brand2 d-none d-lg-block  align-items-center justify-content-center" href="index.html">
                 <a class="header-desktop" href="{{ url('/dashboard') }}"></a>
             </a>

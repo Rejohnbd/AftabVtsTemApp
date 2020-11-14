@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Device;
+use App\Models\DeviceData;
 use App\Models\Map;
+use App\Models\Vehicle;
 use App\Models\VehicleDevice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MapController extends Controller
 {
@@ -16,8 +19,13 @@ class MapController extends Controller
      */
     public function index()
     {
-
-        return view('admin.pages.map.index');
+        $datas = DB::table('devices')
+            ->join('vehicle_devices', 'devices.device_id', '=', 'vehicle_devices.device_id')
+            ->join('vehicles', 'vehicle_devices.vehicle_id', '=', 'vehicles.vehicle_id')
+            ->where('device_type_id', 5)
+            ->select('devices.device_id', 'vehicles.vehicle_id', 'vehicles.vehicle_brand', 'vehicles.vehicle_model', 'vehicles.vehicle_model_year', 'vehicles.vehicle_plate_number')
+            ->get();
+        return view('admin.pages.map.index', compact('datas'));
     }
 
     /**
@@ -94,8 +102,10 @@ class MapController extends Controller
 
     public function vehicleLocation($id)
     {
+        $vehicleInfo = Vehicle::where('vehicle_id', $id)->first();
         $vehicleDeviceInfo = VehicleDevice::select('device_id')->where('vehicle_id', $id)->first();
         $deviceInfo = Device::where('device_id', $vehicleDeviceInfo->device_id)->first();
-        return view('admin.pages.map.vehicle-show', compact('deviceInfo'));
+        $deviceDataInfo = DeviceData::select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed')->where('device_id', $deviceInfo->device_id)->orderBy('created_at', 'desc')->first();
+        return view('admin.pages.map.vehicle-show')->with('vehicleInfo', $vehicleInfo)->with('deviceInfo', $deviceInfo)->with('deviceDataInfo', $deviceDataInfo);
     }
 }

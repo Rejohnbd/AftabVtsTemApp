@@ -49,4 +49,29 @@ Route::middleware(['auth'])->group(function () {
     Route::post('device-temp-data-paginate', 'TemperatureDeviceDataController@tempDeviceDataPaginate')->name('device-temp-data-paginate');
     Route::post('device-temp-dated-data', 'TemperatureDeviceDataController@tempDeviceDatedData')->name('device-temp-dated-data');
     Route::post('device-temp-export-as-excel', 'TemperatureDeviceDataController@tempDeviceDataExcelExport')->name('device-temp-export-as-excel');
+
+    // Vehicle Report
+    Route::get('vehicle-reports/{id}', 'DeviceDataController@index')->name('vehicle-reports');
+    Route::post('vehicle-daily-report', 'DeviceDataController@datedReport')->name('vehicle-daily-report');
+    Route::post('vehicle-daily-report-download', 'DeviceDataController@datedReportDownload')->name('vehicle-daily-report-download');
+    Route::post('vehicle-daily-status-report', 'DeviceDataController@datedEngineStatusReport')->name('vehicle-daily-status-report');
+    Route::post('vehicle-daily-status-report-download', 'DeviceDataController@datedEngineStatusDownload')->name('vehicle-daily-status-report-download');
+    Route::post('vehicle-monthly-report', 'DeviceDataController@monthlyReport')->name('vehicle-monthly-report');
+    Route::post('vehicle-monthly-report-download', 'DeviceDataController@monthlyReportDownload')->name('vehicle-monthly-report-download');
+
+
+    // Route::get('daily-report/{id}', 'DeviceDataController@testDailyReport')->name('daily-report');
+
+    // Driver
+    Route::get('driver-dashboard', 'DriverDashboardController@index')->name('driver-dashboard');
+    Route::get('driver-expenses', 'DriverExpensesController@index')->name('driver-expenses');
+    Route::get('driver-expenses-create', 'DriverExpensesController@create')->name('driver-expenses-create');
+    Route::post('driver-expenses-store', 'DriverExpensesController@store')->name('driver-expenses-store');
+    Route::get('driver-expenses-edit/{id}', 'DriverExpensesController@edit')->name('driver-expenses-edit');
+    Route::put('driver-expenses-update', 'DriverExpensesController@update')->name('driver-expenses-update');
+    Route::post('driver-expenses-delete', 'DriverExpensesController@destroyDriverExpenses')->name('driver-expenses-delete');
+    Route::get('trip-current', 'DriverTripController@currentTrip')->name('trip-current');
+    Route::get('trip-old', 'DriverTripController@oldTrip')->name('trip-old');
+    Route::get('trip-start/{id}', 'DriverTripController@startTrip')->name('trip-start');
+    Route::get('trip-stop/{id}', 'DriverTripController@stopTrip')->name('trip-stop');
 });

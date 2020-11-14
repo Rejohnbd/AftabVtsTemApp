@@ -7,7 +7,7 @@
     <div class="section">
         <div class="page-header">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('/dashboards') }}"><i class="fe fe-life-buoy mr-1"></i> Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}"><i class="fe fe-life-buoy mr-1"></i> Dashboard</a></li>
                 <li class="breadcrumb-item" aria-current="page">All Vehicle List</li>
             </ol>
             <div class="ml-auto">
@@ -114,6 +114,11 @@
                                                     <p class="card-text">{{ $device->device->device_unique_id }}</p>
                                                     <p class="card-text">{{ $device->device->device_sim_number }}</p>
                                                     <p class="card-text">{{ $device->device->device_sim_type }}</p>
+                                                    @if($device->device->device_type_id == 5)
+                                                    <a href="{{ route('vehicle-location', $vehicle->vehicle_id) }}" class="btn btn-primary btn-block">View GPS Data</a>
+                                                    @else
+                                                    <a href="{{ route('device-temp-data', $device->device->device_id) }}" class="btn btn-primary btn-block">View Temp Data</a>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </li>
