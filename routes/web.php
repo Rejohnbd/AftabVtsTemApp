@@ -49,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('device-temp-data-paginate', 'TemperatureDeviceDataController@tempDeviceDataPaginate')->name('device-temp-data-paginate');
     Route::post('device-temp-dated-data', 'TemperatureDeviceDataController@tempDeviceDatedData')->name('device-temp-dated-data');
     Route::post('device-temp-export-as-excel', 'TemperatureDeviceDataController@tempDeviceDataExcelExport')->name('device-temp-export-as-excel');
+    Route::get('all-reports', 'VehicleController@navReports')->name('all-reports');
 
     // Vehicle Report
     Route::get('vehicle-reports/{id}', 'DeviceDataController@index')->name('vehicle-reports');
@@ -58,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('vehicle-daily-status-report-download', 'DeviceDataController@datedEngineStatusDownload')->name('vehicle-daily-status-report-download');
     Route::post('vehicle-monthly-report', 'DeviceDataController@monthlyReport')->name('vehicle-monthly-report');
     Route::post('vehicle-monthly-report-download', 'DeviceDataController@monthlyReportDownload')->name('vehicle-monthly-report-download');
+
 
 
     // Route::get('daily-report/{id}', 'DeviceDataController@testDailyReport')->name('daily-report');

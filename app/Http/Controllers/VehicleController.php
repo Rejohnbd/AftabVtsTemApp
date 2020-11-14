@@ -141,4 +141,10 @@ class VehicleController extends Controller
             return response(['result' => true]);
         }
     }
+
+    public function navReports()
+    {
+        $datas = Vehicle::all();
+        return view('admin.pages.nav-reports.index', compact('datas'));
+    }
 }
