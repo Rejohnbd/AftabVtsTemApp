@@ -63,3 +63,16 @@ function findVehicleAttachTemDevice($id)
     }
     return $deviceInfo;
 }
+
+function findVehicleAttachGpsDevice($id)
+{
+    $deviceInfo = array();
+    $vehicleDevices = DB::table('vehicle_devices')->select('device_id')->where('vehicle_id', $id)->get();
+    for ($i = 0; $i < count($vehicleDevices); $i++) {
+        $deviceId = DB::table('devices')->select('device_id')->where('device_type_id', 5)->where('device_id', $vehicleDevices[$i]->device_id)->first();
+        if ($deviceId != null) {
+            $deviceInfo = ['exist' => true, 'device_id' =>  $deviceId->device_id];
+        }
+    }
+    return $deviceInfo;
+}

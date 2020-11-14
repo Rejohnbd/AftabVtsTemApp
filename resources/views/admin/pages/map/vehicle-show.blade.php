@@ -40,23 +40,53 @@
                                         </div>
                                     </li>
                                 </ul>
-
                             </div>
                         </div>
                     </div>
-                    <div class="card ">
+                    <div class="card card-collapsed">
                         <div class="card-header pt-2 pb-0 border-bottom-0">
-                            <h6 class="mb-0">Engine Status: <span id="engineStatus">@if($deviceDataInfo->status == 1) ON @else OFF @endif</span></h6>
+                            <h6 class="mb-0">Live GPS Info</h6>
+                            <div class="card-options">
+                                <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                            </div>
                         </div>
                         <div class="card-body pt-0">
-                            <h6 class="mb-2">
-                                <i class="fe fe-check-circle fs-20 text-primary"></i> <span>Locations</span>
-                            </h6>
-                            <div class="progress progress-md mb-3">
-                                <div id="vehicleSpeedStyle" style="width: {{ round($deviceDataInfo->speed) }}" class="progress-bar bg-warning"><span id="vehicleSpeed">{{ round($deviceDataInfo->speed) }}</span></div>
+                            <p class="mb-2">
+                                Engine Status: <span class="ml-2" id="engineStatus">@if($deviceDataInfo->status == 1) ON @else OFF @endif</span>
+                            </p>
+                            <p class="mb-2">
+                                <i class="fa fa-map-marker fs-20 text-danger"></i> <span class="ml-2">Locations</span>
+                            </p>
+                            Vehicle Speed:</br />
+                            <div class="progress progress-md mb-1">
+                                <div id="vehicleSpeedStyle" style="width: {{ round($deviceDataInfo->speed) }}" class="progress-bar bg-warning">
+                                    <span id="vehicleSpeed">{{ round($deviceDataInfo->speed) }} Km</span>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="card card-collapsed">
+                        <div class="card-header pt-2 pb-0 border-bottom-0">
+                            <h6 class="mb-0">Live Temp Info</h6>
+                            <div class="card-options">
+                                <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <p class="mb-2">
+                                Compesure Status: <span class="ml-2" id="statusText">@if($deviceTempDataInfo->comp_status == 1) ON @else OFF @endif</span>
+                            </p>
+                            <p class="mb-2">
+                                Temperature: <span class="ml-2" id="tempText">{{ $deviceTempDataInfo->temperature }} <sup>0</sup>C</span>
+                            </p>
+                            <p class="mb-2">
+                                Humidity: <span class="ml-2" id="humiText">{{ $deviceTempDataInfo->humidity }} %</span>
+                            </p>
+                        </div>
+                    </div>
+
+
                     <div class="card card-collapsed">
                         <div class="card-header pt-2 pb-0 border-bottom-0">
                             <h6 class="mb-0">Reports</h6>
@@ -150,7 +180,7 @@
             marker = new google.maps.Marker({
                 map: map,
                 position: position,
-                icon: "{{ asset('img/car.jpg') }}",
+                icon: "{{ asset('img/van.png') }}",
             });
         }
         lockPosition = position;
@@ -199,7 +229,7 @@
         marker = new google.maps.Marker({
             map: map,
             position: lockPosition,
-            icon: "{{ asset('img/car.jpg') }}",
+            icon: "{{ asset('img/van.png') }}",
         });
 
     });
@@ -242,6 +272,28 @@
             minDate: "{{ $vehicleInfo->created_at->format('Y-m-d') }}",
             maxDate: "{{ date('Y-m-d') }}"
         });
+
+        setInterval(function() {
+            $.ajax({
+                url: "{{ route('get-temp-device-data') }}",
+                method: 'POST',
+                data: {
+                    deviceId: "{{ $deviceTempDataInfo->device_id }}",
+                    _token: '{{csrf_token()}}',
+                },
+                success: function(response) {
+                    if (response) {
+                        if (response.comp_status == 0) {
+                            $('#statusText').text('OFF')
+                        } else if (response.comp_status == 1) {
+                            $('#statusText').text('ON')
+                        }
+                        $('#tempText').text(response.temperature)
+                        $('#humiText').text(response.humidity)
+                    }
+                }
+            })
+        }, 30000);
     })
 </script>
 
