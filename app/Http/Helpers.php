@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Device;
+use App\Models\VehicleDevice;
 use Illuminate\Support\Facades\DB;
 
 function countDeviceTypeStatus($status)
@@ -49,5 +51,15 @@ function calculateDistance($lat1, $lon1, $lat2, $lon2)
     return $km;
 }
 
-
-// function findTemp
+function findVehicleAttachTemDevice($id)
+{
+    $deviceInfo = array();
+    $vehicleDevices = DB::table('vehicle_devices')->select('device_id')->where('vehicle_id', $id)->get();
+    for ($i = 0; $i < count($vehicleDevices); $i++) {
+        $deviceId = DB::table('devices')->select('device_id')->where('device_type_id', 6)->where('device_id', $vehicleDevices[$i]->device_id)->first();
+        if ($deviceId != null) {
+            $deviceInfo = ['exist' => true, 'device_id' =>  $deviceId->device_id];
+        }
+    }
+    return $deviceInfo;
+}

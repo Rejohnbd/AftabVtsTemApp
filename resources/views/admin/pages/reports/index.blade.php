@@ -10,13 +10,20 @@
                 <li class="breadcrumb-item"><a href="{{ url('/dashboards') }}"><i class="fe fe-life-buoy mr-1"></i> Dashboard</a></li>
                 <li class="breadcrumb-item" aria-current="page">Report of: {{ $vehicleInfo->vehicle_plate_number}}</li>
             </ol>
-            <div class="ml-auto">
-                <a href="#" class="btn btn-primary btn-icon btn-sm text-white mr-2">
-                    <span>
-                        <i class="fe fe-eye"></i>
-                    </span> Temperature Info
-                </a>
-            </div>
+            <?php
+            $deviceInfo = findVehicleAttachTemDevice($vehicleInfo->vehicle_id);
+            if ($deviceInfo['exist'] == 1) {
+            ?>
+                <div class="ml-auto">
+                    <a href="{{ route('device-temp-data', $deviceInfo['device_id'] ) }}" class="btn btn-primary btn-icon btn-sm text-white mr-2">
+                        <span>
+                            <i class="fe fe-eye"></i>
+                        </span> Temperature Info
+                    </a>
+                </div>
+            <?php
+            }
+            ?>
         </div>
 
         <div class="row">
