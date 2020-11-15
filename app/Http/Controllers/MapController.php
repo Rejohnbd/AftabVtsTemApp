@@ -98,7 +98,9 @@ class MapController extends Controller
     public function deviceLocation($id)
     {
         $deviceInfo = Device::findOrFail($id);
-        return view('admin.pages.map.device-show', compact('deviceInfo'));
+        $deviceDataInfo = DeviceData::select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed')->where('device_id', $deviceInfo->device_id)->orderBy('created_at', 'desc')->first();
+        // dd($deviceInfo, $deviceDataInfo);
+        return view('admin.pages.map.device-show')->with('deviceInfo', $deviceInfo)->with('deviceDataInfo', $deviceDataInfo);
     }
 
     public function vehicleLocation($id)

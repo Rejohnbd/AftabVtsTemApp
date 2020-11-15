@@ -4,28 +4,51 @@
 
 @section('content')
 <div class="container-fluid content-area">
-    <div class="section">
-        <div class="page-header">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}"><i class="fe fe-life-buoy mr-1"></i> Dashboard</a></li>
-                <li class="breadcrumb-item" aria-current="page">Device Location</li>
-            </ol>
-            <div class="ml-auto">
-                <a href="#" class="btn btn-primary btn-icon btn-sm text-white mr-2">
-                    <span>
-                        <i class="fe fe-plus"></i>
-                    </span> Show Report
-                </a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12 ">
-                <div class="map-header" style="height: 100vh !important;">
-                    <div class="map-header-layer" id="map"></div>
+    <div class="row" style="margin-left: 0px !important; margin-right: 0px !important">
+        <div class="col-lg-12 col-xl-3">
+            <div class="row">
+                <div class="col-md-12 col-lg-6 col-xl-12" style="height: 67vh !important;">
+
+                    <div class="card" style="margin-top: 120px;">
+                        <div class="card-header pt-2 pb-0 border-bottom-0">
+                            <h6 class="mb-0">Device Information</h6>
+                        </div>
+                        <div class="card-body pt-0">
+                            <p class="mb-2"><strong>Device IMEI: </strong> <span class="float-right">{{ $deviceInfo->device_unique_id }}</span></p>
+                            <p class="mb-2"><strong>Device Model: </strong> <span class="float-right">{{ $deviceInfo->device_model }}</span></p>
+                            <p class="mb-2"><strong>Device SIM: </strong> <span class="float-right">{{ $deviceInfo->device_sim_number }}</span></p>
+                            <p class="mb-2"><strong>SIM Type: </strong> <span class="float-right">{{ $deviceInfo->device_sim_type }}</span></p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header pt-2 pb-0 border-bottom-0">
+                            <h6 class="mb-0">Device GPS Info</h6>
+                        </div>
+                        <div class="card-body pt-0">
+                            <p class="mb-2">
+                                Engine Status: <span class="ml-2" id="engineStatus">@if($deviceDataInfo->status == 1) ON @else OFF @endif</span>
+                            </p>
+                            <p class="mb-2">
+                                <i class="fa fa-map-marker fs-20 text-danger"></i> <span class="ml-2">Locations</span>
+                            </p>
+                            Vehicle Speed:</br />
+                            <div class="progress progress-md mb-1">
+                                <div id="vehicleSpeedStyle" style="width: {{ round($deviceDataInfo->speed) }}" class="progress-bar bg-warning">
+                                    <span id="vehicleSpeed">{{ round($deviceDataInfo->speed) }} Km</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="col-lg-12 col-xl-9">
+            <div class="map-header" style="height: 100vh !important;">
+                <div class="map-header-layer" id="map"></div>
+            </div>
+        </div>
     </div>
+</div>
 </div>
 
 @endsection
@@ -50,10 +73,10 @@
     function initMap() {
         var mapOptions = {
             center: {
-                lat: 24.7953,
-                lng: 90.3563
+                lat: <?= $deviceDataInfo->latitude ?>,
+                lng: <?= $deviceDataInfo->longitude ?>
             },
-            zoom: 8,
+            zoom: 10,
             zoomControl: true,
             fullscreenControl: true,
             streetViewControl: true,
@@ -90,7 +113,7 @@
 
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(deviceData.lat, deviceData.lng),
-            icon: "{{ asset('img/car.jpg') }}",
+            icon: "{{ asset('img/van.png') }}",
             map: map,
         });
 
