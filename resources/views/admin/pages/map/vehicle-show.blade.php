@@ -23,9 +23,9 @@
                                             <h3>Vehicle Info</h3>
                                         </div>
                                         <div>
-                                            <p><strong>Vehicle Brand: </strong> {{ $vehicleInfo->vehicle_brand }}</p>
-                                            <p><strong>Vehicle Model: </strong> {{ $vehicleInfo->vehicle_model }}</p>
-                                            <p><strong>Model Year: </strong> {{ $vehicleInfo->vehicle_model_year }}</p>
+                                            <p><strong>Vehicle Brand: </strong> <span class="float-right">{{ $vehicleInfo->vehicle_brand }}</span></p>
+                                            <p><strong>Vehicle Model: </strong> <span class="float-right">{{ $vehicleInfo->vehicle_model }}</span></p>
+                                            <p><strong>Model Year: </strong> <span class="float-right">{{ $vehicleInfo->vehicle_model_year }}</span></p>
                                         </div>
                                     </li>
                                     <li>
@@ -33,10 +33,10 @@
                                             <h3>Device Info</h3>
                                         </div>
                                         <div>
-                                            <p><strong>Device IMEI: </strong> {{ $deviceInfo->device_unique_id }}</p>
-                                            <p><strong>Device Model: </strong> {{ $deviceInfo->device_model }}</p>
-                                            <p><strong>Device SIM: </strong> {{ $deviceInfo->device_sim_number }}</p>
-                                            <p><strong>SIM Type: </strong> {{ $deviceInfo->device_sim_type }}</p>
+                                            <p><strong>Device IMEI: </strong> <span class="float-right">{{ $deviceInfo->device_unique_id }}</span></p>
+                                            <p><strong>Device Model: </strong> <span class="float-right">{{ $deviceInfo->device_model }}</span></p>
+                                            <p><strong>Device SIM: </strong> <span class="float-right">{{ $deviceInfo->device_sim_number }}</span></p>
+                                            <p><strong>SIM Type: </strong> <span class="float-right">{{ $deviceInfo->device_sim_type }}</span></p>
                                         </div>
                                     </li>
                                 </ul>
@@ -52,12 +52,12 @@
                         </div>
                         <div class="card-body pt-0">
                             <p class="mb-2">
-                                Engine Status: <span class="ml-2" id="engineStatus">@if($deviceDataInfo->status == 1) ON @else OFF @endif</span>
+                                <strong>Engine Status:</strong> <span class="ml-2" id="engineStatus">@if($deviceDataInfo->status == 1) ON @else OFF @endif</span>
                             </p>
                             <p class="mb-2">
-                                <i class="fa fa-map-marker fs-20 text-danger"></i> <span class="ml-2">Locations</span>
+                                <i class="fa fa-map-marker fs-20 text-danger"></i> <strong><span class="ml-2">Locations</span></strong>
                             </p>
-                            Vehicle Speed:</br />
+                            <strong>Vehicle Speed:</strong></br />
                             <div class="progress progress-md mb-1">
                                 <div id="vehicleSpeedStyle" style="width: {{ round($deviceDataInfo->speed) }}" class="progress-bar bg-warning">
                                     <span id="vehicleSpeed">{{ round($deviceDataInfo->speed) }} Km</span>
@@ -75,13 +75,13 @@
                         </div>
                         <div class="card-body pt-0">
                             <p class="mb-2">
-                                Compesure Status: <span class="ml-2" id="statusText">@if($deviceTempDataInfo->comp_status == 1) ON @else OFF @endif</span>
+                                <strong>Compesure Status:</strong><span class="float-right" id="statusText">@if($deviceTempDataInfo->comp_status == 1) ON @else OFF @endif</span>
                             </p>
                             <p class="mb-2">
-                                Temperature: <span class="ml-2" id="tempText">{{ $deviceTempDataInfo->temperature }} <sup>0</sup>C</span>
+                                <strong>Temperature:</strong><span class="float-right"><sup>o</sup>C</span> <span class="float-right" id="tempText">{{ $deviceTempDataInfo->temperature }}</span>
                             </p>
                             <p class="mb-2">
-                                Humidity: <span class="ml-2" id="humiText">{{ $deviceTempDataInfo->humidity }} %</span>
+                                <strong>Humidity:</strong><span class="float-right">%</span><span class="float-right" id="humiText">{{ $deviceTempDataInfo->humidity }}</span>
                             </p>
                         </div>
                     </div>

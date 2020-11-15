@@ -116,7 +116,6 @@
             icon: "{{ asset('img/van.png') }}",
             map: map,
         });
-
     });
 </script>
 
