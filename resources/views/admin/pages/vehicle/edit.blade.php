@@ -57,6 +57,27 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label class="form-label">Vehicle System Code</label>
+                                        <input type="text" class="form-control" name="vehicle_system_code" placeholder="Vehicle System Code" value="{{ old('vehicle_system_code', $vehicle->vehicle_system_code) }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mt-2">
+                                        <label class="form-label mt-0">Vehicle Ownership Type</label>
+                                        <select name="vehicle_ownership_type" class="form-control @error('vehicle_ownership_type') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
+                                            <option label="Choose one"></option>
+                                            <option value="1" @if($vehicle->vehicle_ownership_type == 1) selected @endif>Own Vehicle</option>
+                                            <option value="2" @if($vehicle->vehicle_ownership_type == 2) selected @endif>Rented Vehicle</option>
+                                        </select>
+                                        @error('vehicle_ownership_type')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label class="form-label">Vehicle Registration No</label>
                                         <input type="text" class="form-control @error('vehicle_plate_number') is-invalid @enderror" name="vehicle_plate_number" placeholder="Vehicle Registration No" value="{{ old('vehicle_plate_number', $vehicle->vehicle_plate_number) }}" required>
                                         @error('vehicle_plate_number')
@@ -108,6 +129,24 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                         @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Vehicle Capacity</label>
+                                        <input type="text" class="form-control" name="vehicle_capacity" placeholder="Vehicle Capacity" value="{{ old('vehicle_capacity', $vehicle->vehicle_capacity) }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Vehicle Measurement</label>
+                                        <input type="text" class="form-control" name="vehicle_measurement" placeholder="Vehicle Measurement" value="{{ old('vehicle_measurement', $vehicle->vehicle_measurement) }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Vehicle Seat</label>
+                                        <input type="text" class="form-control" name="vehicle_seats" placeholder="Vehicle Seats" value="{{ old('vehicle_seats', $vehicle->vehicle_seats) }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">

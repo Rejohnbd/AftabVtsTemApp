@@ -34,6 +34,7 @@ class UpdateVehicleRequest extends FormRequest
             'vehicle_insurance_expire_date'     => 'required|date_format:m/d/Y',
             'vehicle_registration_expire_date'  => 'required|date_format:m/d/Y',
             'vehicle_tax_token_expire_date'     => 'required|date_format:m/d/Y',
+            'vehicle_ownership_type'            => 'required|in:1,2'
         ];
     }
 
@@ -61,6 +62,8 @@ class UpdateVehicleRequest extends FormRequest
             'vehicle_registration_expire_date.date_format'  => 'Provide Valid Registration Expire Date',
             'vehicle_tax_token_expire_date.required'        => 'Tax Token Expire Date is Required',
             'vehicle_tax_token_expire_date.date_format'     => 'Provide Valid Tax Token Expire Date',
+            'vehicle_ownership_type.required'               => 'Vehicle Ownership Type is Required.',
+            'vehicle_ownership_type.in'                     => 'Please Select Proper Vehicle Ownership Type.',
         ];
     }
 }
