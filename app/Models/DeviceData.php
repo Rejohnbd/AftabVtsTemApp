@@ -21,4 +21,11 @@ class DeviceData extends Model
         $vehicleInfo = VehicleDevice::select('vehicle_id')->where('device_id', $deviceId)->first();
         return $vehicleInfo->vehicle_id;
     }
+
+    public function findVehicleKplByDeviceId($id)
+    {
+        $vehileInfo = VehicleDevice::select('vehicle_id')->where('device_id', $id)->first();
+        $kpl =  Vehicle::select('vehicle_kpl')->where('vehicle_id', $vehileInfo->vehicle_id)->first();
+        return $kpl->vehicle_kpl;
+    }
 }

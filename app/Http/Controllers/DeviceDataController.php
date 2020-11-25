@@ -89,6 +89,11 @@ class DeviceDataController extends Controller
         $device = new DeviceData();
         $device_id = $device->findDeviceIdFromApi($data->imei);
         $vehicle_id = $device->findVehicleIdFromApi($device_id);
+        $vehicle_kpl = $device->findVehicleKplByDeviceId($device_id);
+
+        $lastLatLng = DeviceData::select('latitude', 'longitude')->where('device_id', $device_id)->orderBy('created_at', 'desc')->first();
+        $distance = calculateDistance($lastLatLng->latitude, $lastLatLng->longitude, $data->lat, $data->lng);
+        $fuel_use = (1 / $vehicle_kpl) * $distance;
 
         $saveData = DeviceData::create([
             'device_id'         => $device_id,
@@ -97,6 +102,8 @@ class DeviceDataController extends Controller
             'longitude'         => $data->lng,
             'status'            => $data->status,
             'speed'             => $data->speed,
+            'distance'          => $distance,
+            'fuel_use'          => $fuel_use,
             'device_time'       => $data->device_time,
             'device_date_json'  => json_encode($data->date),
             'device_data_json'  => $device_data_json,

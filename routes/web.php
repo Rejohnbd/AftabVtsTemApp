@@ -60,8 +60,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('vehicle-monthly-report', 'DeviceDataController@monthlyReport')->name('vehicle-monthly-report');
     Route::post('vehicle-monthly-report-download', 'DeviceDataController@monthlyReportDownload')->name('vehicle-monthly-report-download');
 
-
-
     // Route::get('daily-report/{id}', 'DeviceDataController@testDailyReport')->name('daily-report');
 
     // Driver
