@@ -67,9 +67,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label">Hourly Fuel Consumption</label>
-                                        <input type="text" class="form-control @error('hourly_fuel_consumption') is-invalid @enderror" name="hourly_fuel_consumption" placeholder="Hourly Fuel Consumption" value="{{ old('hourly_fuel_consumption') }}" required>
-                                        @error('hourly_fuel_consumption')
+                                        <label class="form-label">Fuel Consumption</label>
+                                        <input type="text" class="form-control @error('vehicle_kpl') is-invalid @enderror" name="vehicle_kpl" placeholder="Fuel Consumption" value="{{ old('vehicle_kpl') }}" required>
+                                        @error('vehicle_kpl')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

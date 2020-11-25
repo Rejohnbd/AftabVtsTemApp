@@ -47,7 +47,7 @@ class VehicleController extends Controller
         $newVehicle->vehicle_type_id                    = $request->vehicle_type_id;
         $newVehicle->customer_user_id                   = $request->customer_user_id;
         $newVehicle->vehicle_plate_number               = $request->vehicle_plate_number;
-        $newVehicle->hourly_fuel_consumption            = $request->hourly_fuel_consumption;
+        $newVehicle->vehicle_kpl                        = $request->vehicle_kpl;
         $newVehicle->vehicle_brand                      = $request->vehicle_brand;
         $newVehicle->vehicle_model                      = $request->vehicle_model;
         $newVehicle->vehicle_model_year                 = $request->vehicle_model_year;
@@ -103,7 +103,7 @@ class VehicleController extends Controller
             'vehicle_type_id'                    => $request->vehicle_type_id,
             'customer_user_id'                   => $request->customer_user_id,
             'vehicle_plate_number'               => $request->vehicle_plate_number,
-            'hourly_fuel_consumption'            => $request->hourly_fuel_consumption,
+            'vehicle_kpl'                        => $request->vehicle_kpl,
             'vehicle_brand'                      => $request->vehicle_brand,
             'vehicle_model'                      => $request->vehicle_model,
             'vehicle_model_year'                 => $request->vehicle_model_year,

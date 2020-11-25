@@ -86,7 +86,7 @@
                                                         <td><strong>Vehicle Model Year :</strong> {{ $vehicle->vehicle_model_year }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Vehice Fuel Consumption :</strong> {{ $vehicle->hourly_fuel_consumption }}</td>
+                                                        <td><strong>Vehice Fuel Consumption :</strong> {{ $vehicle->vehicle_kpl }}</td>
                                                     </tr>
                                                 </tbody>
                                                 <tbody class="col-lg-12 col-xl-6 p-0">
