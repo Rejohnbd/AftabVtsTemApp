@@ -55,7 +55,7 @@
                                 <strong>Engine Status:</strong> <span class="ml-2" id="engineStatus">@if($deviceDataInfo->status == 1) ON @else OFF @endif</span>
                             </p>
                             <p class="mb-2">
-                                <i class="fa fa-map-marker fs-20 text-danger"></i> <strong><span class="ml-2">Locations</span></strong>
+                                <i class="fa fa-map-marker fs-20 text-danger"></i> <strong><span class="ml-2" id="vehicleLocation">Locations</span></strong>
                             </p>
                             <strong>Vehicle Speed:</strong></br />
                             <div class="progress progress-md mb-1">
@@ -142,6 +142,10 @@
     var changePosition;
     var lockPosition;
     var marker;
+    var initLat = <?= $deviceDataInfo->latitude ?>;
+    var initLng = <?= $deviceDataInfo->longitude ?>;
+    var geocoder;
+    var infowindow;
     // map initialize
     function initMap() {
         var mapOptions = {
@@ -155,26 +159,19 @@
             streetViewControl: true,
         };
         map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-        // marker = new google.maps.Marker({
-        //     position: new google.maps.LatLng(<?= $deviceDataInfo->latitude ?>, <?= $deviceDataInfo->longitude ?>),
-        //     icon: "{{ asset('img/car.jpg') }}",
-        // map: map,
-        // });
-        displayLocation(<?= $deviceDataInfo->latitude ?>, <?= $deviceDataInfo->longitude ?>)
+        // Location Marker
+        displayLocation(initLat, initLng)
+        // Location Name
+        geocoder = new google.maps.Geocoder();
+        infowindow = new google.maps.InfoWindow();
+        geocodeLatLng(geocoder, map, infowindow);
     }
 
     function displayLocation(lat, lng) {
-        // console.log(location.lat)
         var position = new google.maps.LatLng(lat, lng);
         if (marker && marker.setPosition) {
             // if the marker already exists, move it (set its position)
-            // location = {
-            // lat: lat,
-            // lng: lng
-            // };
             marker.setPosition(position);
-
         } else {
             // create a new marker, keeping a reference
             marker = new google.maps.Marker({
@@ -183,7 +180,29 @@
                 icon: "{{ asset('img/van.png') }}",
             });
         }
-        lockPosition = position;
+    }
+
+    function geocodeLatLng(geocoder, map, infowindow) {
+        const latlng = {
+            lat: initLat,
+            lng: initLng
+        };
+        geocoder.geocode({
+            location: latlng
+        }, (results, status) => {
+            if (status === 'OK') {
+                if (results[0]) {
+                    infowindow.setContent(results[0].formatted_address);
+                    infowindow.open(map, marker);
+                    $('#vehicleLocation').text(results[0].formatted_address);
+                } else {
+                    window.alert("No results found");
+                }
+            } else {
+                window.alert("Geocoder failed due to: " + status);
+            }
+        });
+
     }
     // decode data
     function dex_to_degrees(dex) {
@@ -198,17 +217,10 @@
     };
     firebase.initializeApp(config);
     var database = firebase.database();
-    // Get Data from Firebase
-    // database.ref('Devices/').on('child_changed', function(snapshot) {
-    // var changeData = snapshot.val();
-    // console.log(changeData)
-    // });
+
     database.ref('Devices/').on('child_changed', function(snapshot) {
         var changeData = snapshot.val();
         if (snapshot.ref.key == <?= $deviceInfo->device_unique_id ?>) {
-            console.log(changeData)
-            console.log(snapshot.ref.key)
-
             var engineStatus;
             if (changeData.Data.status == 0) {
                 engineStatus = 'OFF';
@@ -216,22 +228,19 @@
                 engineStatus = 'ON'
             }
             $('#engineStatus').text(engineStatus);
-
             $('#vehicleSpeed').text(changeData.Data.speed);
             $('#vehicleSpeedStyle').css('width', changeData.Data.speed + '%');
 
-
-            changePosition = [dex_to_degrees(changeData.Data.lat), dex_to_degrees(changeData.Data.lng)];
-            var result = [<?= $deviceDataInfo->latitude ?>, <?= $deviceDataInfo->longitude ?>]
-            // transition(result);
+            oldPosition = [initLat, initLng];
+            var result = [dex_to_degrees(changeData.Data.lat), dex_to_degrees(changeData.Data.lng)];
+            // Marker Move
+            transition(result);
+            // Update Old Lat & Lng to Changed Lat & Lng
+            initLat = dex_to_degrees(changeData.Data.lat);
+            initLng = dex_to_degrees(changeData.Data.lng);
+            // Show New Location Name
+            geocodeLatLng(geocoder, map, infowindow);
         }
-
-        marker = new google.maps.Marker({
-            map: map,
-            position: lockPosition,
-            icon: "{{ asset('img/van.png') }}",
-        });
-
     });
 
     // Variable for Transition or Move marker
@@ -243,18 +252,15 @@
 
     function transition(result) {
         i = 0;
-        deltaLat = (result[0] - changePosition[0]) / numDeltas;
-        deltaLng = (result[1] - changePosition[1]) / numDeltas;
+        deltaLat = (result[0] - oldPosition[0]) / numDeltas;
+        deltaLng = (result[1] - oldPosition[1]) / numDeltas;
         moveMarker();
     }
 
     function moveMarker() {
-        changePosition[0] += deltaLat;
-        changePosition[1] += deltaLng;
-        // console.log(position[0], position[1])
-        displayLocation(changePosition[0], changePosition[1])
-        // var latlng = new google.maps.LatLng(position[0], position[1]);
-        // marker.setPosition(latlng);
+        oldPosition[0] += deltaLat;
+        oldPosition[1] += deltaLng;
+        displayLocation(oldPosition[0], oldPosition[1])
         if (i != numDeltas) {
             i++;
             setTimeout(moveMarker, delay);
