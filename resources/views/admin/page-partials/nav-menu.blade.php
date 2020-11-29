@@ -28,7 +28,12 @@
                             <li aria-haspopup="true"><a href="{{ route('all-expenses.index') }}">All Expenses</a></li>
                         </ul>
                     </li>
-                    <li aria-haspopup="true"><a href="{{ route('trips.index') }}" class="sub-icon"><i class="fa fa-road"></i> Trips</a></li>
+                    <li aria-haspopup="true"><a href="#" class="sub-icon"><i class="fa fa-road"></i> Trips <i class="fa fa-angle-down horizontal-icon"></i></a>
+                        <ul class="sub-menu">
+                            <li aria-haspopup="true"><a href="{{ route('trip-type.index') }}">Trip Types</a></li>
+                            <li aria-haspopup="true"><a href="{{ route('trips.index') }}">All Trips</a></li>
+                        </ul>
+                    </li>
                     <li aria-haspopup="true"><a href="{{ route('all-vehicle-location') }}" class="sub-icon"><i class="fa fa-map-marker"></i> Maps</a></li>
                     <li aria-haspopup="true"><a href="{{ route('all-reports') }}" class="sub-icon"><i class="fe fe-layers"></i>Reports</a></li>
                 </ul>
