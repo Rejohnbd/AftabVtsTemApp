@@ -83,18 +83,26 @@ class TripTypeController extends Controller
      */
     public function update(UpdateTripTypeRequest $request, TripType $tripType)
     {
-        $updateTripType = $tripType->update([
-            'trip_type_name' => $request->trip_type_name,
-            'status' => $request->status,
-        ]);
-
-        if ($updateTripType) {
-            session()->flash('success', 'Trip Type Updated Successfully');
-            return redirect()->route('trip-type.index');
-        } else {
-            session()->flash('error', 'Something Happend Wrong');
+        // dd($request->all(), $tripType->trip_type_id);
+        $checkExistance = TripType::select('trip_type_name')->where('trip_type_id', '!=' , $tripType->trip_type_id)->where('trip_type_name', $request->trip_type_name)->first();
+        if($checkExistance == null){
+            $updateTripType = $tripType->update([
+                'trip_type_name' => $request->trip_type_name,
+                'status' => $request->status,
+            ]);
+    
+            if ($updateTripType) {
+                session()->flash('success', 'Trip Type Updated Successfully');
+                return redirect()->route('trip-type.index');
+            } else {
+                session()->flash('error', 'Something Happend Wrong');
+                return redirect()->route('trip-type.index');
+            }
+        }else {
+            session()->flash('error', 'Duplicate Trip Type Exist');
             return redirect()->route('trip-type.index');
         }
+        
     }
 
     /**

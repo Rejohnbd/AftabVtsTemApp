@@ -24,7 +24,7 @@ class StoreTripTypeRequest extends FormRequest
     public function rules()
     {
         return [
-            'trip_type_name'    => 'required|string',
+            'trip_type_name'    => 'required|string|unique:trip_types,trip_type_name',
             'status'            => 'required|in:0,1'
         ];
     }
@@ -33,6 +33,7 @@ class StoreTripTypeRequest extends FormRequest
     {
         return [
             'trip_type_name.required'   => 'Trip Type Name is Required.',
+            'trip_type_name.unique'     => 'Trip Type Name Already Exist.',
             'status.required'           => 'Select Trip Type Status Required.',
             'status.in'                 => 'Please Select Proper Trip Type Status.',
         ];

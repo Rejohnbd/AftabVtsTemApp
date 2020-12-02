@@ -77,6 +77,21 @@
 </script>
 @endif
 
+@if(session('error'))
+<script>
+    $(document).ready(function() {
+        Swal.fire({
+            title: "Alert",
+            text: "{{ session('error') }}",
+            icon: "error",
+            showCancelButton: true,
+            confirmButtonText: 'Exit',
+            cancelButtonText: 'Stay on the page'
+        });
+    });
+</script>
+@endif
+
 <script>
     $(document).ready(function() {
         $('.delete-device-type').on('click', function() {

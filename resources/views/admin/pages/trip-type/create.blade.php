@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <button type="submit" class="btn btn-success btn-block">Save Device Type</button>
+                                    <button type="submit" class="btn btn-success btn-block">Save Trip Type</button>
                                 </div>
                                 <div class="col-md-6">
                                     <a href="{{ route('trip-type.index') }}" class="btn btn-warning btn-block">Cancel</a>
