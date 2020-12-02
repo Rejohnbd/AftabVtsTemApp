@@ -41,7 +41,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane active show" id="tab-51">
                                     <div id="profile-log-switch">
-                                        <div class="media-heading">
+                                        {{-- <div class="media-heading">
                                             <h5 class="text-uppercase"><strong>Customer Information</strong></h5>
                                         </div>
                                         <div class="table-responsive ">
@@ -69,7 +69,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </div>
+                                        </div> --}}
                                         <div class="media-heading mt-3">
                                             <h5 class="text-uppercase"><strong>Vehicle Information</strong></h5>
                                         </div>

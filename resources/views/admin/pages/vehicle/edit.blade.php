@@ -23,7 +23,7 @@
                             @csrf
                             @method('PUT')
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="form-label mt-0">Vehicle Type</label>
                                         <select name="vehicle_type_id" class="form-control @error('vehicle_type_id') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
@@ -39,7 +39,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label mt-0">Vehicle User</label>
                                         <select name="customer_user_id" class="form-control @error('customer_user_id') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
@@ -54,7 +54,7 @@
                                         </span>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Vehicle System Code</label>

@@ -113,12 +113,17 @@ class MapController extends Controller
         // $vehicleDeviceInfo = VehicleDevice::select('device_id')->where('vehicle_id', $id)->first();
         $gpsDevice = findVehicleAttachGpsDevice($vehicleInfo->vehicle_id);
         $tempDevice = findVehicleAttachTemDevice($vehicleInfo->vehicle_id);
-        $deviceGpsInfo = Device::where('device_id', $gpsDevice['device_id'])->first();
-        $deviceTempInfo = Device::where('device_id', $tempDevice['device_id'])->first();
-        // dd($deviceTempInfo);
-        $deviceDataInfo = DeviceData::select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed')->where('device_id', $deviceGpsInfo->device_id)->orderBy('created_at', 'desc')->first();
-        $deviceTempDataInfo = TemperatureDeviceData::select('device_id', 'temperature', 'humidity', 'comp_status')->where('device_id', $deviceTempInfo->device_unique_id)->orderBy('created_at', 'desc')->first();
-        // dd($deviceTempDataInfo);
-        return view('admin.pages.map.vehicle-show')->with('vehicleInfo', $vehicleInfo)->with('deviceInfo', $deviceGpsInfo)->with('deviceDataInfo', $deviceDataInfo)->with('deviceTempInfo', $deviceTempInfo)->with('deviceTempDataInfo', $deviceTempDataInfo);
+        if(!empty($gpsDevice)) {
+            $deviceGpsInfo = Device::where('device_id', $gpsDevice['device_id'])->first();
+            $deviceTempInfo = Device::where('device_id', $tempDevice['device_id'])->first();
+            // dd($deviceTempInfo);
+            $deviceDataInfo = DeviceData::select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed')->where('device_id', $deviceGpsInfo->device_id)->orderBy('created_at', 'desc')->first();
+            $deviceTempDataInfo = TemperatureDeviceData::select('device_id', 'temperature', 'humidity', 'comp_status')->where('device_id', $deviceTempInfo->device_unique_id)->orderBy('created_at', 'desc')->first();
+            // dd($deviceTempDataInfo);
+            return view('admin.pages.map.vehicle-show')->with('vehicleInfo', $vehicleInfo)->with('deviceInfo', $deviceGpsInfo)->with('deviceDataInfo', $deviceDataInfo)->with('deviceTempInfo', $deviceTempInfo)->with('deviceTempDataInfo', $deviceTempDataInfo);
+        }else {
+            session()->flash('error', 'No GPS Device Added Yet Now.');
+            return redirect()->route('vehicles.index');
+        }
     }
 }

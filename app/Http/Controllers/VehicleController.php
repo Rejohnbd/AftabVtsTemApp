@@ -45,7 +45,7 @@ class VehicleController extends Controller
     {
         $newVehicle = new Vehicle;
         $newVehicle->vehicle_type_id                    = $request->vehicle_type_id;
-        $newVehicle->customer_user_id                   = $request->customer_user_id;
+        // $newVehicle->customer_user_id                   = $request->customer_user_id;
         $newVehicle->vehicle_system_code                = $request->vehicle_system_code;
         $newVehicle->vehicle_ownership_type             = $request->vehicle_ownership_type;
         $newVehicle->vehicle_plate_number               = $request->vehicle_plate_number;
@@ -106,7 +106,7 @@ class VehicleController extends Controller
     {
         $updateVehile = $vehicle->update([
             'vehicle_type_id'                    => $request->vehicle_type_id,
-            'customer_user_id'                   => $request->customer_user_id,
+            // 'customer_user_id'                   => $request->customer_user_id,
             'vehicle_system_code'                => $request->vehicle_system_code,
             'vehicle_ownership_type'             => $request->vehicle_ownership_type,
             'vehicle_plate_number'               => $request->vehicle_plate_number,
