@@ -99,8 +99,12 @@ class MapController extends Controller
     {
         $deviceInfo = Device::findOrFail($id);
         $deviceDataInfo = DeviceData::select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed')->where('device_id', $deviceInfo->device_id)->orderBy('created_at', 'desc')->first();
-        // dd($deviceInfo, $deviceDataInfo);
-        return view('admin.pages.map.device-show')->with('deviceInfo', $deviceInfo)->with('deviceDataInfo', $deviceDataInfo);
+        if($deviceDataInfo == null): 
+            session()->flash('error', 'No Device Data Found');
+            return redirect()->route('devices.index');
+        else: 
+            return view('admin.pages.map.device-show')->with('deviceInfo', $deviceInfo)->with('deviceDataInfo', $deviceDataInfo);
+        endif;
     }
 
     public function vehicleLocation($id)
