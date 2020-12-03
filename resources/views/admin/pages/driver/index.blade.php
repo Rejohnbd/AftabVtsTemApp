@@ -45,7 +45,7 @@
                                     <td>{{ $data->driver_first_name }} {{ $data->driver_last_name }}</td>
                                     <td>{{ $data->user->email }}</td>
                                     <td>{{ $data->driver_license }}</td>
-                                    <td>{{ $data->driver_mobile }}, {{ $data->driver_mobile_opt }}</td>
+                                    <td>{{ $data->driver_mobile }} @if($data->driver_mobile_opt) , {{ $data->driver_mobile_opt }} @endif</td>
                                     <td>@if($data->status == 1) Active @else Intactive @endif</td>
                                     <td>
                                         <div class="btn-list">

@@ -126,11 +126,11 @@
             </a>
         </div>
     </div>
-    <div class="dropdown  header-fullscreen">
+    {{-- <div class="dropdown  header-fullscreen">
         <a class="nav-link icon sidebar-right-mobile" data-toggle="sidebar-right" data-target=".sidebar-right">
             <i class="fe fe-align-right"></i>
         </a>
-    </div>
+    </div> --}}
 </div>
 </div>
 </div>

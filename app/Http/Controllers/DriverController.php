@@ -60,12 +60,15 @@ class DriverController extends Controller
         $newDriver->driver_join_date    = date('Y-m-d', strtotime($request->driver_join_date));
         $newDriver->status              = $request->status;
         // driver Photo
-        $currentDate = date('Y_m_d_H_i');
-        $file = $request->file('driver_photo');
-        $orginalName = $request->file('driver_photo')->getClientOriginalName();
-        $driverPhoto = $currentDate . '_' . $orginalName;
-        $file->move(storage_path('/app/public/users/drivers') . '/', $currentDate . '_' . $orginalName);
-        $newDriver->driver_photo    = $driverPhoto;
+        if($request->hasFile('driver_photo')){
+            $currentDate = date('Y_m_d_H_i');
+            $file = $request->file('driver_photo');
+            $orginalName = $request->file('driver_photo')->getClientOriginalName();
+            $driverPhoto = $currentDate . '_' . $orginalName;
+            $file->move(storage_path('/app/public/users/drivers') . '/', $currentDate . '_' . $orginalName);
+            $newDriver->driver_photo    = $driverPhoto;
+        }
+        
         $saveNewDriver = $newDriver->save();
 
         if ($saveNewDriver) {

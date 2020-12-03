@@ -30,21 +30,22 @@
                             <li class="list-group-item">REGISTRATION EXPIRE <span class="float-right">{{ date('d/m/Y', strtotime($data->vehicle_registration_expire_date)) }}</span></li>
                             <li class="list-group-item">TAX TOKEN EXPIRE <span class="float-right">{{ date('d/m/Y', strtotime($data->vehicle_tax_token_expire_date)) }}</span></li>
                         </ul>
-                    </div>
-                    <div class="card-footer">
+                    </div> 
+                     <div class="card-footer">
                         <div class="card-options">
-                            <a href="{{ route('vehicle-location', $data->vehicle_id) }}" class="btn btn-secondary btn-sm">Location</a>
+                            {{-- <a href="{{ route('vehicle-location', $data->vehicle_id) }}" class="btn btn-secondary btn-sm">Location</a> --}}
                             <a href="{{ route('vehicle-reports', $data->vehicle_id) }}" class="btn btn-primary btn-sm ml-2">GPS Report</a>
                             <?php
                             $deviceInfo = findVehicleAttachTemDevice($data->vehicle_id);
-                            if ($deviceInfo['exist'] == 1) {
+                            // dd($deviceInfo);
+                            if ($deviceInfo['exist']) {
                             ?>
-                                <a href="{{ route('temp-device-report', $deviceInfo['device_id'] ) }}" class="btn btn-info btn-sm ml-2">Temperature Report</a>
+                                <a href="{{ route('temp-device-report', $deviceInfo['device_id'] ) }}" class="btn btn-info btn-sm ml-2">Temp. Report</a>
                             <?php
                             }
                             ?>
                         </div>
-                    </div>
+                    </div> 
                 </div>
             </div>
             @empty

@@ -47,7 +47,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Driver NID</label>
-                                        <input type="text" class="form-control @error('driver_NID') is-invalid @enderror" name="driver_NID" placeholder="Driver NID" value="{{ old('driver_NID') }}" required>
+                                        <input type="text" class="form-control @error('driver_NID') is-invalid @enderror" name="driver_NID" placeholder="Driver NID" value="{{ old('driver_NID') }}">
                                         @error('driver_NID')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -58,7 +58,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Driving License</label>
-                                        <input type="text" class="form-control @error('driver_license') is-invalid @enderror" name="driver_license" placeholder="Driving License" value="{{ old('driver_license') }}" required>
+                                        <input type="text" class="form-control @error('driver_license') is-invalid @enderror" name="driver_license" placeholder="Driving License" value="{{ old('driver_license') }}">
                                         @error('driver_license')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -102,7 +102,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Driver Mobile Optional</label>
-                                        <input type="number" class="form-control @error('driver_mobile_opt') is-invalid @enderror" name="driver_mobile_opt" placeholder="Driving Mobile Optional" value="{{ old('driver_mobile_opt') }}" required>
+                                        <input type="number" class="form-control @error('driver_mobile_opt') is-invalid @enderror" name="driver_mobile_opt" placeholder="Driving Mobile Optional" value="{{ old('driver_mobile_opt') }}">
                                         @error('driver_mobile_opt')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -114,7 +114,7 @@
                                     <div class="form-group mt-2">
                                         <div class="form-group">
                                             <label class="form-label mt-0">Driver Gender</label>
-                                            <select name="driver_gender" class="form-control @error('driver_gender') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
+                                            <select name="driver_gender" class="form-control @error('driver_gender') is-invalid @enderror select2 custom-select" data-placeholder="Choose one">
                                                 <option label="Choose one"></option>
                                                 <option value="male">Male</option>
                                                 <option value="female">Female</option>
@@ -136,7 +136,7 @@
                                                 <div class="input-group-text">
                                                     <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
                                                 </div>
-                                            </div><input class="form-control fc-datepicker" name="driver_join_date" value="{{ old('driver_join_date') }}" placeholder="MM/DD/YYYY" type="text" required>
+                                            </div><input class="form-control fc-datepicker" name="driver_join_date" value="{{ old('driver_join_date') }}" placeholder="MM/DD/YYYY" type="text">
                                         </div>
                                         @error('driver_join_date')
                                         <span class="invalid-feedback" style="display: block !important;" role="alert">
@@ -149,7 +149,7 @@
                                     <div class="form-group mt-2">
                                         <div class="form-group">
                                             <label class="form-label mt-0">Driver Address</label>
-                                            <textarea class="form-control  @error('driver_address') is-invalid @enderror" name="driver_address" rows="4" placeholder="Driver Address" required>{{ old('driver_address') }}</textarea>
+                                            <textarea class="form-control  @error('driver_address') is-invalid @enderror" name="driver_address" rows="4" placeholder="Driver Address">{{ old('driver_address') }}</textarea>
                                             @error('driver_address')
                                             <span class="invalid-feedback" style="display: block !important;" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -162,7 +162,7 @@
                                     <div class="form-group">
                                         <label class="form-label">Driver Photo</label>
                                         <div class="input-group">
-                                            <input type="file" name="driver_photo" accept=".jpeg,.jpg,.png" class="dropify" data-height="100" required />
+                                            <input type="file" name="driver_photo" accept=".jpeg,.jpg,.png" class="dropify" data-height="100"/>
                                         </div>
                                         @error('driver_photo')
                                         <span class="invalid-feedback" style="display: block !important;" role="alert">
