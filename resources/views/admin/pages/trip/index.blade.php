@@ -68,6 +68,9 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="m-2 d-flex justify-content-center">
+                        {!! $datas->render() !!}
+                    </div>
                 </div>
             </div>
         </div>

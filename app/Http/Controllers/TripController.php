@@ -19,7 +19,7 @@ class TripController extends Controller
      */
     public function index()
     {
-        $datas = Trip::all();
+        $datas = Trip::paginate(10);
         return view('admin.pages.trip.index', compact('datas'));
     }
 
