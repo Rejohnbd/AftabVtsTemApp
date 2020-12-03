@@ -22,6 +22,12 @@
                             <li aria-haspopup="true"><a href="{{ route('vehicle-device') }}">All Vehicle Devices</a></li>
                         </ul>
                     </li>
+                    <li aria-haspopup="true"><a href="#" class=""><i class="fe fe-life-buoy"></i> Maintenance<i class="fa fa-angle-down horizontal-icon"></i></a>
+                        <ul class="sub-menu">
+                            <li aria-haspopup="true"><a href="{{ route('maintenance-type.index') }}">Maintenance Type</a></li>
+                            <li aria-haspopup="true"><a href="#">All Maintenance</a></li>
+                        </ul>
+                    </li>
                     <li aria-haspopup="true"><a href="#" class="sub-icon"><i class="fe fe-file-text"></i> Expenses <i class="fa fa-angle-down horizontal-icon"></i></a>
                         <ul class="sub-menu">
                             <li aria-haspopup="true"><a href="{{ route('expenses-type.index') }}">Expenses Types</a></li>
