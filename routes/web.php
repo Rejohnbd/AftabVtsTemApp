@@ -74,6 +74,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('driver-expenses-delete', 'DriverExpensesController@destroyDriverExpenses')->name('driver-expenses-delete');
     Route::get('trip-current', 'DriverTripController@currentTrip')->name('trip-current');
     Route::get('trip-old', 'DriverTripController@oldTrip')->name('trip-old');
-    Route::get('trip-start/{id}', 'DriverTripController@startTrip')->name('trip-start');
-    Route::get('trip-stop/{id}', 'DriverTripController@stopTrip')->name('trip-stop');
+    Route::post('trip-start', 'DriverTripController@startTrip')->name('trip-start');
+    Route::post('trip-stop', 'DriverTripController@stopTrip')->name('trip-stop');
 });
