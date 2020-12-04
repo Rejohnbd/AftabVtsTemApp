@@ -54,6 +54,22 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label mt-0">Select Helper</label>
+                                        <select name="helper_id[]" class="form-control @error('driver_user_id') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" multiple>
+                                            <option label="Choose one"></option>
+                                            @foreach($allFreeHelper as $freeHelper)
+                                            <option value="{{ $freeHelper->helper_id }}">{{ $freeHelper->helper_name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('helper_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Trip From</label>

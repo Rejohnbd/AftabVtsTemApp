@@ -33,6 +33,7 @@
                                     <th>Trip Date</th>
                                     <th>Vehicle Regi. No.</th>
                                     <th>Driver Name</th>
+                                    <th>Helper Name</th>
                                     <th>Trip Location</th>
                                     <th>Trip Details</th>
                                     <th>Start Time</th>
@@ -48,6 +49,16 @@
                                     <td>{{ date('d/m/Y', strtotime($data->trip_date)) }}</td>
                                     <td>{{ $data->vehicle->vehicle_plate_number }}</td>
                                     <td>{{ $data->driver->driver_first_name }} {{ $data->driver->driver_last_name }}</td>
+                                    <td>
+                                        <?php
+                                        if ($data->helper_id) {
+                                            $helperIds = explode(',', $data->helper_id);
+                                            foreach ($helperIds as $helperId) {
+                                                echo $allHelper[$helperId]->helper_name . '<br/>';
+                                            }
+                                        }
+                                        ?>
+                                    </td>
                                     <td>{{ $data->trip_from }} to {{ $data->trip_to }}</td>
                                     <td>{{ $data->trip_details }}</td>
                                     <td></td>

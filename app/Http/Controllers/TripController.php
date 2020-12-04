@@ -6,6 +6,7 @@ use App\Http\Requests\Trips\StoreTripsRequest;
 use App\Http\Requests\Trips\UpdateTripsRequest;
 use App\Models\Driver;
 use App\Models\Expenses;
+use App\Models\Helper;
 use App\Models\Trip;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
@@ -20,7 +21,12 @@ class TripController extends Controller
     public function index()
     {
         $datas = Trip::paginate(10);
-        return view('admin.pages.trip.index', compact('datas'));
+        $allHelper = Helper::all();
+        $helpers = array();
+        foreach ($allHelper as $value) {
+            $helpers[$value->helper_id] = $value;
+        }
+        return view('admin.pages.trip.index')->with('datas', $datas)->with('allHelper', $helpers);
     }
 
     /**
@@ -32,7 +38,8 @@ class TripController extends Controller
     {
         $allFreeVehicle = Vehicle::all();
         $allFreeDriver = Driver::all();
-        return view('admin.pages.trip.create')->with('allFreeVehicle', $allFreeVehicle)->with('allFreeDriver', $allFreeDriver);
+        $allFreeHelper = Helper::all();
+        return view('admin.pages.trip.create')->with('allFreeVehicle', $allFreeVehicle)->with('allFreeDriver', $allFreeDriver)->with('allFreeHelper', $allFreeHelper);
     }
 
     /**
@@ -43,9 +50,14 @@ class TripController extends Controller
      */
     public function store(StoreTripsRequest $request)
     {
+        $helperIds = null;
+        if ($request->helper_id) {
+            $helperIds = implode(',', $request->helper_id);
+        }
         $newTrip = new Trip;
         $newTrip->vehicle_id        = $request->vehicle_id;
         $newTrip->driver_user_id    = $request->driver_user_id;
+        $newTrip->helper_id         = $helperIds;
         $newTrip->trip_from         = $request->trip_from;
         $newTrip->trip_to           = $request->trip_to;
         $newTrip->trip_details      = $request->trip_details;
@@ -83,7 +95,8 @@ class TripController extends Controller
     {
         $allFreeVehicle = Vehicle::all();
         $allFreeDriver = Driver::all();
-        return view('admin.pages.trip.edit')->with('trip', $trip)->with('allFreeVehicle', $allFreeVehicle)->with('allFreeDriver', $allFreeDriver);
+        $allFreeHelper = Helper::all();
+        return view('admin.pages.trip.edit')->with('trip', $trip)->with('allFreeVehicle', $allFreeVehicle)->with('allFreeDriver', $allFreeDriver)->with('allFreeHelper', $allFreeHelper);
     }
 
     /**
@@ -95,9 +108,14 @@ class TripController extends Controller
      */
     public function update(UpdateTripsRequest $request, Trip $trip)
     {
+        $helperIds = null;
+        if ($request->helper_id) {
+            $helperIds = implode(',', $request->helper_id);
+        }
         $updateTrip = $trip->update([
             'vehicle_id'        => $request->vehicle_id,
             'driver_user_id'    => $request->driver_user_id,
+            'helper_id'         => $helperIds,
             'trip_from'         => $request->trip_from,
             'trip_to'           => $request->trip_to,
             'trip_details'      => $request->trip_details,
