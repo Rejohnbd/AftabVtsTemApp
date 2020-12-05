@@ -130,7 +130,7 @@
 <script src="{{ asset('plugins/accordion/accordion.min.js') }}"></script>
 <script src="{{ asset('plugins/accordion/accordion.js') }}"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-<script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAP_API_KEY') }}&callback=initMap"></script>
+<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6GM52G_Zf5-U9Ta22uSQAz_lGQEGq05I&callback=initMap"></script>
 {{-- Include Firebase  --}}
 {{-- <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
