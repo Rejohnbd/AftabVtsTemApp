@@ -63,9 +63,9 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6GM52G_Zf5-U9Ta22uSQAz_lGQEGq05I&callback=initMap"></script>
 {{-- Include Firebase  --}}
-{{-- <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script> --}}
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
 
 <script>
     var deviceData = {};
@@ -76,19 +76,29 @@
                 lat: <?= $deviceDataInfo->latitude ?>,
                 lng: <?= $deviceDataInfo->longitude ?>
             },
-            zoom: 10,
+            zoom: 15,
             zoomControl: true,
             fullscreenControl: true,
             streetViewControl: true,
         };
         map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        var position = new google.maps.LatLng(<?= $deviceDataInfo->latitude ?>, <?= $deviceDataInfo->longitude ?>);
+        marker = new google.maps.Marker({
+                map: map,
+                position: position,
+                icon: {
+                    url: "{{ asset('img/van.png') }}",
+                    rotation: 0,
+                }
+            });
     }
+
     // decode data
     function dex_to_degrees(dex) {
         return parseInt(dex, 16) / 1800000;
     };
     // firebase initialize
-    /*var config = {
+    var config = {
         apiKey: "{{ env('FIRE_API_KEY')}}",
         authDomain: "{{ env('FIRE_AUTH_DOMAIN') }}",
         databaseURL: "{{ env('FIRE_DB_URL') }}",
@@ -97,7 +107,7 @@
     firebase.initializeApp(config);
     var database = firebase.database();
     // Get Data from Firebase
-    /* database.ref('Devices/').on('value', function(snapshot) {
+     database.ref('Devices/').on('value', function(snapshot) {
         var allDevicesInfo = snapshot.val();
         $.each(allDevicesInfo, function(key, data) {
             if (key == <?= $deviceInfo->device_unique_id ?>) {
@@ -116,7 +126,7 @@
             icon: "{{ asset('img/van.png') }}",
             map: map,
         });
-    }); */
+    }); 
 </script>
 
 @endsection

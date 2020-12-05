@@ -56,6 +56,7 @@ class VehicleController extends Controller
         $newVehicle->vehicle_capacity                   = $request->vehicle_capacity;
         $newVehicle->vehicle_measurement                = $request->vehicle_measurement;
         $newVehicle->vehicle_seats                      = $request->vehicle_seats;
+        $newVehicle->vehicle_fuel_tank_capacity         = $request->vehicle_fuel_tank_capacity;
         $newVehicle->vehicle_insurance_expire_date      = date('Y-m-d', strtotime($request->vehicle_insurance_expire_date));
         $newVehicle->vehicle_registration_expire_date   = date('Y-m-d', strtotime($request->vehicle_registration_expire_date));
         $newVehicle->vehicle_tax_token_expire_date      = date('Y-m-d', strtotime($request->vehicle_tax_token_expire_date));
@@ -117,6 +118,7 @@ class VehicleController extends Controller
             'vehicle_capacity'                   => $request->vehicle_capacity,
             'vehicle_measurement'                => $request->vehicle_measurement,
             'vehicle_seats'                      => $request->vehicle_seats,
+            'vehicle_fuel_tank_capacity'         => $request->vehicle_fuel_tank_capacity,
             'vehicle_insurance_expire_date'      => date('Y-m-d', strtotime($request->vehicle_insurance_expire_date)),
             'vehicle_registration_expire_date'   => date('Y-m-d', strtotime($request->vehicle_registration_expire_date)),
             'vehicle_tax_token_expire_date'      => date('Y-m-d', strtotime($request->vehicle_tax_token_expire_date))

@@ -76,7 +76,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label">Vehicle Registration No</label>
                                         <input type="text" class="form-control @error('vehicle_plate_number') is-invalid @enderror" name="vehicle_plate_number" placeholder="Vehicle Registration No" value="{{ old('vehicle_plate_number', $vehicle->vehicle_plate_number) }}" required>
@@ -87,11 +87,22 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label class="form-label">Fuel Consumption</label>
+                                        <label class="form-label">Fuel Consumption(K.P.L)</label>
                                         <input type="text" class="form-control @error('vehicle_kpl') is-invalid @enderror" name="vehicle_kpl" placeholder="Fuel Consumption" value="{{ old('vehicle_kpl', $vehicle->vehicle_kpl) }}" required>
                                         @error('vehicle_kpl')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Vehicle Fuel Tank Capacity</label>
+                                        <input type="number" class="form-control @error('vehicle_fuel_tank_capacity') is-invalid @enderror" name="vehicle_fuel_tank_capacity" placeholder="Vehicle Fuel Tank Capacity" value="{{ old('vehicle_fuel_tank_capacity', $vehicle->vehicle_fuel_tank_capacity) }}" >
+                                        @error('vehicle_fuel_tank_capacity')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

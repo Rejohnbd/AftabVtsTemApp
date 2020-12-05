@@ -56,9 +56,9 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6GM52G_Zf5-U9Ta22uSQAz_lGQEGq05I&callback=initMap"></script>
 {{-- Include Firebase  --}}
-{{-- <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script> --}}
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script> 
 <script>
     var deviceOldData = {};
     var myMarkers = new Array();
@@ -83,7 +83,7 @@
         return parseInt(dex, 16) / 1800000;
     };
     // firebase initialize
-    /* var config = {
+     var config = {
         apiKey: "{{ env('FIRE_API_KEY')}}",
         authDomain: "{{ env('FIRE_AUTH_DOMAIN') }}",
         databaseURL: "{{ env('FIRE_DB_URL') }}",
@@ -92,7 +92,7 @@
     firebase.initializeApp(config);
     var database = firebase.database();
     // Get Data from Firebase
-    /* database.ref('Devices/').once('value').then(function(snapshot) {
+     database.ref('Devices/').once('value').then(function(snapshot) {
         var allDevicesInfo = snapshot.val();
         var i = 0;
         for (var key in allDevicesInfo) {
@@ -112,10 +112,10 @@
             myMarkers[index] = [addMarker(map, deviceOldData[index]), [deviceOldData[index].imei]]
         };
 
-    }); */
+    }); 
     // console.log(deviceOldData, 'deviceOldData');
 
-    /*function addMarker(map, data) {
+    function addMarker(map, data) {
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(data.lat, data.lng),
             icon: "{{ asset('img/van.png') }}",
@@ -125,7 +125,7 @@
     }
     // console.log(myMarkers)
 
-    /*database.ref('Devices/').on('child_changed', function(snapshot) {
+    database.ref('Devices/').on('child_changed', function(snapshot) {
         var changeData = snapshot.val();
         // console.log(snapshot.ref.key);
         $.each(deviceOldData, function(key, data) {
@@ -182,7 +182,7 @@
             i++;
             setTimeout(moveMarker, delay);
         }
-    } */
+    }
 </script>
 
 @endsection
