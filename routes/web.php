@@ -63,7 +63,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('vehicle-monthly-report', 'DeviceDataController@monthlyReport')->name('vehicle-monthly-report');
     Route::post('vehicle-monthly-report-download', 'DeviceDataController@monthlyReportDownload')->name('vehicle-monthly-report-download');
 
-    // Route::get('daily-report/{id}', 'DeviceDataController@testDailyReport')->name('daily-report');
+    // Expenses Report
+    Route::get('expenses-reports', 'ExpensesReportController@index')->name('expenses-reports');
+    Route::post('expenses-reports-by-expense-type', 'ExpensesReportController@reportByExpenseType')->name('expenses-reports-by-expense-type');
+    // Trip Report
+    Route::get('trip-reports', 'TripReportController@index')->name('trip-reports');
+    Route::post('trip-reports-by-vehicle', 'TripReportController@reportByVehicle')->name('trip-reports-by-vehicle');
 
     // Driver
     Route::get('driver-dashboard', 'DriverDashboardController@index')->name('driver-dashboard');
