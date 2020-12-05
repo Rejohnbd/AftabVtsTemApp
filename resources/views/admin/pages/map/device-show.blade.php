@@ -97,7 +97,7 @@
     firebase.initializeApp(config);
     var database = firebase.database();
     // Get Data from Firebase
-    database.ref('Devices/').on('value', function(snapshot) {
+    /* database.ref('Devices/').on('value', function(snapshot) {
         var allDevicesInfo = snapshot.val();
         $.each(allDevicesInfo, function(key, data) {
             if (key == <?= $deviceInfo->device_unique_id ?>) {
@@ -116,7 +116,7 @@
             icon: "{{ asset('img/van.png') }}",
             map: map,
         });
-    });
+    }); */
 </script>
 
 @endsection

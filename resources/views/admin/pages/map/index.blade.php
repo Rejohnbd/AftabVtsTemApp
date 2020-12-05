@@ -92,7 +92,7 @@
     firebase.initializeApp(config);
     var database = firebase.database();
     // Get Data from Firebase
-    database.ref('Devices/').once('value').then(function(snapshot) {
+    /* database.ref('Devices/').once('value').then(function(snapshot) {
         var allDevicesInfo = snapshot.val();
         var i = 0;
         for (var key in allDevicesInfo) {
@@ -112,7 +112,7 @@
             myMarkers[index] = [addMarker(map, deviceOldData[index]), [deviceOldData[index].imei]]
         };
 
-    });
+    }); */
     // console.log(deviceOldData, 'deviceOldData');
 
     function addMarker(map, data) {

@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('trips', 'TripController');
     Route::post('trips-delete', 'TripController@destroyTrip')->name('trips-delete');
     Route::resource('maintenance-type', 'MaintenanceTypeController');
+    Route::resource('maintenance', 'MaintenanceController');
     Route::resource('trip-type', 'TripTypeController');
     Route::get('all-vehicle-location', 'MapController@index')->name('all-vehicle-location');
     Route::get('vehicle-location/{id}', 'MapController@vehicleLocation')->name('vehicle-location');

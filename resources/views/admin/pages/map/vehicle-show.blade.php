@@ -132,9 +132,9 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAP_API_KEY') }}&callback=initMap"></script>
 {{-- Include Firebase  --}}
-<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+{{-- <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script> --}}
 
 <script>
     var deviceData = {};
@@ -164,9 +164,9 @@
         // Location Marker
         displayLocation(initLat, initLng)
         // Location Name
-        geocoder = new google.maps.Geocoder();
-        infowindow = new google.maps.InfoWindow();
-        geocodeLatLng(geocoder, map, infowindow);
+        // geocoder = new google.maps.Geocoder();
+        // infowindow = new google.maps.InfoWindow();
+        // geocodeLatLng(geocoder, map, infowindow);
     }
 
     function displayLocation(lat, lng) {
@@ -196,7 +196,7 @@
             // })
         }
     }
-
+/*
 
 
     function geocodeLatLng(geocoder, map, infowindow) {
@@ -235,7 +235,7 @@
     firebase.initializeApp(config);
     var database = firebase.database();
 
-    database.ref('Devices/').on('child_changed', function(snapshot) {
+    /* database.ref('Devices/').on('child_changed', function(snapshot) {
         var changeData = snapshot.val();
         if (snapshot.ref.key == <?= $deviceInfo->device_unique_id ?>) {
             var engineStatus;
@@ -258,8 +258,8 @@
             // Show New Location Name
             geocodeLatLng(geocoder, map, infowindow);
         }
-    });
-
+    }); */
+/*
     // Variable for Transition or Move marker
     var numDeltas = 100;
     var delay = 10; //milliseconds
@@ -282,7 +282,7 @@
             i++;
             setTimeout(moveMarker, delay);
         }
-    }
+    } */
 </script>
 
 
