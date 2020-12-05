@@ -63,9 +63,9 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAP_API_KEY') }}&callback=initMap"></script>
 {{-- Include Firebase  --}}
-<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+{{-- <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script> --}}
 
 <script>
     var deviceData = {};
@@ -88,7 +88,7 @@
         return parseInt(dex, 16) / 1800000;
     };
     // firebase initialize
-    var config = {
+    /*var config = {
         apiKey: "{{ env('FIRE_API_KEY')}}",
         authDomain: "{{ env('FIRE_AUTH_DOMAIN') }}",
         databaseURL: "{{ env('FIRE_DB_URL') }}",
