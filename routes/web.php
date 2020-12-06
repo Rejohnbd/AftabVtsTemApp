@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('maintenance-type', 'MaintenanceTypeController');
     Route::resource('maintenance', 'MaintenanceController');
     Route::resource('trip-type', 'TripTypeController');
+    Route::resource('settings', 'SettingsController');
     Route::get('all-vehicle-location', 'MapController@index')->name('all-vehicle-location');
     Route::get('vehicle-location/{id}', 'MapController@vehicleLocation')->name('vehicle-location');
     Route::get('device-location/{id}', 'MapController@deviceLocation')->name('device-location');

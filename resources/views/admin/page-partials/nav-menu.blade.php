@@ -44,6 +44,11 @@
                     </li>
                     <li aria-haspopup="true"><a href="{{ route('all-vehicle-location') }}" class="sub-icon"><i class="fa fa-map-marker"></i> Maps</a></li>
                     <li aria-haspopup="true"><a href="{{ route('all-reports') }}" class="sub-icon"><i class="fe fe-layers"></i>Reports</a></li>
+                    <li aria-haspopup="true"><a href="#" class="sub-icon"><i class="fa fa-cog"></i> Settings <i class="fa fa-angle-down horizontal-icon"></i></a>
+                        <ul class="sub-menu">
+                            <li aria-haspopup="true"><a href="{{ route('settings.index') }}">Settings</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
         </div>
