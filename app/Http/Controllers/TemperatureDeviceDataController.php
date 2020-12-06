@@ -79,10 +79,12 @@ class TemperatureDeviceDataController extends Controller
             $deviceInfo = Device::select('device_id')->where('device_unique_id', $device_id)->first();
             $deviceLastData = DB::table('notification')->where('device_id', $deviceInfo->device_id)->orderBy('notification_id', 'desc')->first();
 
-            $lastDataTime = strtotime($deviceLastData->notification_datetime);
-            $prsentTime = strtotime(Carbon::now());
-            $interval = abs($prsentTime - $lastDataTime);
-            $minutes   = round($interval / 60);
+            if ($deviceLastData) {
+                $lastDataTime = strtotime($deviceLastData->notification_datetime);
+                $prsentTime = strtotime(Carbon::now());
+                $interval = abs($prsentTime - $lastDataTime);
+                $minutes   = round($interval / 60);
+            }
 
             if ($deviceLastData == null || ($minutes > 10)) {
                 $vehicle_regi_no = $vehicleInfo->vehicle_plate_number;
