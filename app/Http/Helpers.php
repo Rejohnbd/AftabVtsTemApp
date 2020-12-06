@@ -76,3 +76,14 @@ function findVehicleAttachGpsDevice($id)
     }
     return $deviceInfo;
 }
+
+function findVehicleRegiNo($deviceId)
+{
+    $vehicleInfo = DB::table('vehicles')
+        ->join('vehicle_devices', 'vehicle_devices.vehicle_id', '=', 'vehicles.vehicle_id')
+        ->join('devices', 'devices.device_id', '=', 'vehicle_devices.device_id')
+        ->where('devices.device_unique_id', $deviceId)
+        ->select('vehicles.vehicle_plate_number', 'vehicles.vehicle_id')
+        ->first();
+    return $vehicleInfo;
+}

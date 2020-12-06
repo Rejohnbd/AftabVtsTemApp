@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TempNotificationMail;
 use App\Models\Device;
+use App\Models\Settings;
 use App\Models\TemperatureDeviceData;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class TemperatureDeviceDataController extends Controller
 {
@@ -66,6 +71,50 @@ class TemperatureDeviceDataController extends Controller
         $temperature = $temp;
         $humidity = $humi;
         $comp_status = $status;
+
+        $settingsData = array_column(Settings::all()->toArray(), 'value', 'name');
+
+        if ($temperature < $settingsData['alert_min_temp'] || $temperature > $settingsData['alert_max_temp'] ||  $humidity < $settingsData['alert_min_humidity'] || $humidity > $settingsData['alert_max_humidity']) {
+            $vehicleInfo = findVehicleRegiNo($device_id);
+            $deviceInfo = Device::select('device_id')->where('device_unique_id', $device_id)->first();
+            $deviceLastData = DB::table('notification')->where('device_id', $deviceInfo->device_id)->orderBy('notification_id', 'desc')->first();
+
+            $lastDataTime = strtotime($deviceLastData->notification_datetime);
+            $prsentTime = strtotime(Carbon::now());
+            $interval = abs($prsentTime - $lastDataTime);
+            $minutes   = round($interval / 60);
+
+            if ($deviceLastData == null || ($minutes > 10)) {
+                $vehicle_regi_no = $vehicleInfo->vehicle_plate_number;
+                $mailData['vehicle_regi_no'] = $vehicle_regi_no;
+                $mailData['device_id'] = $device_id;
+                $mailData['temperature'] = $temperature;
+                $mailData['humidity'] = $humidity;
+                $mailData['date_time'] = Carbon::now();
+                $mailData['settings_data'] = $settingsData;
+                Mail::send(new TempNotificationMail($mailData));
+
+                $notification_type = null;
+                if ($temperature < $settingsData['alert_min_temp']) {
+                    $notification_type = 'Low Temp';
+                } elseif ($temperature > $settingsData['alert_max_temp']) {
+                    $notification_type = 'High Temp';
+                } elseif ($humidity < $settingsData['alert_min_humidity']) {
+                    $notification_type = 'Low Humidity';
+                } else {
+                    $notification_type = 'High Humidity';
+                }
+
+                DB::table('notification')->insert([
+                    'vehicle_id' => $vehicleInfo->vehicle_id,
+                    'device_id' => $deviceInfo->device_id,
+                    'notification_type' => $notification_type,
+                    'notification_body' => '',
+                    'notification_datetime' => Carbon::now()
+                ]);
+            }
+        }
+
         $saveData = TemperatureDeviceData::create([
             'device_id' => $device_id,
             'temperature' => $temperature,
