@@ -43,8 +43,6 @@
                                     <td>{{ $datas->trip_details }}</td>
                                     <td>
                                         <div class="btn-list">
-                                            {{-- <a href="{{ route('trip-start', $datas->trip_id) }}" class="btn btn-icon btn-success btn-sm @if($datas->trip_status == 2) disabled @endif" data-toggle="tooltip" data-placement="top" title="" data-original-title="Start Trip">START</a>
-                                            <a href="{{ route('trip-stop', $datas->trip_id) }}" class="btn btn-icon btn-danger btn-sm @if($datas->trip_status == 1) disabled @endif" data-toggle="tooltip" data-placement="top" title="" data-original-title="Stop Trip">STOP</a> --}}
                                             <button type="button" class="btn btn-icon btn-success btn-sm @if($datas->trip_status == 2) disabled @endif" @if($datas->trip_status == 1) data-toggle="modal" data-target="#startTripModal" @endif data-toggle="tooltip" data-placement="top" title="Start Trip" data-original-title="Start Trip">START</button>
                                             <button type="button" class="btn btn-icon btn-danger btn-sm @if($datas->trip_status == 1) disabled @endif" @if($datas->trip_status == 2) data-toggle="modal" data-target="#endTripModal" @endif data-toggle="tooltip" data-placement="top" title="End Trip" data-original-title="Stop Trip">STOP</button>
                                         </div>
@@ -65,7 +63,7 @@
 </div>
 
 @if($datas != null)
-<div class="modal fade" id="startTripModal" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal fade" id="startTripModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -90,7 +88,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="endTripModal" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal fade" id="endTripModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -146,11 +144,11 @@
 @endif
 
 <script>
-    $(document).ready(function(){
-        $('#btnStartTrip').on('click', function(){
+    $(document).ready(function() {
+        $('#btnStartTrip').on('click', function() {
             $('#startTripErrorText').remove();
             $('input[name=trip_start_kilometer]').removeClass('is-invalid');
-            if(!$('input[name=trip_start_kilometer]').val()){
+            if (!$('input[name=trip_start_kilometer]').val()) {
                 $('input[name=trip_start_kilometer]').addClass('is-invalid');
                 $('.start-km').append('<strong id="startTripErrorText">Please Give Trip Start Kilometer</strong>');
             } else {
@@ -166,7 +164,9 @@
                     },
                     success: function(response) {
                         if (response.result) {
-                            $('#startTripModal').modal({show: false});
+                            $('#startTripModal').modal({
+                                show: false
+                            });
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Trip Start Successfully',
@@ -193,10 +193,10 @@
             }
         });
 
-        $('#btnEndTrip').on('click', function(){
+        $('#btnEndTrip').on('click', function() {
             $('#endTripErrorText').remove();
             $('input[name=trip_end_kilometer]').removeClass('is-invalid');
-            if(!$('input[name=trip_end_kilometer]').val()){
+            if (!$('input[name=trip_end_kilometer]').val()) {
                 $('input[name=trip_end_kilometer]').addClass('is-invalid');
                 $('.end-km').append('<strong id="endTripErrorText">Please Give Trip End Kilometer</strong>');
             } else {
@@ -212,7 +212,9 @@
                     },
                     success: function(response) {
                         if (response.result) {
-                            $('#startTripModal').modal({show: false});
+                            $('#endTripModal').modal({
+                                show: false
+                            });
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Trip End Successfully',

@@ -19,8 +19,8 @@
             <th>{{ $data->helper_id }}</th>
             <th>{{ $data->trip_from }} to {{ $data->trip_to }}</th>
             <th>{{ $data->trip_details }}</th>
-            <th>{{ date('g:i a', strtotime($data->trip_start_datetime)) }}</th>
-            <th>{{ date('g:i a', strtotime($data->trip_end_datetime)) }}</th>
+            <th>@if($data->trip_start_datetime){{ date('d/m/Y g:i a', strtotime($data->trip_start_datetime)) }}@endif</th>
+            <th>@if($data->trip_end_datetime){{ date('d/m/Y g:i a', strtotime($data->trip_end_datetime)) }}@endif</th>
             <th>@if($data->trip_status == 1) Yet to Start @elseif($data->trip_status == 2) Started @else Completed @endif</th>
         </tr>
         @empty
