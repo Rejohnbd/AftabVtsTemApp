@@ -25,6 +25,7 @@ class UpdateTripsRequest extends FormRequest
     {
         return [
             'vehicle_id'        => 'required|numeric',
+            'company_id'        => 'required|numeric',
             'driver_user_id'    => 'required|numeric',
             'trip_from'         => 'required|string',
             'trip_to'           => 'required|string',
@@ -39,6 +40,8 @@ class UpdateTripsRequest extends FormRequest
         return [
             'vehicle_id.required'       => 'Vehicle is Required for Trip.',
             'vehicle_id.numeric'        => 'Provide Valid Vehicle for Trip.',
+            'company_id.required'       => 'Company is Required for Trip.',
+            'company_id.numeric'        => 'Provide Valid Company for Trip.',
             'driver_user_id.required'   => 'Driver is Required for Trip.',
             'driver_user_id.numeric'    => 'Provide Valid Driver for Trip.',
             'trip_from.required'        => 'Location From Required for Trip.',

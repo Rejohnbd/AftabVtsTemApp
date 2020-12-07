@@ -41,6 +41,22 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label class="form-label mt-0">Select Company</label>
+                                        <select name="company_id" class="form-control @error('company_id') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
+                                            <option label="Choose one"></option>
+                                            @foreach($allCompanies as $company)
+                                            <option value="{{ $company->company_id }}" @if($trip->company_id == $company->company_id) selected @endif>{{ $company->company_name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('company_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label class="form-label mt-0">Select Driver</label>
                                         <select name="driver_user_id" class="form-control @error('driver_user_id') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
                                             <option label="Choose one"></option>
@@ -55,7 +71,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label mt-0">Select Helper</label>
                                         <select name="helper_id[]" class="form-control @error('driver_user_id') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" multiple>

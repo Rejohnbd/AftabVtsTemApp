@@ -19,4 +19,9 @@ class Trip extends Model
     {
         return $this->belongsTo(Driver::class, 'driver_user_id', 'driver_user_id');
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'company_id');
+    }
 }

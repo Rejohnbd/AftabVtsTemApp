@@ -5,12 +5,12 @@
                 <ul class="horizontalMenu-list">
                     <li aria-haspopup="true"><a href="#" class="sub-icon"><i class="fa fa-cog"></i> Settings <i class="fa fa-angle-down horizontal-icon"></i></a>
                         <ul class="sub-menu">
+                            <li aria-haspopup="true"><a href="{{ route('company.index') }}">Companies</a></li>
                             <li aria-haspopup="true"><a href="{{ route('settings.index') }}">Settings</a></li>
                         </ul>
                     </li>
                     <li aria-haspopup="true"><a href="#" class="sub-icon "><i class="fe fe-users"></i> Users <i class="fa fa-angle-down horizontal-icon"></i></a>
                         <ul class="sub-menu">
-                            <li aria-haspopup="true"><a href="{{ route('company.index') }}">Companies</a></li>
                             <li aria-haspopup="true"><a href="{{ route('drivers.index') }}">Drivers</a></li>
                             <li aria-haspopup="true"><a href="{{ route('helpers.index') }}">Helpers</a></li>
                         </ul>

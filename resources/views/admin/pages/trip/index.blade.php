@@ -26,12 +26,13 @@
                         <h3 class="card-title">Trip List Table</h3>
                     </div>
                     <div class="table-responsive">
-                        <table class="table card-table table-vcenter text-nowrap">
+                        <table class="table card-table table-vcenter">
                             <thead>
                                 <tr>
                                     <th>Sl.</th>
                                     <th>Trip Date</th>
                                     <th>Vehicle Regi. No.</th>
+                                    <th>Company Name</th>
                                     <th>Driver Name</th>
                                     <th>Helper Name</th>
                                     <th>Trip Location</th>
@@ -48,6 +49,7 @@
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ date('d/m/Y', strtotime($data->trip_date)) }}</td>
                                     <td>{{ $data->vehicle->vehicle_plate_number }}</td>
+                                    <td>@if($data->company_id){{ $data->company->company_name }}@endif</td>
                                     <td>{{ $data->driver->driver_first_name }} {{ $data->driver->driver_last_name }}</td>
                                     <td>
                                         <?php

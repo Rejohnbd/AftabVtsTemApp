@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Trips\StoreTripsRequest;
 use App\Http\Requests\Trips\UpdateTripsRequest;
+use App\Models\Company;
 use App\Models\Driver;
 use App\Models\Expenses;
 use App\Models\Helper;
@@ -20,7 +21,7 @@ class TripController extends Controller
      */
     public function index()
     {
-        $datas = Trip::paginate(10);
+        $datas = Trip::orderBy('trip_id', 'desc')->paginate(10);
         $allHelper = Helper::all();
         $helpers = array();
         foreach ($allHelper as $value) {
@@ -39,7 +40,12 @@ class TripController extends Controller
         $allFreeVehicle = Vehicle::all();
         $allFreeDriver = Driver::all();
         $allFreeHelper = Helper::all();
-        return view('admin.pages.trip.create')->with('allFreeVehicle', $allFreeVehicle)->with('allFreeDriver', $allFreeDriver)->with('allFreeHelper', $allFreeHelper);
+        $allCompanies = Company::where('status', 1)->get();
+        return view('admin.pages.trip.create')
+            ->with('allFreeVehicle', $allFreeVehicle)
+            ->with('allFreeDriver', $allFreeDriver)
+            ->with('allFreeHelper', $allFreeHelper)
+            ->with('allCompanies', $allCompanies);
     }
 
     /**
@@ -56,6 +62,7 @@ class TripController extends Controller
         }
         $newTrip = new Trip;
         $newTrip->vehicle_id        = $request->vehicle_id;
+        $newTrip->company_id        = $request->company_id;
         $newTrip->driver_user_id    = $request->driver_user_id;
         $newTrip->helper_id         = $helperIds;
         $newTrip->trip_from         = $request->trip_from;
@@ -96,7 +103,13 @@ class TripController extends Controller
         $allFreeVehicle = Vehicle::all();
         $allFreeDriver = Driver::all();
         $allFreeHelper = Helper::all();
-        return view('admin.pages.trip.edit')->with('trip', $trip)->with('allFreeVehicle', $allFreeVehicle)->with('allFreeDriver', $allFreeDriver)->with('allFreeHelper', $allFreeHelper);
+        $allCompanies = Company::where('status', 1)->get();
+        return view('admin.pages.trip.edit')
+            ->with('trip', $trip)
+            ->with('allFreeVehicle', $allFreeVehicle)
+            ->with('allFreeDriver', $allFreeDriver)
+            ->with('allFreeHelper', $allFreeHelper)
+            ->with('allCompanies', $allCompanies);
     }
 
     /**
@@ -114,6 +127,7 @@ class TripController extends Controller
         }
         $updateTrip = $trip->update([
             'vehicle_id'        => $request->vehicle_id,
+            'company_id'        => $request->company_id,
             'driver_user_id'    => $request->driver_user_id,
             'helper_id'         => $helperIds,
             'trip_from'         => $request->trip_from,
