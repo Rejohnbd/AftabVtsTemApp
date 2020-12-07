@@ -86,7 +86,7 @@ class TemperatureDeviceDataController extends Controller
                 $minutes   = round($interval / 60);
             }
 
-            if ($deviceLastData == null || ($minutes > 10)) {
+            if ($deviceLastData == null || ($minutes > 20)) {
                 $vehicle_regi_no = $vehicleInfo->vehicle_plate_number;
                 $mailData['vehicle_regi_no'] = $vehicle_regi_no;
                 $mailData['device_id'] = $device_id;

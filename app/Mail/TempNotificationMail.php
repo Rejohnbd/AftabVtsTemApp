@@ -29,7 +29,7 @@ class TempNotificationMail extends Mailable
      */
     public function build()
     {
-        $recipients = explode(',', $this->data['settings_data']['notification_emails']);
+        $recipients = array_map('trim', explode(',', $this->data['settings_data']['notification_emails']));
         return $this->from($this->data['settings_data']['email_from'])
             ->subject('Alert Noticiation Email')
             ->to($recipients)

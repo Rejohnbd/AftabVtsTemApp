@@ -3,6 +3,11 @@
         <div class="horizontal-mainwrapper container clearfix">
             <nav class="horizontalMenu clearfix">
                 <ul class="horizontalMenu-list">
+                    <li aria-haspopup="true"><a href="#" class="sub-icon"><i class="fa fa-cog"></i> Settings <i class="fa fa-angle-down horizontal-icon"></i></a>
+                        <ul class="sub-menu">
+                            <li aria-haspopup="true"><a href="{{ route('settings.index') }}">Settings</a></li>
+                        </ul>
+                    </li>
                     <li aria-haspopup="true"><a href="#" class="sub-icon "><i class="fe fe-users"></i> Users <i class="fa fa-angle-down horizontal-icon"></i></a>
                         <ul class="sub-menu">
                             <li aria-haspopup="true"><a href="{{ route('drivers.index') }}">Drivers</a></li>
@@ -20,10 +25,6 @@
                             <li aria-haspopup="true"><a href="{{ route('vehicle-type.index') }}">Vehicle Types</a></li>
                             <li aria-haspopup="true"><a href="{{ route('vehicles.index') }}">All Vehicle</a></li>
                             <li aria-haspopup="true"><a href="{{ route('vehicle-device') }}">All Vehicle Devices</a></li>
-                        </ul>
-                    </li>
-                    <li aria-haspopup="true"><a href="#" class=""><i class="fe fe-life-buoy"></i> Maintenance<i class="fa fa-angle-down horizontal-icon"></i></a>
-                        <ul class="sub-menu">
                             <li aria-haspopup="true"><a href="{{ route('maintenance-type.index') }}">Maintenance Type</a></li>
                             <li aria-haspopup="true"><a href="{{ route('maintenance.index') }}">All Maintenance</a></li>
                         </ul>
@@ -42,13 +43,12 @@
                             <li aria-haspopup="true"><a href="{{ route('trip-reports') }}">Trips Reports</a></li>
                         </ul>
                     </li>
-                    <li aria-haspopup="true"><a href="{{ route('all-vehicle-location') }}" class="sub-icon"><i class="fa fa-map-marker"></i> Maps</a></li>
-                    <li aria-haspopup="true"><a href="{{ route('all-reports') }}" class="sub-icon"><i class="fe fe-layers"></i>Reports</a></li>
-                    {{-- <li aria-haspopup="true"><a href="#" class="sub-icon"><i class="fa fa-cog"></i> Settings <i class="fa fa-angle-down horizontal-icon"></i></a>
+                    <li aria-haspopup="true"><a href="#" class="sub-icon"><i class="fe fe-layers"></i>Reports <i class="fa fa-angle-down horizontal-icon"></i></a>
                         <ul class="sub-menu">
-                            <li aria-haspopup="true"><a href="{{ route('settings.index') }}">Settings</a></li>
-                </ul>
-                </li> --}}
+                            <li aria-haspopup="true"><a href="{{ route('all-vehicle-location') }}">Maps</a></li>
+                            <li aria-haspopup="true"><a href="{{ route('all-reports') }}">Reports</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
         </div>
