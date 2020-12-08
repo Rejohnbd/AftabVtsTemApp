@@ -30,12 +30,10 @@
                             <thead>
                                 <tr>
                                     <th>Sl.</th>
-                                    <th>Expenses Type</th>
                                     <th>Trip Date</th>
                                     <th>Trip Location</th>
                                     <th>Expenses Description</th>
                                     <th>Expenses Amount</th>
-                                    <th>Expenses Dated</th>
                                     <th>Expenses Added By</th>
                                     <th>Action</th>
                                 </tr>
@@ -44,23 +42,22 @@
                                 @forelse($datas as $data)
                                 <tr id="expensesId-{{ $data->expense_id }}">
                                     <th scope="row">{{ $loop->iteration }}</th>
-                                    <td>{{ $data->expensesType->expense_type_name }}</td>
                                     <td>{{ date('d/m/Y', strtotime($data->trip->trip_date)) }}</td>
                                     <td>{{ $data->trip->trip_from }} to {{ $data->trip->trip_to }}</td>
                                     <td>{{ $data->expense_description }}</td>
-                                    <td>{{ $data->expense_amount }}</td>
-                                    <td>{{ date('d/m/Y', strtotime($data->expense_date)) }}</td>
+                                    <td>{{ $data->total_expense_amount }}</td>
                                     <td>{{ ucfirst($data->user->type) }}</td>
                                     <td>
                                         <div class="btn-list">
                                             <a href="{{ route('all-expenses.edit', $data->expense_id) }}" class="btn btn-icon btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Expenses"><i class="fe fe-edit"></i></a>
+                                            <button type="button" class="btn btn-icon btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="View Expenses Details"><i class="fa fa-eye"></i></button>
                                             <button type="button" data-id="{{ $data->expense_id }}" class="btn btn-icon btn-danger btn-sm delete-all-expenses" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Expenses"><i class="fe fe-trash"></i></button>
                                         </div>
                                     </td>
                                 </tr>
                                 @empty
                                 <tr>
-                                    <th colspan="9" class="text-center">No Expenses Added Now.</th>
+                                    <th colspan="7" class="text-center">No Expenses Added Now.</th>
                                 </tr>
                                 @endforelse
                             </tbody>
