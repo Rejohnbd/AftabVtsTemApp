@@ -61,13 +61,13 @@
     $(document).ready(function(){
         $("#fromDate").flatpickr({
             dateFormat: "Y-m-d",
-            minDate: "{{ $firstRow->created_at->format('Y-m-d') }}",
-            maxDate: "{{ $lastRow->created_at->format('Y-m-d') }}"
+            minDate: "@if($firstRow){{ $firstRow->created_at->format('Y-m-d') }}@else today @endif",
+            maxDate: "@if($lastRow){{ $lastRow->created_at->format('Y-m-d') }}@else today @endif"
         });
         $("#toDate").flatpickr({
             dateFormat: "Y-m-d",
-            minDate: "{{ $firstRow->created_at->format('Y-m-d') }}",
-            maxDate: "{{ $lastRow->created_at->format('Y-m-d') }}"
+            minDate: "@if($firstRow){{ $firstRow->created_at->format('Y-m-d') }}@else today @endif",
+            maxDate: "@if($lastRow){{ $lastRow->created_at->format('Y-m-d') }}@else today @endif"
         });
 
         $('#btnExpensesReport').on('click', function(){
