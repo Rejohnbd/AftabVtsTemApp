@@ -30,8 +30,8 @@
                             <li class="list-group-item">REGISTRATION EXPIRE <span class="float-right">{{ date('d/m/Y', strtotime($data->vehicle_registration_expire_date)) }}</span></li>
                             <li class="list-group-item">TAX TOKEN EXPIRE <span class="float-right">{{ date('d/m/Y', strtotime($data->vehicle_tax_token_expire_date)) }}</span></li>
                         </ul>
-                    </div> 
-                     <div class="card-footer">
+                    </div>
+                    <div class="card-footer">
                         <div class="card-options">
                             {{-- <a href="{{ route('vehicle-location', $data->vehicle_id) }}" class="btn btn-secondary btn-sm">Location</a> --}}
                             <a href="{{ route('vehicle-reports', $data->vehicle_id) }}" class="btn btn-primary btn-sm ml-2">GPS Report</a>
@@ -45,7 +45,7 @@
                             }
                             ?>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
             @empty
@@ -63,4 +63,26 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('styles')
+<link rel="stylesheet" href="{{ asset('plugins/sweet-alert/sweetalert.css') }}" />
+@endsection
+
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+@if(session('error'))
+<script>
+    $(document).ready(function() {
+        Swal.fire({
+            title: "Alert",
+            text: "{{ session('error') }}",
+            icon: "error",
+            showCancelButton: true,
+            confirmButtonText: 'Exit',
+            cancelButtonText: 'Stay on the page'
+        });
+    });
+</script>
+@endif
 @endsection

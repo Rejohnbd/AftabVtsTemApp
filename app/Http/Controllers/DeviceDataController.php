@@ -19,13 +19,18 @@ class DeviceDataController extends Controller
         $vehicleDeviceInfo = VehicleDevice::select('device_id')->where('vehicle_id', $id)->first();
         $deviceInfo = Device::where('device_id', $vehicleDeviceInfo->device_id)->first();
         $deviceDataInfo = DeviceData::select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed')->where('device_id', $deviceInfo->device_id)->orderBy('created_at', 'desc')->first();
-        return view('admin.pages.reports.index')->with('vehicleInfo', $vehicleInfo)->with('deviceInfo', $deviceInfo)->with('deviceDataInfo', $deviceDataInfo);
+        if ($deviceDataInfo == null) :
+            session()->flash('error', 'No Data Found');
+            return redirect()->back();
+        else :
+            return view('admin.pages.reports.index')->with('vehicleInfo', $vehicleInfo)->with('deviceInfo', $deviceInfo)->with('deviceDataInfo', $deviceDataInfo);
+        endif;
     }
 
     public function datedReport(Request $request)
     {
         $date = $request->selectedDate;
-        $datas = DB::table('device_data')->select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed', 'created_at')->where('vehicle_id', $request->vehicleId)->whereDate('created_at', $date)->get();
+        $datas = DB::table('device_data')->select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed', 'distance', 'fuel_use', 'created_at')->where('vehicle_id', $request->vehicleId)->whereDate('created_at', $date)->get();
         return response()->view('admin.pages.reports.daily-distance-report-web', compact('datas'));
     }
 

@@ -48,17 +48,19 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.css') }}" />
+<link rel="stylesheet" href="{{ asset('plugins/sweet-alert/sweetalert.css') }}" />
 @endsection
 
 @section('scripts')
 <script src="{{ asset('plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.js') }}"></script>
 <script src="{{ asset('plugins/jquery.mCustomScrollbar/customscrollbar.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6GM52G_Zf5-U9Ta22uSQAz_lGQEGq05I&callback=initMap"></script>
 {{-- Include Firebase  --}}
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script> 
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
 <script>
     var deviceOldData = {};
     var myMarkers = new Array();
@@ -83,7 +85,7 @@
         return parseInt(dex, 16) / 1800000;
     };
     // firebase initialize
-     var config = {
+    var config = {
         apiKey: "{{ env('FIRE_API_KEY')}}",
         authDomain: "{{ env('FIRE_AUTH_DOMAIN') }}",
         databaseURL: "{{ env('FIRE_DB_URL') }}",
@@ -92,7 +94,7 @@
     firebase.initializeApp(config);
     var database = firebase.database();
     // Get Data from Firebase
-     database.ref('Devices/').once('value').then(function(snapshot) {
+    database.ref('Devices/').once('value').then(function(snapshot) {
         var allDevicesInfo = snapshot.val();
         var i = 0;
         for (var key in allDevicesInfo) {
@@ -112,7 +114,7 @@
             myMarkers[index] = [addMarker(map, deviceOldData[index]), [deviceOldData[index].imei]]
         };
 
-    }); 
+    });
     // console.log(deviceOldData, 'deviceOldData');
 
     function addMarker(map, data) {
@@ -184,5 +186,20 @@
         }
     }
 </script>
+
+@if(session('error'))
+<script>
+    $(document).ready(function() {
+        Swal.fire({
+            title: "Alert",
+            text: "{{ session('error') }}",
+            icon: "error",
+            showCancelButton: true,
+            confirmButtonText: 'Exit',
+            cancelButtonText: 'Stay on the page'
+        });
+    });
+</script>
+@endif
 
 @endsection

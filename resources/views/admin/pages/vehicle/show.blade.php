@@ -49,90 +49,89 @@
                                                 <tbody class="col-lg-12 col-xl-6 p-0">
                                                     <tr>
                                                         <td><strong>Customer Name :</strong> {{ $vehicle->customer->customer_first_name }} {{ $vehicle->customer->customer_last_name }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Customer NID :</strong> {{ $vehicle->customer->customer_NID }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Customer Company :</strong> {{ $vehicle->customer->company_name }}</td>
-                                                    </tr>
-                                                </tbody>
-                                                <tbody class="col-lg-12 col-xl-6 p-0">
-                                                    <tr>
-                                                        <td><strong>Customer Phone :</strong> {{ $vehicle->customer->customer_mobile }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Customer Address :</strong> {{ $vehicle->customer->customer_address }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Customer Join Date :</strong> {{ date('d/m/Y', strtotime($vehicle->customer->customer_join_date)) }} </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div> --}}
-                                        <div class="media-heading mt-3">
-                                            <h5 class="text-uppercase"><strong>Vehicle Information</strong></h5>
-                                        </div>
-                                        <div class="table-responsive ">
-                                            <table class="table row table-borderless">
-                                                <tbody class="col-lg-12 col-xl-6 p-0">
-                                                    <tr>
-                                                        <td><strong>Vehicle Brand :</strong> {{ $vehicle->vehicle_brand }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Vehicle Model :</strong> {{ $vehicle->vehicle_model }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Vehicle Model Year :</strong> {{ $vehicle->vehicle_model_year }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Vehice Fuel Consumption :</strong> {{ $vehicle->vehicle_kpl }}</td>
-                                                    </tr>
-                                                </tbody>
-                                                <tbody class="col-lg-12 col-xl-6 p-0">
-                                                    <tr>
-                                                        <td><strong>Insurance Expire Date :</strong> {{ date('d/m/Y', strtotime($vehicle->vehicle_insurance_expire_date)) }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Registration Expire Date :</strong> {{ date('d/m/Y', strtotime($vehicle->vehicle_registration_expire_date)) }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Tax Token Expire Date :</strong> {{ date('d/m/Y', strtotime($vehicle->vehicle_tax_token_expire_date)) }}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Customer NID :</strong> {{ $vehicle->customer->customer_NID }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Customer Company :</strong> {{ $vehicle->customer->company_name }}</td>
+                                        </tr>
+                                        </tbody>
+                                        <tbody class="col-lg-12 col-xl-6 p-0">
+                                            <tr>
+                                                <td><strong>Customer Phone :</strong> {{ $vehicle->customer->customer_mobile }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Customer Address :</strong> {{ $vehicle->customer->customer_address }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Customer Join Date :</strong> {{ date('d/m/Y', strtotime($vehicle->customer->customer_join_date)) }} </td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                                    </div> --}}
+                                    <div class="media-heading mt-3">
+                                        <h5 class="text-uppercase"><strong>Vehicle Information</strong></h5>
+                                    </div>
+                                    <div class="table-responsive ">
+                                        <table class="table row table-borderless">
+                                            <tbody class="col-lg-12 col-xl-6 p-0">
+                                                <tr>
+                                                    <td><strong>Vehicle Brand :</strong> {{ $vehicle->vehicle_brand }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Vehicle Model :</strong> {{ $vehicle->vehicle_model }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Vehicle Model Year :</strong> {{ $vehicle->vehicle_model_year }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Vehice Fuel Consumption :</strong> {{ $vehicle->vehicle_kpl }}</td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody class="col-lg-12 col-xl-6 p-0">
+                                                <tr>
+                                                    <td><strong>Insurance Expire Date :</strong> {{ date('d/m/Y', strtotime($vehicle->vehicle_insurance_expire_date)) }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Registration Expire Date :</strong> {{ date('d/m/Y', strtotime($vehicle->vehicle_registration_expire_date)) }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Tax Token Expire Date :</strong> {{ date('d/m/Y', strtotime($vehicle->vehicle_tax_token_expire_date)) }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
-                                <div class="tab-pane" id="tab-61">
-                                    <ul class="widget-users row">
-                                        @forelse($usedDevice as $device)
-                                        <li class="col-lg-3  col-md-6 col-sm-12 col-12">
-                                            <div class="card border-0">
-                                                <div class="card-body text-center">
-                                                    <h4 class="h4 mb-0 mt-3">{{ $device->device->device_model }}</h4>
-                                                    <p class="card-text">{{ $device->device->device_unique_id }}</p>
-                                                    <p class="card-text">{{ $device->device->device_sim_number }}</p>
-                                                    <p class="card-text">{{ $device->device->device_sim_type }}</p>
-                                                    @if($device->device->device_type_id == 5)
-                                                    <a href="{{ route('vehicle-location', $vehicle->vehicle_id) }}" class="btn btn-primary btn-block">View GPS Data</a>
-                                                    @else
-                                                    <a href="{{ route('device-temp-data', $device->device->device_id) }}" class="btn btn-primary btn-block">View Temp Data</a>
-                                                    @endif
-                                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab-61">
+                                <ul class="widget-users row">
+                                    @forelse($usedDevice as $device)
+                                    <li class="col-lg-3  col-md-6 col-sm-12 col-12">
+                                        <div class="card border-0">
+                                            <div class="card-body text-center">
+                                                <h4 class="h4 mb-0 mt-3">{{ $device->device->device_model }}</h4>
+                                                <p class="card-text">{{ $device->device->device_unique_id }}</p>
+                                                <p class="card-text">{{ $device->device->device_sim_number }}</p>
+                                                <p class="card-text">{{ $device->device->device_sim_type }}</p>
+                                                @if($device->device->device_type_id == 5)
+                                                <a href="{{ route('vehicle-location', $vehicle->vehicle_id) }}" class="btn btn-primary btn-block">View GPS Data</a>
+                                                @else
+                                                <a href="{{ route('device-temp-data', $device->device->device_id) }}" class="btn btn-primary btn-block">View Temp Data</a>
+                                                @endif
                                             </div>
-                                        </li>
-                                        @empty
-                                        <li class=" col-12">
-                                            <div class="card border-0">
-                                                <div class="card-body text-center">
-                                                    <h4 class="h4 mb-0 mt-3">No Device Added Yet.</h4>
-                                                </div>
+                                        </div>
+                                    </li>
+                                    @empty
+                                    <li class=" col-12">
+                                        <div class="card border-0">
+                                            <div class="card-body text-center">
+                                                <h4 class="h4 mb-0 mt-3">No Device Added Yet.</h4>
                                             </div>
-                                        </li>
-                                        @endforelse
-                                    </ul>
-                                </div>
+                                        </div>
+                                    </li>
+                                    @endforelse
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -141,12 +140,27 @@
         </div>
     </div>
 </div>
+</div>
 @endsection
 
 @section('styles')
-
+<link rel="stylesheet" href="{{ asset('plugins/sweet-alert/sweetalert.css') }}" />
 @endsection
 
 @section('scripts')
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+@if(session('error'))
+<script>
+    $(document).ready(function() {
+        Swal.fire({
+            title: "Alert",
+            text: "{{ session('error') }}",
+            icon: "error",
+            showCancelButton: true,
+            confirmButtonText: 'Exit',
+            cancelButtonText: 'Stay on the page'
+        });
+    });
+</script>
+@endif
 @endsection
