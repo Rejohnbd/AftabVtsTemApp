@@ -97,8 +97,13 @@ class DeviceDataController extends Controller
         $vehicle_kpl = $device->findVehicleKplByDeviceId($device_id);
 
         $lastLatLng = DeviceData::select('latitude', 'longitude')->where('device_id', $device_id)->orderBy('created_at', 'desc')->first();
-        $distance = calculateDistance($lastLatLng->latitude, $lastLatLng->longitude, $data->lat, $data->lng);
-        $fuel_use = (1 / $vehicle_kpl) * $distance;
+        if ($lastLatLng == null) {
+            $distance = 0;
+            $fuel_use = 0;
+        } else {
+            $distance = calculateDistance($lastLatLng->latitude, $lastLatLng->longitude, $data->lat, $data->lng);
+            $fuel_use = (1 / $vehicle_kpl) * $distance;
+        }
 
         $saveData = DeviceData::create([
             'device_id'         => $device_id,
