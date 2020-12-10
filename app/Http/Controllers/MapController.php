@@ -109,7 +109,7 @@ class MapController extends Controller
 
     public function vehicleLocation($id)
     {
-        $vehicleInfo = Vehicle::where('vehicle_id', $id)->first();
+        $vehicleInfo = Vehicle::findOrFail($id);
         // $vehicleDeviceInfo = VehicleDevice::select('device_id')->where('vehicle_id', $id)->first();
         $gpsDevice = findVehicleAttachGpsDevice($vehicleInfo->vehicle_id);
         $tempDevice = findVehicleAttachTemDevice($vehicleInfo->vehicle_id);

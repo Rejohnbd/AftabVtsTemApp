@@ -58,7 +58,7 @@
 <script src="{{ asset('plugins/select2/select2.full.min.js') }}"></script>
 <script src="{{ asset('js/select2.js') }}"></script>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
         $("#fromDate").flatpickr({
             dateFormat: "Y-m-d",
             minDate: "@if($firstRow){{ $firstRow->created_at->format('Y-m-d') }}@else today @endif",
@@ -70,7 +70,7 @@
             maxDate: "@if($lastRow){{ $lastRow->created_at->format('Y-m-d') }}@else today @endif"
         });
 
-        $('#btnExpensesReport').on('click', function(){
+        $('#btnExpensesReport').on('click', function() {
             var fromDate = null;
             var toDate = null;
             var expensesTypeId = null;
@@ -78,15 +78,15 @@
             $('#fromDate').removeClass('is-invalid');
             $('#toDate').removeClass('is-invalid');
 
-            $('#expensesType').on('change', function(){
+            $('#expensesType').on('change', function() {
                 expensesTypeId = this.value;
             });
 
-            if(!$("#expensesType").val()){
+            if (!$("#expensesType").val()) {
                 $('#expensesType').addClass('is-invalid');
             } else if (!$("#fromDate").val()) {
                 $('#fromDate').addClass('is-invalid');
-            } else if (!$("#toDate").val()){
+            } else if (!$("#toDate").val()) {
                 $('#toDate').addClass('is-invalid');
             } else {
                 fromDate = $("#fromDate").val();
@@ -107,7 +107,7 @@
                     }
                 })
             }
-           
+
         });
     });
 </script>
