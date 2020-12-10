@@ -17,7 +17,12 @@ class TemperatureDeviceDataController extends Controller
     {
         $tempDeviceInfo = Device::findOrFail($id);
         $tempDeviceLastData = TemperatureDeviceData::where('device_id', $tempDeviceInfo->device_unique_id)->orderBy('created_at', 'desc')->first();
-        return view('admin.pages.temperature.index')->with('tempDeviceInfo', $tempDeviceInfo)->with('tempDeviceLastData', $tempDeviceLastData);
+        if ($tempDeviceLastData == null) :
+            session()->flash('error', 'No Data Found');
+            return redirect()->back();
+        else :
+            return view('admin.pages.temperature.index')->with('tempDeviceInfo', $tempDeviceInfo)->with('tempDeviceLastData', $tempDeviceLastData);
+        endif;
     }
 
     public function getTempDevice(Request $request)

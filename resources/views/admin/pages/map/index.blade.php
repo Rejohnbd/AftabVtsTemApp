@@ -12,7 +12,7 @@
                         <div class="card-header">
                             <div class="card-title"> All Vehicle</div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body p-0">
                             <div class="content vscroll" style="height: 67vh !important;">
                                 <div class="list-group list-lg-group list-group-flush br-4">
                                     @foreach($datas as $data)
@@ -22,8 +22,7 @@
                                             <div class="media-body ml-2">
                                                 <div class="d-md-flex align-items-center">
                                                     <div>
-                                                        <h5 class="mb-0 text-dark">{{ $data->vehicle_plate_number }}</h5>
-                                                        <p class="mb-0 fs-13 text-muted"></p>
+                                                        <h5 class="mb-0 mt-2 text-dark">{{ $data->vehicle_plate_number }}</h5>
                                                     </div>
                                                 </div>
                                             </div>
