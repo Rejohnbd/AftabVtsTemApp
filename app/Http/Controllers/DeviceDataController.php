@@ -19,6 +19,9 @@ class DeviceDataController extends Controller
         $allVehicleDeviceIds = VehicleDevice::select('device_id')->where('vehicle_id', $id)->get();
         foreach ($allVehicleDeviceIds as $vehileDeviceId) {
             $deviceInfo = Device::where('device_id', $vehileDeviceId->device_id)->where('device_type_id', 5)->first();
+            if ($deviceInfo != null) :
+                break;
+            endif;
         }
         $deviceDataInfo = DeviceData::select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed')->where('device_id', $deviceInfo->device_id)->orderBy('created_at', 'desc')->first();
         if ($deviceDataInfo == null) :
