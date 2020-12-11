@@ -65,7 +65,7 @@
                             </div>
                         </div>
                     </div>
-
+                    @if($deviceTempDataInfo)
                     <div class="card card-collapsed">
                         <div class="card-header pt-2 pb-0 border-bottom-0">
                             <h6 class="mb-0">Live Temp Info</h6>
@@ -85,6 +85,7 @@
                             </p>
                         </div>
                     </div>
+                    @endif
                     <div class="card card-collapsed">
                         <div class="card-header pt-2 pb-0 border-bottom-0">
                             <h6 class="mb-0">Reports</h6>
@@ -225,7 +226,7 @@
     firebase.initializeApp(config);
     var database = firebase.database();
 
-     database.ref('Devices/').on('child_changed', function(snapshot) {
+    database.ref('Devices/').on('child_changed', function(snapshot) {
         var changeData = snapshot.val();
         if (snapshot.ref.key == <?= $deviceInfo->device_unique_id ?>) {
             var engineStatus;
@@ -237,7 +238,7 @@
             $('#engineStatus').text(engineStatus);
             $('#vehicleSpeed').text(changeData.Data.speed);
             $('#vehicleSpeedStyle').css('width', changeData.Data.speed + '%');
-            console.log('called');
+            // console.log('called');
             oldPosition = [initLat, initLng];
             var result = [dex_to_degrees(changeData.Data.lat), dex_to_degrees(changeData.Data.lng)];
             // Marker Move
@@ -248,7 +249,7 @@
             // Show New Location Name
             geocodeLatLng(geocoder, map, infowindow);
         }
-    }); 
+    });
 
     // Variable for Transition or Move marker
     var numDeltas = 100;
@@ -272,11 +273,12 @@
             i++;
             setTimeout(moveMarker, delay);
         }
-    } 
+    }
 </script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+@if($deviceTempDataInfo)
 <script>
     $(document).ready(function() {
         $("#dataDate").flatpickr({
@@ -309,5 +311,6 @@
         }, 30000);
     })
 </script>
+@endif
 
 @endsection

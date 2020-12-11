@@ -116,7 +116,6 @@ class MapController extends Controller
         if (!empty($gpsDevice)) {
             $deviceGpsInfo = Device::where('device_id', $gpsDevice['device_id'])->first();
             $deviceTempInfo = Device::where('device_id', $tempDevice['device_id'])->first();
-            // dd($deviceTempInfo);
             $deviceDataInfo = DeviceData::select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed')->where('device_id', $deviceGpsInfo->device_id)->orderBy('created_at', 'desc')->first();
             $deviceTempDataInfo = TemperatureDeviceData::select('device_id', 'temperature', 'humidity', 'comp_status')->where('device_id', $deviceTempInfo->device_unique_id)->orderBy('created_at', 'desc')->first();
             if ($deviceDataInfo == null) :
