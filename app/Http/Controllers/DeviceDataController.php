@@ -16,8 +16,10 @@ class DeviceDataController extends Controller
     public function index($id)
     {
         $vehicleInfo = Vehicle::where('vehicle_id', $id)->first();
-        $vehicleDeviceInfo = VehicleDevice::select('device_id')->where('vehicle_id', $id)->first();
-        $deviceInfo = Device::where('device_id', $vehicleDeviceInfo->device_id)->first();
+        $allVehicleDeviceIds = VehicleDevice::select('device_id')->where('vehicle_id', $id)->get();
+        foreach ($allVehicleDeviceIds as $vehileDeviceId) {
+            $deviceInfo = Device::where('device_id', $vehileDeviceId->device_id)->where('device_type_id', 5)->first();
+        }
         $deviceDataInfo = DeviceData::select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed')->where('device_id', $deviceInfo->device_id)->orderBy('created_at', 'desc')->first();
         if ($deviceDataInfo == null) :
             session()->flash('error', 'No Data Found');
