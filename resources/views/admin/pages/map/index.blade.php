@@ -149,15 +149,15 @@
 
         $.each(myMarkers, function(key, data) {
             if (changeImei == data[1]) {
-                console.log(key)
-                console.log(data[1])
+                // console.log(key)
+                // console.log(data[1])
                 changeMyMarker = myMarkers[key];
             }
         })
-        console.log(changeMyMarker, 'changed marker');
+        // console.log(changeMyMarker, 'changed marker');
 
-        var result = [oldLat, oldLng, changeMyMarker]
-        transition(result);
+        // var result = [oldLat, oldLng, changeMyMarker]
+        // transition(result);
     });
 
     // Variable for Transition or Move marker

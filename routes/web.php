@@ -88,12 +88,12 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/all-clear', function () {
+    $exitCode = Artisan::call('config:clear');
+    echo '<h1>Config cache cleared</h1>';
+    $exitCode = Artisan::call('cache:clear');
+    echo '<h1>Cache facade value cleared</h1>';
     $exitCode = Artisan::call('view:clear');
     echo '<h1>View cache cleared</h1>';
     $exitCode = Artisan::call('route:clear');
     echo '<h1>Route cache cleared</h1>';
-    $exitCode = Artisan::call('cache:clear');
-    echo '<h1>Cache facade value cleared</h1>';
-    $exitCode = Artisan::call('config:cache');
-    echo '<h1>Config cache cleared</h1>';
 });
