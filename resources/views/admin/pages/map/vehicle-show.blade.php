@@ -94,7 +94,7 @@
                             </div>
                         </div>
                         <div class="card-body pt-0">
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label class="form-label">Show Travels</label>
                                 <div class="row gutters-xs">
                                     <div class="col">
@@ -104,7 +104,7 @@
                                         <button id="btnDailyReport" class="btn btn-primary" type="button"><i class="fa fa-eye"></i></button>
                                     </span>
                                 </div>
-                            </div>
+                            </div> --}}
                             <a href="{{ route('vehicle-reports', $vehicleInfo->vehicle_id) }}" class="btn btn-primary btn-block">View Report</a>
                         </div>
                     </div>

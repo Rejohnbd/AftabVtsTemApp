@@ -65,24 +65,15 @@
                 </td>
                 <td>
                     <?php
-
                     for ($i; $i < count($datas); $i++) {
                         if (strtotime(date('G:i', mktime($hour, 0, 0))) <= strtotime(date('G:i', strtotime($datas[$i]->created_at))) && strtotime(date('G:i', strtotime($datas[$i]->created_at))) < strtotime(date('G:i', mktime($hour + 1, 0, 0)))) {
-                            // echo date('G:i', mktime($hour, 0, 0));
-                            // echo '<br/>';
-                            // echo date('G:i', strtotime($datas[$i]->created_at)) . '-' . $i;
-                            // echo '<br/>';
-
                             if (($i % 2 == 0) || $i == 0) {
                                 $oldLat = $datas[$i]->latitude;
                                 $oldLng = $datas[$i]->longitude;
-                                // echo $oldLat . '-' . $oldLng;
-                                // echo '----------------';
-                                // echo "<br/>";
+                                if ($i != 0) {
+                                    $totalKm +=  calculateDistance($datas[$i - 1]->latitude, $datas[$i - 1]->longitude, $oldLat, $oldLng,);
+                                }
                             } else {
-                                // echo 'oldLat=' . $oldLat . ', oldLng=' . $oldLng . ', newLat =' . $datas[$i]->latitude . ', newLng=' . $datas[$i]->longitude;
-                                // echo '<br/>';
-                                // if($oldLat != null && $oldLat != 0 && $oldLng != null && $oldLng != 0 && $ )
                                 $totalKm +=  calculateDistance($oldLat, $oldLng, $datas[$i]->latitude, $datas[$i]->longitude);
                             }
                         } else {
@@ -103,7 +94,7 @@
         ?>
         <tr>
             <th colspan="2">Total</th>
-            <th><?php echo array_sum($subTotalKm); ?></th>
+            <th><?php echo array_sum($subTotalKm) . ' Km'; ?></th>
             <th></th>
         </tr>
     </table>

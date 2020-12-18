@@ -6,6 +6,7 @@ use App\Models\Device;
 use App\Models\DeviceData;
 use App\Models\Vehicle;
 use App\Models\VehicleDevice;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;

@@ -15,13 +15,14 @@
         for ($i = 0; $i < count($datas); $i++) {
             if ($loopDate == date('Y-m-d', strtotime($datas[$i]->created_at))) {
                 $loopDatedArray[$dateArrayIndex] = [$datas[$i]->latitude, $datas[$i]->longitude];
-                $dateArrayIndex++;
                 if ($i == (count($datas) - 1)) {
                     showRow($loopDate, $loopDatedArray);
                 }
+                $dateArrayIndex++;
             } else {
                 showRow($loopDate, $loopDatedArray);
                 $loopDate = date('Y-m-d', strtotime($datas[$i]->created_at));
+                $loopDatedArray = null;
                 $dateArrayIndex = 0;
                 $loopDatedArray[$dateArrayIndex] = [$datas[$i]->latitude, $datas[$i]->longitude];
                 $dateArrayIndex++;
@@ -43,12 +44,16 @@
                         if (($dataIndex % 2 == 0) || $dataIndex == 0) {
                             $oldLat = $data[$dataIndex][0];
                             $oldLng = $data[$dataIndex][1];
+                            if ($dataIndex != 0) {
+                                $totalKm +=  calculateDistance($data[($dataIndex - 1)][0], $data[($dataIndex - 1)][1], $oldLat, $oldLng);
+                            }
                         } else {
                             $totalKm +=  calculateDistance($oldLat, $oldLng, $data[$dataIndex][0], $data[$dataIndex][1]);
                         }
                     }
                     echo  round($totalKm, 2) . ' KM';
                     $totalKm = 0;
+                    $dataIndex = 0;
                     ?>
                 </td>
                 <td></td>
