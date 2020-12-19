@@ -50,7 +50,7 @@
                                     <td>
                                         <div class="btn-list">
                                             <a href="{{ route('all-expenses.edit', $data->expense_id) }}" class="btn btn-icon btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Expenses"><i class="fe fe-edit"></i></a>
-                                            <button type="button" class="btn btn-icon btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="View Expenses Details"><i class="fa fa-eye"></i></button>
+                                            <a href="{{ route('all-expenses-view', $data->expense_id) }}" class="btn btn-icon btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="View Expenses Details"><i class="fa fa-eye"></i></a>
                                             <button type="button" data-id="{{ $data->expense_id }}" class="btn btn-icon btn-danger btn-sm delete-all-expenses" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Expenses"><i class="fe fe-trash"></i></button>
                                         </div>
                                     </td>

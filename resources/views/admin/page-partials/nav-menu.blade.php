@@ -30,23 +30,26 @@
                             <li aria-haspopup="true"><a href="{{ route('maintenance.index') }}">All Maintenance</a></li>
                         </ul>
                     </li>
-                    <li aria-haspopup="true"><a href="#" class="sub-icon"><i class="fe fe-file-text"></i> Expenses <i class="fa fa-angle-down horizontal-icon"></i></a>
+                    <li aria-haspopup="true"><a href="#" class="sub-icon">Trips &amp; Expenses <i class="fa fa-angle-down horizontal-icon"></i></a>
                         <ul class="sub-menu">
-                            <li aria-haspopup="true"><a href="{{ route('expenses-type.index') }}">Expenses Types</a></li>
-                            <li aria-haspopup="true"><a href="{{ route('all-expenses.index') }}">All Expenses</a></li>
-                            <li aria-haspopup="true"><a href="{{ route('expenses-reports') }}">Expenses Report</a></li>
-                        </ul>
-                    </li>
-                    <li aria-haspopup="true"><a href="#" class="sub-icon"><i class="fa fa-road"></i> Trips <i class="fa fa-angle-down horizontal-icon"></i></a>
-                        <ul class="sub-menu">
-                            <li aria-haspopup="true"><a href="{{ route('trip-type.index') }}">Trip Types</a></li>
-                            <li aria-haspopup="true"><a href="{{ route('trips.index') }}">All Trips</a></li>
-                            <li aria-haspopup="true"><a href="{{ route('trip-reports') }}">Trips Reports</a></li>
+                            <li aria-haspopup="true" class="sub-menu-sub"><a href="#">Trips</a>
+                                <ul class="sub-menu">
+                                    <li aria-haspopup="true"><a href="{{ route('trip-type.index') }}">Trip Types</a></li>
+                                    <li aria-haspopup="true"><a href="{{ route('trips.index') }}">All Trips</a></li>
+                                    <li aria-haspopup="true"><a href="{{ route('trip-reports') }}">Trips Reports</a></li>
+                                </ul>
+                            </li>
+                            <li aria-haspopup="true" class="sub-menu-sub"><a href="#">Expenses</a>
+                                <ul class="sub-menu">
+                                    <li aria-haspopup="true"><a href="{{ route('expenses-type.index') }}">Expenses Types</a></li>
+                                    <li aria-haspopup="true"><a href="{{ route('all-expenses.index') }}">All Expenses</a></li>
+                                    <li aria-haspopup="true"><a href="{{ route('expenses-reports') }}">Expenses Report</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li aria-haspopup="true"><a href="#" class="sub-icon"><i class="fe fe-layers"></i>Reports <i class="fa fa-angle-down horizontal-icon"></i></a>
                         <ul class="sub-menu">
-                            <li aria-haspopup="true"><a href="{{ route('all-vehicle-location') }}">Maps</a></li>
                             <li aria-haspopup="true"><a href="{{ route('all-reports') }}">Reports</a></li>
                         </ul>
                     </li>

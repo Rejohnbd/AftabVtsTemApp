@@ -78,9 +78,16 @@ class ExpensesController extends Controller
      * @param  \App\Models\Expenses  $expenses
      * @return \Illuminate\Http\Response
      */
-    public function show(Expenses $expenses)
+    public function show($id)
     {
-        //
+        $expense = Expenses::findOrFail($id);
+        $expenseItems = DB::table('expenses_items')->where('expense_id', $expense->expense_id)->get();
+        $allExpenseTypes = array_column(ExpensesType::all()->toArray(), 'expense_type_name', 'expense_type_id');
+        // dd($allExpenseTypes);
+        return view('admin.pages.expenses.show')
+            ->with('expense', $expense)
+            ->with('expenseItems', $expenseItems)
+            ->with('allExpenseTypes', $allExpenseTypes);
     }
 
     /**

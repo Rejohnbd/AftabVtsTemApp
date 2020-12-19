@@ -26,7 +26,7 @@ class HomeController extends Controller
     {
         // return view('home');
         if (Auth::user()->type == 'admin') :
-            return redirect()->route('dasbboard');
+            return redirect()->route('all-vehicle-location');
         else :
             return redirect()->route('driver-dashboard');
         endif;

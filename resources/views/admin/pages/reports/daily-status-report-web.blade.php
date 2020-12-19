@@ -61,11 +61,14 @@
                             if (($dataIndex % 2 == 0) || $dataIndex == 0) {
                                 $oldLat = $data[$dataIndex][2];
                                 $oldLng = $data[$dataIndex][3];
+                                if ($dataIndex != 0) {
+                                    $totalKm +=  calculateDistance($data[$dataIndex - 1][2], $data[$dataIndex - 1][3], $oldLat, $oldLng);
+                                }
                             } else {
                                 $totalKm +=  calculateDistance($oldLat, $oldLng, $data[$dataIndex][2], $data[$dataIndex][3]);
                             }
                         }
-                        echo  round($totalKm, 2) . ' KM';
+                        echo round($totalKm, 2) . ' KM';
                         $totalKm = 0;
                         ?>
                     </td>

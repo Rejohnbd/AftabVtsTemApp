@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('expenses-type', 'ExpensesTypeController');
     Route::post('expenses-type-delete', 'ExpensesTypeController@destroyExpensesType')->name('expenses-type-delete');
     Route::resource('all-expenses', 'ExpensesController');
+    Route::get('all-expenses-view/{id}', 'ExpensesController@show')->name('all-expenses-view');
     Route::post('all-expenses-update', 'ExpensesController@update')->name('all-expenses-update');
     Route::post('all-expenses-delete', 'ExpensesController@destroyAllExpenses')->name('all-expenses-delete');
     Route::resource('drivers', 'DriverController');
