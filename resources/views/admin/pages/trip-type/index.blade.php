@@ -44,7 +44,7 @@
                                     <td>
                                         <div class="btn-list">
                                             <a href="{{ route('trip-type.edit', $data->trip_type_id) }}" class="btn btn-icon btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Trip Type"><i class="fe fe-edit"></i></a>
-                                            <button type="button" data-id="{{ $data->trip_type_id }}" class="btn btn-icon btn-danger btn-sm delete-device-type" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Trip Type"><i class="fe fe-trash"></i></button>
+                                            {{-- <button type="button" data-id="{{ $data->trip_type_id }}" class="btn btn-icon btn-danger btn-sm delete-device-type" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Trip Type"><i class="fe fe-trash"></i></button> --}}
                                         </div>
                                     </td>
                                 </tr>
@@ -94,53 +94,53 @@
 
 <script>
     $(document).ready(function() {
-        $('.delete-device-type').on('click', function() {
-            var id = $(this).attr('data-id');
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!',
-                reverseButtons: true
-            }).then((result) => {
-                /*if (result.value) {
-                    $.ajax({
-                        url: "{{ url('device-type-delete') }}",
-                        method: 'POST',
-                        data: {
-                            deviceTypeId: id,
-                            _token: '{{csrf_token()}}',
-                        },
-                        success: function(response) {
-                            if (response.result) {
-                                $('#deviceTypeId-' + id).remove();
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Device Type Deleted Successfully',
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                });
-                            }
-                            if (!response.result) {
-                                Swal.fire({
-                                    title: "Alert",
-                                    text: "This Device Type Info Used in System",
-                                    icon: "error",
-                                    showCancelButton: true,
-                                    confirmButtonText: 'Exit',
-                                    cancelButtonText: 'Stay on the page'
-                                });
-                            }
-                        },
-                        error: function(err) {
-                            console.log(err);
-                        }
-                    });
-                }*/
-            });
-        });
+        /* $('.delete-device-type').on('click', function() {
+             var id = $(this).attr('data-id');
+             Swal.fire({
+                 title: 'Are you sure?',
+                 text: "You won't be able to revert this!",
+                 icon: 'warning',
+                 showCancelButton: true,
+                 confirmButtonText: 'Yes, delete it!',
+                 cancelButtonText: 'No, cancel!',
+                 reverseButtons: true
+             }).then((result) => {
+                 if (result.value) {
+                     $.ajax({
+                         url: "{{ url('device-type-delete') }}",
+                         method: 'POST',
+                         data: {
+                             deviceTypeId: id,
+                             _token: '{{csrf_token()}}',
+                         },
+                         success: function(response) {
+                             if (response.result) {
+                                 $('#deviceTypeId-' + id).remove();
+                                 Swal.fire({
+                                     icon: 'success',
+                                     title: 'Device Type Deleted Successfully',
+                                     showConfirmButton: false,
+                                     timer: 1500
+                                 });
+                             }
+                             if (!response.result) {
+                                 Swal.fire({
+                                     title: "Alert",
+                                     text: "This Device Type Info Used in System",
+                                     icon: "error",
+                                     showCancelButton: true,
+                                     confirmButtonText: 'Exit',
+                                     cancelButtonText: 'Stay on the page'
+                                 });
+                             }
+                         },
+                         error: function(err) {
+                             console.log(err);
+                         }
+                     });
+                 }
+             });
+         });*/
     });
 </script>
 

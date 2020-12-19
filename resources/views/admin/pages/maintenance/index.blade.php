@@ -46,11 +46,11 @@
                                     <td>{{ $data->vehicleName->vehicle_plate_number }}</td>
                                     <td>{{ date('d/m/Y', strtotime($data->maintenance_date)) }}</td>
                                     <td>{{ $data->maintenance_details }}</td>
-                                    <td>{{ date('d/m/Y', strtotime($data->maintenance_next_date)) }}</td>     
+                                    <td>{{ date('d/m/Y', strtotime($data->maintenance_next_date)) }}</td>
                                     <td>
                                         <div class="btn-list">
                                             <a href="{{ route('maintenance.edit', $data->maintenance_id) }}" class="btn btn-icon btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Maintenance"><i class="fe fe-edit"></i></a>
-                                            <button type="button" data-id="{{ $data->maintenance_id }}" class="btn btn-icon btn-danger btn-sm delete-trip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Maintenance"><i class="fe fe-trash"></i></button>
+                                            {{-- <button type="button" data-id="{{ $data->maintenance_id }}" class="btn btn-icon btn-danger btn-sm delete-trip" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Maintenance"><i class="fe fe-trash"></i></button> --}}
                                         </div>
                                     </td>
                                 </tr>
@@ -101,7 +101,7 @@
 @endif
 <script>
     $(document).ready(function() {
-        $('.delete-trip').on('click', function() {
+        /*$('.delete-trip').on('click', function() {
             var id = $(this).attr('data-id');
             Swal.fire({
                 title: 'Are you sure?',
@@ -113,7 +113,7 @@
                 reverseButtons: true
             }).then((result) => {
                 if (result.value) {
-                    /*$.ajax({
+                    $.ajax({
                         url: "{{ url('trips-delete') }}",
                         method: 'POST',
                         data: {
@@ -145,10 +145,10 @@
                             console.log(err);
                         }
                     });
-                    */
+                    
                 }
             });
-        });
+        });*/
     });
 </script>
 @endsection

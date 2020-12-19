@@ -44,7 +44,7 @@
                                     <td>
                                         <div class="btn-list">
                                             <a href="{{ route('maintenance-type.edit', $data->maintenance_type_id) }}" class="btn btn-icon btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Maintenance Type"><i class="fe fe-edit"></i></a>
-                                            <button type="button" data-id="{{ $data->maintenance_type_id }}" class="btn btn-icon btn-danger btn-sm expeses-type-delete" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Maintenance Type"><i class="fe fe-trash"></i></button>
+                                            {{-- <button type="button" data-id="{{ $data->maintenance_type_id }}" class="btn btn-icon btn-danger btn-sm expeses-type-delete" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Maintenance Type"><i class="fe fe-trash"></i></button> --}}
                                         </div>
                                     </td>
                                 </tr>
@@ -92,7 +92,7 @@
 @endif
 <script>
     $(document).ready(function() {
-        $('.expeses-type-delete').on('click', function() {
+        /*$('.expeses-type-delete').on('click', function() {
             var id = $(this).attr('data-id');
             Swal.fire({
                 title: 'Are you sure?',
@@ -104,7 +104,7 @@
                 reverseButtons: true
             }).then((result) => {
                 if (result.value) {
-                    /*$.ajax({
+                    $.ajax({
                         url: "{{ url('expenses-type-delete') }}",
                         method: 'POST',
                         data: {
@@ -135,10 +135,10 @@
                         error: function(err) {
                             console.log(err);
                         }
-                    }); */
+                    }); 
                 }
             });
-        });
+        });*/
     });
 </script>
 @endsection

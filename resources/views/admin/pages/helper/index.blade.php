@@ -50,7 +50,7 @@
                                     <td>
                                         <div class="btn-list">
                                             <a href="{{ route('helpers.edit', $data->helper_id) }}" class="btn btn-icon btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Helper"><i class="fe fe-edit"></i></a>
-                                            <button type="button" class="btn btn-icon btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Helper"><i class="fe fe-trash"></i></button>
+                                            {{-- <button type="button" class="btn btn-icon btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Helper"><i class="fe fe-trash"></i></button> --}}
                                         </div>
                                     </td>
                                 </tr>
