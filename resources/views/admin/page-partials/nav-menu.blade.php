@@ -23,11 +23,19 @@
                     </li>
                     <li aria-haspopup="true"><a href="#" class=""><i class="ion ion-model-s"></i> Vehicles <i class="fa fa-angle-down horizontal-icon"></i></a>
                         <ul class="sub-menu">
-                            <li aria-haspopup="true"><a href="{{ route('vehicle-type.index') }}">Vehicle Types</a></li>
-                            <li aria-haspopup="true"><a href="{{ route('vehicles.index') }}">All Vehicle</a></li>
-                            <li aria-haspopup="true"><a href="{{ route('vehicle-device') }}">All Vehicle Devices</a></li>
-                            <li aria-haspopup="true"><a href="{{ route('maintenance-type.index') }}">Maintenance Type</a></li>
-                            <li aria-haspopup="true"><a href="{{ route('maintenance.index') }}">All Maintenance</a></li>
+                            <li aria-haspopup="true" class="sub-menu-sub"><a href="#">Vehicles</a>
+                                <ul class="sub-menu">
+                                    <li aria-haspopup="true"><a href="{{ route('vehicle-type.index') }}">Vehicle Types</a></li>
+                                    <li aria-haspopup="true"><a href="{{ route('vehicles.index') }}">All Vehicle</a></li>
+                                    <li aria-haspopup="true"><a href="{{ route('vehicle-device') }}">All Vehicle Devices</a></li>
+                                </ul>
+                            </li>
+                            <li aria-haspopup="true" class="sub-menu-sub"><a href="#">Maintenance</a>
+                                <ul class="sub-menu">
+                                    <li aria-haspopup="true"><a href="{{ route('maintenance-type.index') }}">Maintenance Type</a></li>
+                                    <li aria-haspopup="true"><a href="{{ route('maintenance.index') }}">All Maintenance</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li aria-haspopup="true"><a href="#" class="sub-icon">Trips &amp; Expenses <i class="fa fa-angle-down horizontal-icon"></i></a>

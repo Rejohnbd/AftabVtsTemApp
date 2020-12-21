@@ -4,12 +4,12 @@
         <div class="d-flex header-nav">
             <a id="horizontal-navtoggle" class="animated-arrow hor-toggle"><span></span></a>
             <div class="color-headerlogo">
-                <a class="header-desktop" href="{{ url('/dashboard') }}"></a>
-                <a class="header-mobile" href="{{ url('/dashboard') }}"></a>
+                <a class="header-desktop" href="{{ url('/all-vehicle-location') }}"></a>
+                <a class="header-mobile" href="{{ url('/all-vehicle-location') }}"></a>
             </div>
 
-            <a class="header-brand header-brand2 d-none d-lg-block  align-items-center justify-content-center" href="index.html">
-                <a class="header-desktop" href="{{ url('/dashboard') }}"></a>
+            <a class="header-brand header-brand2 d-none d-lg-block  align-items-center justify-content-center" href="{{ url('/all-vehicle-location') }}">
+                <a class="header-desktop" href="{{ url('/all-vehicle-location') }}"></a>
             </a>
             <div class="d-flex order-lg-2 ml-auto header-right-icons header-search-icon">
                 <div class="dropdown  search-icon">
