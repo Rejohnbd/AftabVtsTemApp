@@ -24,6 +24,7 @@ class StoreTripsRequest extends FormRequest
     public function rules()
     {
         return [
+            'trip_type_id'      => 'required|numeric',
             'vehicle_id'        => 'required|numeric',
             'company_id'        => 'required|numeric',
             'driver_user_id'    => 'required|numeric',
@@ -38,6 +39,8 @@ class StoreTripsRequest extends FormRequest
     public function messages()
     {
         return [
+            'trip_type_id.required'     => 'Trip Type is Required for Trip.',
+            'trip_type_id.numeric'      => 'Provide Valid Trip Type for Trip.',
             'vehicle_id.required'       => 'Vehicle is Required for Trip.',
             'vehicle_id.numeric'        => 'Provide Valid Vehicle for Trip.',
             'company_id.required'       => 'Company is Required for Trip.',

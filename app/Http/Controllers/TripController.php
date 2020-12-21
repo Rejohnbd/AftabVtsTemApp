@@ -9,6 +9,7 @@ use App\Models\Driver;
 use App\Models\Expenses;
 use App\Models\Helper;
 use App\Models\Trip;
+use App\Models\TripType;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
@@ -40,8 +41,10 @@ class TripController extends Controller
         $allFreeVehicle = Vehicle::all();
         $allFreeDriver = Driver::all();
         $allFreeHelper = Helper::all();
+        $allTripTypes = TripType::all();
         $allCompanies = Company::where('status', 1)->get();
         return view('admin.pages.trip.create')
+            ->with('allTripTypes', $allTripTypes)
             ->with('allFreeVehicle', $allFreeVehicle)
             ->with('allFreeDriver', $allFreeDriver)
             ->with('allFreeHelper', $allFreeHelper)
@@ -61,6 +64,7 @@ class TripController extends Controller
             $helperIds = implode(',', $request->helper_id);
         }
         $newTrip = new Trip;
+        $newTrip->trip_type_id      = $request->trip_type_id;
         $newTrip->vehicle_id        = $request->vehicle_id;
         $newTrip->company_id        = $request->company_id;
         $newTrip->driver_user_id    = $request->driver_user_id;
@@ -103,9 +107,11 @@ class TripController extends Controller
         $allFreeVehicle = Vehicle::all();
         $allFreeDriver = Driver::all();
         $allFreeHelper = Helper::all();
+        $allTripTypes = TripType::all();
         $allCompanies = Company::where('status', 1)->get();
         return view('admin.pages.trip.edit')
             ->with('trip', $trip)
+            ->with('allTripTypes', $allTripTypes)
             ->with('allFreeVehicle', $allFreeVehicle)
             ->with('allFreeDriver', $allFreeDriver)
             ->with('allFreeHelper', $allFreeHelper)
@@ -126,6 +132,7 @@ class TripController extends Controller
             $helperIds = implode(',', $request->helper_id);
         }
         $updateTrip = $trip->update([
+            'trip_type_id'      => $request->trip_type_id,
             'vehicle_id'        => $request->vehicle_id,
             'company_id'        => $request->company_id,
             'driver_user_id'    => $request->driver_user_id,

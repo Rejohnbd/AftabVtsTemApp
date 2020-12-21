@@ -24,4 +24,9 @@ class Trip extends Model
     {
         return $this->belongsTo(Company::class, 'company_id', 'company_id');
     }
+
+    public function tripType()
+    {
+        return $this->belongsTo(TripType::class, 'trip_type_id', 'trip_type_id');
+    }
 }

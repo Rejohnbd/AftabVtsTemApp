@@ -22,7 +22,23 @@
                         <form method="POST" action="{{ route('trips.store') }}">
                             @csrf
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label mt-0">Select Trip Type</label>
+                                        <select name="trip_type_id" class="form-control @error('trip_type_id') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
+                                            <option label="Choose one"></option>
+                                            @foreach($allTripTypes as $tripType)
+                                            <option value="{{ $tripType->trip_type_id}}">{{ $tripType->trip_type_name}}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('trip_type_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label mt-0">Select Vehicle</label>
                                         <select name="vehicle_id" class="form-control @error('vehicle_id') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
@@ -38,7 +54,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label mt-0">Select Company</label>
                                         <select name="company_id" class="form-control @error('company_id') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>

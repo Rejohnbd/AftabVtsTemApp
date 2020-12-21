@@ -3,7 +3,7 @@
 @section('title', 'Trip List')
 
 @section('content')
-<div class="container  content-area">
+<div class="container-fluid content-area">
     <div class="section">
         <div class="page-header">
             <ol class="breadcrumb">
@@ -31,6 +31,7 @@
                                 <tr>
                                     <th>Sl.</th>
                                     <th>Trip Date</th>
+                                    <th>Trip Type</th>
                                     <th>Vehicle Regi. No.</th>
                                     <th>Company Name</th>
                                     <th>Driver Name</th>
@@ -48,6 +49,7 @@
                                 <tr id="tripId-{{ $data->trip_id }}">
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ date('d/m/Y', strtotime($data->trip_date)) }}</td>
+                                    <td>@if($data->trip_type_id){{ $data->tripType->trip_type_name }}@endif</td>
                                     <td>{{ $data->vehicle->vehicle_plate_number }}</td>
                                     <td>@if($data->company_id){{ $data->company->company_name }}@endif</td>
                                     <td>{{ $data->driver->driver_first_name }} {{ $data->driver->driver_last_name }}</td>
