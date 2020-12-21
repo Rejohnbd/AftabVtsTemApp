@@ -31,7 +31,9 @@
                                         <select name="trip_id" class="form-control @error('trip_id') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
                                             <option label="Choose one"></option>
                                             @foreach($allTrip as $trip)
-                                            <option value="{{ $trip->trip_id }}" @if($expenses->trip_id == $trip->trip_id) selected @endif>{{ $trip->trip_from }} to {{ $trip->trip_to }} {{ date('d/m/Y', strtotime($trip->trip_date)) }}</option>
+                                            <option value="{{ $trip->trip_id }}" @if($expenses->trip_id == $trip->trip_id) selected @endif> {{ findVehicleById($trip->vehicle_id) }}
+                                                -::- {{ $trip->trip_from }} to {{ $trip->trip_to }}
+                                                -::- Trip Date: {{ date('d/m/Y', strtotime($trip->trip_date)) }}</option>
                                             @endforeach
                                         </select>
                                         @error('trip_id')

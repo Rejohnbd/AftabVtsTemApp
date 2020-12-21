@@ -3,7 +3,7 @@
 @section('title', 'Expenses List')
 
 @section('content')
-<div class="container  content-area">
+<div class="container-fluid  content-area">
     <div class="section">
         <div class="page-header">
             <ol class="breadcrumb">
@@ -30,6 +30,7 @@
                             <thead>
                                 <tr>
                                     <th>Sl.</th>
+                                    <th>Vehicle No</th>
                                     <th>Trip Date</th>
                                     <th>Trip Location</th>
                                     <th>Expenses Description</th>
@@ -42,6 +43,7 @@
                                 @forelse($datas as $data)
                                 <tr id="expensesId-{{ $data->expense_id }}">
                                     <th scope="row">{{ $loop->iteration }}</th>
+                                    <td>{{ findVehileForExpense($data->trip_id) }}</td>
                                     <td>{{ date('d/m/Y', strtotime($data->trip->trip_date)) }}</td>
                                     <td>{{ $data->trip->trip_from }} to {{ $data->trip->trip_to }}</td>
                                     <td>{{ $data->expense_description }}</td>

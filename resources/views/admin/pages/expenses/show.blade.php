@@ -24,7 +24,8 @@
                                     <h5 class="mb-1">Trip Details</h5>
                                 </div>
                                 <div class="mt-2">
-                                    <strong><span class="text-success">Trip Date :</span> {{ date('d/m/Y', strtotime($expense->trip->trip_date)) }}</strong><br />
+                                    <strong><span class="text-success">Vehicle Number :</span> {{ findVehileForExpense($expense->trip_id) }}</strong><br />
+                                    <strong class="mt-2"><span class="text-success">Trip Date :</span> {{ date('d/m/Y', strtotime($expense->trip->trip_date)) }}</strong><br />
                                     <strong class="mt-2"><span class="text-success">Trip Location :</span> {{ $expense->trip->trip_from }} <span class="text-success">To</span> {{ $expense->trip->trip_to }}</strong><br />
                                     <strong class="mt-2"><span class="text-success">Trip Status :</span> @if( $expense->trip->trip_status == 1) Yet To Start @elseif ($expense->trip->trip_status == 2) Started @else Completed @endif </strong><br />
                                     <strong class="mt-2"><span class="text-success">Trip Start Date Time :</span> @if($expense->trip->trip_start_datetime) {{ date('d/m/Y H:i:s A', strtotime($expense->trip->trip_start_datetime)) }} @else Not Found @endif <span class="text-success">To Trip End Date Time :</span> @if($expense->trip->trip_end_datetime) {{ date('d/m/Y H:i:s A', strtotime($expense->trip->trip_end_datetime)) }} @else Not Found @endif</strong><br />

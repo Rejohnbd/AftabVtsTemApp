@@ -87,3 +87,16 @@ function findVehicleRegiNo($deviceId)
         ->first();
     return $vehicleInfo;
 }
+
+function findVehicleById($id)
+{
+    $vehicleNumber = DB::table('vehicles')->select('vehicle_plate_number')->where('vehicle_id', $id)->first();
+    return $vehicleNumber->vehicle_plate_number;
+}
+
+function findVehileForExpense($id)
+{
+    $vehicleId = DB::table('trips')->select('vehicle_id')->where('trip_id', $id)->first();
+    $vehicleNumber = DB::table('vehicles')->select('vehicle_plate_number')->where('vehicle_id', $vehicleId->vehicle_id)->first();
+    return $vehicleNumber->vehicle_plate_number;
+}
