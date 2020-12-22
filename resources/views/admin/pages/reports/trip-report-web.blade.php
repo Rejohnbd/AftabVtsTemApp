@@ -15,8 +15,8 @@
         @forelse($datas as $data)
         <tr>
             <th>{{ date('d/m/Y', strtotime($data->trip_date)) }}</th>
-            <th>{{ $data->driver_user_id }}</th>
-            <th>{{ $data->helper_id }}</th>
+            <th>{{ findDriverNameForTripReport($data->driver_user_id) }}</th>
+            <th>@if($data->helper_id){{ findHelperNameForTripReport($data->helper_id) }} @endif</th>
             <th>{{ $data->trip_from }} to {{ $data->trip_to }}</th>
             <th>{{ $data->trip_details }}</th>
             <th>@if($data->trip_start_datetime){{ date('d/m/Y g:i a', strtotime($data->trip_start_datetime)) }}@endif</th>

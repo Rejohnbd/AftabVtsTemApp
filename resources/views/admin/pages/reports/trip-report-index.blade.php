@@ -3,7 +3,7 @@
 @section('title', 'Trip Reports')
 
 @section('content')
-<div class="container  content-area">
+<div class="container-fluid  content-area">
     <div class="section">
         <div class="page-header">
             <ol class="breadcrumb">
@@ -23,15 +23,27 @@
                                 <option value="{{ $vehicle->vehicle_id }}">{{ $vehicle->vehicle_plate_number }}</option>
                                 @endforeach
                             </select>
+                            <select class="form-control mr-2" id="tripType">
+                                <option value="" label="Trip Type"></option>
+                                @foreach($allTripTypes as $tripType)
+                                <option value="{{ $tripType->trip_type_id }}">{{ $tripType->trip_type_name }}</option>
+                                @endforeach
+                            </select>
+                            <select class="form-control mr-2" id="tripStatus">
+                                <option value="" label="Trip Status"></option>
+                                <option value="1">Yet to Start</option>
+                                <option value="2">Started</option>
+                                <option value="3">Completed</option>
+                            </select>
                             <input id="fromDate" data-provide="datepicker" type="text" class="form-control fc-datepicker mr-2" placeholder="From Date">
                             <input id="toDate" data-provide="datepicker" type="text" class="form-control fc-datepicker" placeholder="To Date">
                             <span class="input-group-btn ml-2">
                                 <button id="btnExpensesReport" class="btn btn-sm btn-primary">
                                     <span class="fa fa-eye"></span>
                                 </button>
-                                <button id="btnEngineStatusReportDownload" class="btn btn-sm btn-primary">
+                                {{-- <button id="btnEngineStatusReportDownload" class="btn btn-sm btn-primary">
                                     <span class="fa fa-download"></span>
-                                </button>
+                                </button> --}}
                             </span>
                         </div>
                     </div>
@@ -58,7 +70,7 @@
 <script src="{{ asset('plugins/select2/select2.full.min.js') }}"></script>
 <script src="{{ asset('js/select2.js') }}"></script>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
         $("#fromDate").flatpickr({
             dateFormat: "Y-m-d",
             minDate: "{{ $firstRow->created_at->format('Y-m-d') }}",
@@ -70,28 +82,40 @@
             maxDate: "{{ $lastRow->created_at->format('Y-m-d') }}"
         });
 
-        $('#btnExpensesReport').on('click', function(){
+        $('#btnExpensesReport').on('click', function() {
             var fromDate = null;
             var toDate = null;
             var vehicleId = null;
+            var tripType = null;
+            var tripStatus = null;
             $('#vehicleId').removeClass('is-invalid');
             $('#fromDate').removeClass('is-invalid');
             $('#toDate').removeClass('is-invalid');
 
-            $('#vehicleId').on('change', function(){
+            $('#vehicleId').on('change', function() {
                 vehicleId = this.value;
             });
 
-            if(!$("#vehicleId").val()){
+            $('#tripType').on('change', function() {
+                tripType = this.value;
+            });
+
+            $('#tripStatus').on('change', function() {
+                tripStatus = this.value;
+            });
+
+            if (!$("#vehicleId").val()) {
                 $('#vehicleId').addClass('is-invalid');
             } else if (!$("#fromDate").val()) {
                 $('#fromDate').addClass('is-invalid');
-            } else if (!$("#toDate").val()){
+            } else if (!$("#toDate").val()) {
                 $('#toDate').addClass('is-invalid');
             } else {
                 fromDate = $("#fromDate").val();
                 toDate = $("#toDate").val();
                 vehicleId = $("#vehicleId").val();
+                tripType = $("#tripType").val();
+                tripStatus = $("#tripStatus").val();
 
                 $.ajax({
                     url: "{{ route('trip-reports-by-vehicle') }}",
@@ -100,6 +124,8 @@
                         vehicleId: vehicleId,
                         fromDate: fromDate,
                         toDate: toDate,
+                        tripType: tripType,
+                        tripStatus: tripStatus,
                         _token: '{{csrf_token()}}',
                     },
                     success: function(response) {
@@ -107,7 +133,7 @@
                     }
                 })
             }
-           
+
         });
     });
 </script>

@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Device;
-use App\Models\VehicleDevice;
 use Illuminate\Support\Facades\DB;
 
 function countDeviceTypeStatus($status)
@@ -99,4 +97,21 @@ function findVehileForExpense($id)
     $vehicleId = DB::table('trips')->select('vehicle_id')->where('trip_id', $id)->first();
     $vehicleNumber = DB::table('vehicles')->select('vehicle_plate_number')->where('vehicle_id', $vehicleId->vehicle_id)->first();
     return $vehicleNumber->vehicle_plate_number;
+}
+
+function findDriverNameForTripReport($id)
+{
+    $driverName = DB::table('drivers')->select('driver_first_name', 'driver_last_name')->where('driver_user_id', $id)->first();
+    return $driverName->driver_first_name . ' ' . $driverName->driver_last_name;
+}
+
+function findHelperNameForTripReport($id)
+{
+    $helpers = array();
+    $ids = explode(',', $id);
+    for ($i = 0; $i < count($ids); $i++) {
+        $helper = DB::table('helpers')->select('helper_name')->where('helper_id', $ids[$i])->first();
+        $helpers[$i] = $helper->helper_name;
+    }
+    return implode(',', $helpers);
 }
