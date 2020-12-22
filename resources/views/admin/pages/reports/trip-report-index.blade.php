@@ -88,7 +88,7 @@
             var vehicleId = null;
             var tripType = null;
             var tripStatus = null;
-            $('#vehicleId').removeClass('is-invalid');
+            // $('#vehicleId').removeClass('is-invalid');
             $('#fromDate').removeClass('is-invalid');
             $('#toDate').removeClass('is-invalid');
 
@@ -104,9 +104,7 @@
                 tripStatus = this.value;
             });
 
-            if (!$("#vehicleId").val()) {
-                $('#vehicleId').addClass('is-invalid');
-            } else if (!$("#fromDate").val()) {
+            if (!$("#fromDate").val()) {
                 $('#fromDate').addClass('is-invalid');
             } else if (!$("#toDate").val()) {
                 $('#toDate').addClass('is-invalid');

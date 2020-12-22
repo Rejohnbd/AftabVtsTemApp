@@ -25,24 +25,12 @@ class TripReportController extends Controller
 
     public function reportByVehicle(Request $request)
     {
-        if ($request->tripType == null && $request->tripStatus == null) {
-            $datas = Trip::where('vehicle_id', $request->vehicleId)->whereBetween('created_at', [$request->fromDate . ' 00:00:00', $request->toDate . ' 23:59:59'])->get();
-            return response()->view('admin.pages.reports.trip-report-web', compact('datas'));
-        }
-
-        if ($request->tripType == null) {
-            $datas = Trip::where('vehicle_id', $request->vehicleId)->where('trip_status', $request->tripStatus)->whereBetween('created_at', [$request->fromDate . ' 00:00:00', $request->toDate . ' 23:59:59'])->get();
-            return response()->view('admin.pages.reports.trip-report-web', compact('datas'));
-        }
-
-        if ($request->tripStatus == null) {
-            $datas = Trip::where('vehicle_id', $request->vehicleId)->where('trip_type_id', $request->tripType)->whereBetween('created_at', [$request->fromDate . ' 00:00:00', $request->toDate . ' 23:59:59'])->get();
-            return response()->view('admin.pages.reports.trip-report-web', compact('datas'));
-        }
-
-        if ($request->tripType != null && $request->tripStatus != null) {
-            $datas = Trip::where('vehicle_id', $request->vehicleId)->where('trip_type_id', $request->tripType)->where('trip_status', $request->tripStatus)->whereBetween('created_at', [$request->fromDate . ' 00:00:00', $request->toDate . ' 23:59:59'])->get();
-            return response()->view('admin.pages.reports.trip-report-web', compact('datas'));
-        }
+        $datas = Trip::whereBetween('created_at', [$request->fromDate . ' 00:00:00', $request->toDate . ' 23:59:59'])
+            ->where('vehicle_id', 'LIKE', $request->vehicleId)
+            ->where('trip_status', 'LIKE', $request->tripStatus)
+            ->where('trip_type_id', 'LIKE', $request->tripType)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return response()->view('admin.pages.reports.trip-report-web', compact('datas'));
     }
 }
