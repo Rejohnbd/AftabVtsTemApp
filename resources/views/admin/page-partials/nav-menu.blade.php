@@ -3,6 +3,7 @@
         <div class="horizontal-mainwrapper container clearfix">
             <nav class="horizontalMenu clearfix">
                 <ul class="horizontalMenu-list">
+                    <li aria-haspopup="true"><a href="{{ route('all-vehicle-location') }}" class=""><i class="fe fe-home"></i> Dashboard</a></li>
                     <li aria-haspopup="true"><a href="#" class="sub-icon"><i class="fa fa-cog"></i> Settings <i class="fa fa-angle-down horizontal-icon"></i></a>
                         <ul class="sub-menu">
                             <li aria-haspopup="true"><a href="{{ route('company.index') }}">Companies</a></li>

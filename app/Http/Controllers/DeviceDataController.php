@@ -43,7 +43,7 @@ class DeviceDataController extends Controller
     public function datedReportDownload(Request $request)
     {
         $date = $request->selectedDate;
-        $datas = DB::table('device_data')->select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed', 'created_at')->where('vehicle_id', $request->vehicleId)->whereDate('created_at', $date)->get();
+        $datas = DB::table('device_data')->select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed', 'distance', 'fuel_use', 'created_at')->where('vehicle_id', $request->vehicleId)->whereDate('created_at', $date)->get();
         $pdf = PDF::loadView('admin.pages.reports.daily-distance-report', [
             'datas' => $datas
         ]);
@@ -74,7 +74,7 @@ class DeviceDataController extends Controller
         $date = strtotime($request->selectedDate);
         $month = date("m", $date);
         $year = date("Y", $date);
-        $datas = DB::table('device_data')->select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed', 'created_at')->where('vehicle_id', $request->vehicleId)->whereYear('created_at', $year)->whereMonth('created_at', $month)->get();
+        $datas = DB::table('device_data')->select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed', 'distance', 'fuel_use', 'created_at')->where('vehicle_id', $request->vehicleId)->whereYear('created_at', $year)->whereMonth('created_at', $month)->get();
         return response()->view('admin.pages.reports.monthly-report-web', compact('datas'));
     }
 
@@ -83,7 +83,7 @@ class DeviceDataController extends Controller
         $date = strtotime($request->selectedDate);
         $month = date("m", $date);
         $year = date("Y", $date);
-        $datas = DB::table('device_data')->select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed', 'created_at')->where('vehicle_id', $request->vehicleId)->whereYear('created_at', $year)->whereMonth('created_at', $month)->get();
+        $datas = DB::table('device_data')->select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed', 'distance', 'fuel_use', 'created_at')->where('vehicle_id', $request->vehicleId)->whereYear('created_at', $year)->whereMonth('created_at', $month)->get();
         $pdf = PDF::loadView('admin.pages.reports.monthly-report', [
             'datas' => $datas
         ]);

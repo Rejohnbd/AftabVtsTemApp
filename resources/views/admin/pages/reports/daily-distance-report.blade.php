@@ -67,18 +67,14 @@
                     <?php
                     for ($i; $i < count($datas); $i++) {
                         if (strtotime(date('G:i', mktime($hour, 0, 0))) <= strtotime(date('G:i', strtotime($datas[$i]->created_at))) && strtotime(date('G:i', strtotime($datas[$i]->created_at))) < strtotime(date('G:i', mktime($hour + 1, 0, 0)))) {
-                            if (($i % 2 == 0) || $i == 0) {
-                                $oldLat = $datas[$i]->latitude;
-                                $oldLng = $datas[$i]->longitude;
-                                if ($i != 0) {
-                                    $totalKm +=  calculateDistance($datas[$i - 1]->latitude, $datas[$i - 1]->longitude, $oldLat, $oldLng,);
-                                }
-                            } else {
-                                $totalKm +=  calculateDistance($oldLat, $oldLng, $datas[$i]->latitude, $datas[$i]->longitude);
+                            if ($datas[$i]->status == 0 && $datas[$i]->speed <= 1) {
+                                $totalKm += $datas[$i]->distance;
+                            } else if ($datas[$i]->status == 1) {
+                                $totalKm += $datas[$i]->distance;
                             }
                         } else {
                             echo  round($totalKm, 2) . ' KM';
-                            $subTotalKm[$subTotalKmIndex] = round($totalKm, 2);
+                            $subTotalKm[$subTotalKmIndex] = $totalKm;
                             $subTotalKmIndex++;
                             $totalKm = 0;
                             break;

@@ -48,7 +48,7 @@
         $dateArrayIndex = 0;
         for ($i = 0; $i < count($datas); $i++) {
             if ($loopDate == date('Y-m-d', strtotime($datas[$i]->created_at))) {
-                $loopDatedArray[$dateArrayIndex] = [$datas[$i]->latitude, $datas[$i]->longitude];
+                $loopDatedArray[$dateArrayIndex] = [$datas[$i]->distance, $datas[$i]->status, $datas[$i]->speed];
                 if ($i == (count($datas) - 1)) {
                     showRow($loopDate, $loopDatedArray);
                 }
@@ -58,7 +58,7 @@
                 $loopDate = date('Y-m-d', strtotime($datas[$i]->created_at));
                 $loopDatedArray = null;
                 $dateArrayIndex = 0;
-                $loopDatedArray[$dateArrayIndex] = [$datas[$i]->latitude, $datas[$i]->longitude];
+                $loopDatedArray[$dateArrayIndex] = [$datas[$i]->distance, $datas[$i]->status, $datas[$i]->speed];
                 $dateArrayIndex++;
             }
         }
@@ -75,11 +75,10 @@
                     $totalKm = 0;
                     $dataIndex = 0;
                     for ($dataIndex; $dataIndex < count($data); $dataIndex++) {
-                        if (($dataIndex % 2 == 0) || $dataIndex == 0) {
-                            $oldLat = $data[$dataIndex][0];
-                            $oldLng = $data[$dataIndex][1];
-                        } else {
-                            $totalKm +=  calculateDistance($oldLat, $oldLng, $data[$dataIndex][0], $data[$dataIndex][1]);
+                        if ($data[$dataIndex][1] == 0 && $data[$dataIndex][2] <= 1) {
+                            $totalKm += $data[$dataIndex][0];
+                        } else if ($data[$dataIndex][1] == 1) {
+                            $totalKm += $data[$dataIndex][0];
                         }
                     }
                     echo  round($totalKm, 2) . ' KM';

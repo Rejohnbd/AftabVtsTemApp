@@ -37,9 +37,9 @@
                             <div class="tabs-menu ">
                                 <ul class="nav panel-tabs">
                                     <li><a href="#tab51" class="active" data-toggle="tab">Daily Report</a></li>
-                                    <li><a href="#tab52" data-toggle="tab">Engine Status Reports</a></li>
+                                    {{-- <li><a href="#tab52" data-toggle="tab">Engine Status Reports</a></li> --}}
                                     <li><a href="#tab53" data-toggle="tab">Monthly Reports</a></li>
-                                    <li><a href="#tab54" data-toggle="tab">Expense Reports</a></li>
+                                    {{-- <li><a href="#tab54" data-toggle="tab">Expense Reports</a></li> --}}
                                 </ul>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane" id="tab52">
+                                {{-- <div class="tab-pane" id="tab52">
                                     <div class="card">
                                         <div class="card-header">
                                             <h3 class="card-title">Show Engine Status Report by Date</h3>
@@ -92,7 +92,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="tab-pane" id="tab53">
                                     <div class="card">
                                         <div class="card-header">
@@ -117,7 +117,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane " id="tab54">
+                                {{-- <div class="tab-pane " id="tab54">
                                     <div class="card">
                                         <div class="card-header">
                                             <h3 class="card-title">Show Expense Report</h3>
@@ -140,7 +140,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
