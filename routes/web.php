@@ -73,6 +73,7 @@ Route::middleware(['auth'])->group(function () {
     // Trip Report
     Route::get('trip-reports', 'TripReportController@index')->name('trip-reports');
     Route::post('trip-reports-by-vehicle', 'TripReportController@reportByVehicle')->name('trip-reports-by-vehicle');
+    Route::post('trip-reports-download', 'TripReportController@trpReportDownload')->name('trip-reports-download');
 
     // Driver
     Route::get('driver-dashboard', 'DriverDashboardController@index')->name('driver-dashboard');

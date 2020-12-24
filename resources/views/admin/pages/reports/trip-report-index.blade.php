@@ -41,17 +41,15 @@
                                 <button id="btnExpensesReport" class="btn btn-sm btn-primary">
                                     <span class="fa fa-eye"></span>
                                 </button>
-                                {{-- <button id="btnEngineStatusReportDownload" class="btn btn-sm btn-primary">
+                                <button id="btnTripReportDownload" class="btn btn-sm btn-primary">
                                     <span class="fa fa-download"></span>
-                                </button> --}}
+                                </button>
                             </span>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="card-body">
-                        <div id="expenseReportTable" class="table-responsive">
-                        </div>
+                    <div id="expenseReportTable" class="table-responsive">
                     </div>
                 </div>
             </div>
@@ -133,6 +131,159 @@
             }
 
         });
+
+        $('#btnTripReportDownload').on('click', function() {
+            var fromDate = null;
+            var toDate = null;
+            var vehicleId = null;
+            var tripType = null;
+            var tripStatus = null;
+            // $('#vehicleId').removeClass('is-invalid');
+            $('#fromDate').removeClass('is-invalid');
+            $('#toDate').removeClass('is-invalid');
+
+            $('#vehicleId').on('change', function() {
+                vehicleId = this.value;
+            });
+
+            $('#tripType').on('change', function() {
+                tripType = this.value;
+            });
+
+            $('#tripStatus').on('change', function() {
+                tripStatus = this.value;
+            });
+
+            if (!$("#fromDate").val()) {
+                $('#fromDate').addClass('is-invalid');
+            } else if (!$("#toDate").val()) {
+                $('#toDate').addClass('is-invalid');
+            } else {
+                fromDate = $("#fromDate").val();
+                toDate = $("#toDate").val();
+                vehicleId = $("#vehicleId").val();
+                tripType = $("#tripType").val();
+                tripStatus = $("#tripStatus").val();
+
+                $.ajax({
+                    url: "{{ route('trip-reports-download') }}",
+                    method: 'POST',
+                    data: {
+                        vehicleId: vehicleId,
+                        fromDate: fromDate,
+                        toDate: toDate,
+                        tripType: tripType,
+                        tripStatus: tripStatus,
+                        _token: '{{csrf_token()}}',
+                    },
+                    success: function(response) {
+                        console.log(response)
+                        JSONToCSVConvertor(null, response, 'Trip_Reports', true);
+                    }
+                })
+            }
+        });
+
+        function JSONToCSVConvertor(info, JSONData, ReportTitle, ShowLabel) {
+            //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
+            var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+
+            var CSV = '';
+            //Set Report title in first row or line
+            CSV += ReportTitle + ' \r\n';
+            // CSV += 'Device No: ' + info.deviceId + '\r\n';
+            // CSV += 'From Date: ' + info.startDate + '\r\n';
+            // CSV += 'To Date: ' + info.endDate + '\r\n\n';
+
+            //This condition will generate the Label/Header
+            if (ShowLabel) {
+                var row = "";
+                //This loop will extract the label from 1st index of on array
+                for (var index in arrData[0]) {
+                    //Now convert each value to string and comma-seprated
+                    row += index + ',';
+                }
+                row = row.slice(0, -1);
+                //append Label row with line break
+                CSV += row.toUpperCase() + '\r\n';
+            }
+
+            //1st loop is to extract each row
+            for (var i = 0; i < arrData.length; i++) {
+                var row = "";
+
+                //2nd loop will extract each column and convert it in string comma-seprated
+                for (var index in arrData[i]) {
+                    console.log(index);
+                    if (index == 'trip_date') {
+                        row += '"' + arrData[i][index] + '",';
+                    } else if (index == 'driver_name') {
+                        row += '"' + arrData[i][index] + '",';
+                    } else if (index == 'helper_name') {
+                        row += '"' + arrData[i][index] + '",';
+                    } else if (index == 'trip_from') {
+                        row += '"' + arrData[i][index] + '",';
+                    } else if (index == 'trip_to') {
+                        row += '"' + arrData[i][index] + '",';
+                    } else if (index == 'trip_details') {
+                        row += '"' + arrData[i][index] + '",';
+                    } else if (index == 'trip_start_datetime') {
+                        row += '"' + arrData[i][index] + '",';
+                    } else if (index == 'trip_start_kilometer') {
+                        row += '"' + arrData[i][index] + '",';
+                    } else if (index == 'trip_end_datetime') {
+                        row += '"' + arrData[i][index] + '",';
+                    } else if (index == 'trip_end_kilometer') {
+                        row += '"' + arrData[i][index] + '",';
+                    } else if (index == 'trip_status') {
+                        if (arrData[i][index] == 1) {
+                            row += '"' + 'Yet to Start' + '",';
+                        } else if (arrData[i][index] == 2) {
+                            row += '"' + 'Started' + '",';
+                        } else {
+                            row += '"' + 'Complete' + '",';
+                        }
+                    }
+                }
+
+                row.slice(0, row.length - 1);
+
+                //add a line break after each row
+                CSV += row + '\r\n';
+            }
+
+            if (CSV == '') {
+                alert("Invalid data");
+                return;
+            }
+
+            //Generate a file name
+            var fileName = "";
+            //this will remove the blank-spaces from the title and replace it with an underscore
+            fileName += ReportTitle.replace(/ /g, "_");
+
+            //Initialize file format you want csv or xls
+            var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
+
+            // Now the little tricky part.
+            // you can use either>> window.open(uri);
+            // but this will not work in some browsers
+            // or you will not get the correct file extension    
+
+            //this trick will generate a temp <a /> tag
+            var link = document.createElement("a");
+            link.href = uri;
+
+            //set the visibility hidden so it will not effect on your web-layout
+            link.style = "visibility:hidden";
+            link.download = fileName + ".csv";
+
+            //this part will append the anchor tag and remove it after automatic click
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
     });
 </script>
 @endsection
