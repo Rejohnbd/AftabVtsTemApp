@@ -17,8 +17,20 @@
                     <h3 class="card-title">Expenses Report</h3>
                     <div class="card-options">
                         <div class="input-group">
+                            <select class="form-control mr-2" id="company">
+                                <option value="" label="Choose Company"></option>
+                                @foreach($allCompanies as $company)
+                                <option value="{{ $company->company_id }}">{{ $company->company_name }}</option>
+                                @endforeach
+                            </select>
+                            <select class="form-control mr-2" id="vehicleReg">
+                                <option value="" label="Choose Vehicle"></option>
+                                @foreach($allVechicles as $vehicle)
+                                <option value="{{ $vehicle->vehicle_id }}">{{ $vehicle->vehicle_plate_number }}</option>
+                                @endforeach
+                            </select>
                             <select class="form-control mr-2" id="expensesType">
-                                <option value="" label="Choose Expense Type"></option>
+                                <option value="" label="Expense Type"></option>
                                 @foreach($activeExpensesTypes as $expensesType)
                                 <option value="{{ $expensesType->expense_type_id }}">{{ $expensesType->expense_type_name }}</option>
                                 @endforeach
@@ -29,17 +41,15 @@
                                 <button id="btnExpensesReport" class="btn btn-sm btn-primary">
                                     <span class="fa fa-eye"></span>
                                 </button>
-                                <button id="btnEngineStatusReportDownload" class="btn btn-sm btn-primary">
+                                {{-- <button id="btnEngineStatusReportDownload" class="btn btn-sm btn-primary">
                                     <span class="fa fa-download"></span>
-                                </button>
+                                </button> --}}
                             </span>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="card-body">
-                        <div id="expenseReportTable" class="table-responsive">
-                        </div>
+                    <div id="expenseReportTable" class="table-responsive">
                     </div>
                 </div>
             </div>
@@ -73,24 +83,32 @@
         $('#btnExpensesReport').on('click', function() {
             var fromDate = null;
             var toDate = null;
+            var companyId = null;
+            var vehicleId = null;
             var expensesTypeId = null;
             $('#expensesType').removeClass('is-invalid');
             $('#fromDate').removeClass('is-invalid');
             $('#toDate').removeClass('is-invalid');
 
+            $('#company').on('change', function() {
+                companyId = this.value;
+            });
+            $('#vehicleReg').on('change', function() {
+                vehicleId = this.value;
+            });
             $('#expensesType').on('change', function() {
                 expensesTypeId = this.value;
             });
 
-            if (!$("#expensesType").val()) {
-                $('#expensesType').addClass('is-invalid');
-            } else if (!$("#fromDate").val()) {
+            if (!$("#fromDate").val()) {
                 $('#fromDate').addClass('is-invalid');
             } else if (!$("#toDate").val()) {
                 $('#toDate').addClass('is-invalid');
             } else {
                 fromDate = $("#fromDate").val();
                 toDate = $("#toDate").val();
+                companyId = $("#company").val();
+                vehicleId = $("#vehicleReg").val();
                 expensesTypeId = $("#expensesType").val();
 
                 $.ajax({
@@ -98,6 +116,8 @@
                     method: 'POST',
                     data: {
                         expensesTypeId: expensesTypeId,
+                        companyId: companyId,
+                        vehicleId: vehicleId,
                         fromDate: fromDate,
                         toDate: toDate,
                         _token: '{{csrf_token()}}',

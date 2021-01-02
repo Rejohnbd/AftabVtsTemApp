@@ -115,3 +115,21 @@ function findHelperNameForTripReport($id)
     }
     return implode(',', $helpers);
 }
+
+
+function findTripDetailsForExpenseReport($id)
+{
+    $tripDetails = DB::table('trips')->select('trip_details')->where('trip_id', $id)->first();
+    return $tripDetails->trip_details;
+}
+
+function findCompanyForExpenseReport($id)
+{
+    $tripCompany = DB::table('trips')->select('company_id')->where('trip_id', $id)->first();
+    if (!is_null($tripCompany->company_id)) {
+        $company = DB::table('companies')->select('company_name')->where('company_id', $tripCompany->company_id)->first();
+        return $company->company_name;
+    } else {
+        return '';
+    }
+}
