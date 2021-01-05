@@ -214,7 +214,6 @@
 
                 //2nd loop will extract each column and convert it in string comma-seprated
                 for (var index in arrData[i]) {
-                    console.log(index);
                     if (index == 'trip_date') {
                         row += '"' + arrData[i][index] + '",';
                     } else if (index == 'driver_name') {
