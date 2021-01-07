@@ -13,7 +13,7 @@
         #customers td,
         #customers th {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 6px;
         }
 
         #customers tr:nth-child(even) {
@@ -25,8 +25,8 @@
         }
 
         #customers th {
-            padding-top: 8px;
-            padding-bottom: 8px;
+            padding-top: 6px;
+            padding-bottom: 6px;
             text-align: left;
             background-color: #4CAF50;
             color: white;
@@ -35,6 +35,8 @@
 </head>
 
 <body>
+    <h4 style="text-align: center; margin-bottom: 0px; padding-bottom: 0px;">Aftab Bahumukhi Farms Ltd</h4>
+    <h5 style="text-align: center; margin-top: 0px; padding-top: 0px;">Vehicle Number: <?php echo $regiNumber;?>, &nbsp; Date: <?php echo $downloaddate; ?></h5>
     <table id="customers">
         <tr>
             <th>Time</th>

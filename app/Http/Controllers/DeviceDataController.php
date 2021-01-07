@@ -43,9 +43,12 @@ class DeviceDataController extends Controller
     public function datedReportDownload(Request $request)
     {
         $date = $request->selectedDate;
+        $vehicleRegiNumber = findVehicleById($request->vehicleId);
         $datas = DB::table('device_data')->select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed', 'distance', 'fuel_use', 'created_at')->where('vehicle_id', $request->vehicleId)->whereDate('created_at', $date)->get();
         $pdf = PDF::loadView('admin.pages.reports.daily-distance-report', [
-            'datas' => $datas
+            'datas' => $datas,
+            'regiNumber' => $vehicleRegiNumber,
+            'downloaddate' => $date
         ]);
         $pdf->setPaper('A4');
         return $pdf->download('Daily_Reports.pdf');
@@ -83,9 +86,14 @@ class DeviceDataController extends Controller
         $date = strtotime($request->selectedDate);
         $month = date("m", $date);
         $year = date("Y", $date);
+        $vehicleRegiNumber = findVehicleById($request->vehicleId);
         $datas = DB::table('device_data')->select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed', 'distance', 'fuel_use', 'created_at')->where('vehicle_id', $request->vehicleId)->whereYear('created_at', $year)->whereMonth('created_at', $month)->get();
         $pdf = PDF::loadView('admin.pages.reports.monthly-report', [
-            'datas' => $datas
+            'datas' => $datas,
+            'regiNumber' => $vehicleRegiNumber,
+            'month' => $month,
+            'year' => $year
+
         ]);
         $pdf->setPaper('A4');
         return $pdf->download('Monthly_Reports.pdf');

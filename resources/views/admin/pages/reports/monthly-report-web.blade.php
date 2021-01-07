@@ -12,15 +12,16 @@
         $loopDate = date('Y-m-d', strtotime($datas[0]->created_at));
         $loopDatedArray = array();
         $dateArrayIndex = 0;
+        $subTotal = 0;
         for ($i = 0; $i < count($datas); $i++) {
             if ($loopDate == date('Y-m-d', strtotime($datas[$i]->created_at))) {
                 $loopDatedArray[$dateArrayIndex] = [$datas[$i]->distance, $datas[$i]->status, $datas[$i]->speed];
                 if ($i == (count($datas) - 1)) {
-                    showRow($loopDate, $loopDatedArray);
+                    $subTotal = $subTotal + showRow($loopDate, $loopDatedArray);
                 }
                 $dateArrayIndex++;
             } else {
-                showRow($loopDate, $loopDatedArray);
+                $subTotal = $subTotal + showRow($loopDate, $loopDatedArray);
                 $loopDate = date('Y-m-d', strtotime($datas[$i]->created_at));
                 $loopDatedArray = null;
                 $dateArrayIndex = 0;
@@ -48,6 +49,7 @@
                         }
                     }
                     echo  round($totalKm, 2) . ' KM';
+                    $retotal = round($totalKm, 2);
                     $totalKm = 0;
                     $dataIndex = 0;
                     ?>
@@ -55,7 +57,13 @@
                 <td></td>
             </tr>
         <?php
+        return $retotal;
         }
         ?>
+        <tr>
+            <th>Total</th>
+            <th><?php echo $subTotal . ' Km'; ?></th>
+            <th></th>
+        </tr>
     </tbody>
 </table>
