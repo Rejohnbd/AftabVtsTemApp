@@ -3,7 +3,7 @@
 @section('title', 'Expenses Reports')
 
 @section('content')
-<div class="container-fluid  content-area">
+<div class="container  content-area">
     <div class="section">
         <div class="page-header">
             <ol class="breadcrumb">

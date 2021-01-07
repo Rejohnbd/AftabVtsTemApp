@@ -1,13 +1,13 @@
-<table class="table card-table table-vcenter text-nowrap">
+<table class="table card-table">
     <thead>
         <tr>
-            <th>Company</th>
-            <th>Vehicle</th>
-            <th>Trip Details</th>
-            <th>Expense Type</th>
-            <th>Expense Date</th>
-            <th>Expense Details</th>
-            <th>Amount</th>
+            <th width="10%">Company</th>
+            <th width="10%">Vehicle</th>
+            <th width="20%">Trip Details</th>
+            <th width="10%">Expense Type</th>
+            <th width="10%">Expense Date</th>
+            <th width="30%">Expense Details</th>
+            <th width="10%">Amount</th>
         </tr>
     </thead>
     <tbody>

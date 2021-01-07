@@ -3,7 +3,7 @@
 @section('title', 'Trip List')
 
 @section('content')
-<div class="container-fluid content-area">
+<div class="container content-area">
     <div class="section">
         <div class="page-header">
             <ol class="breadcrumb">
@@ -26,22 +26,23 @@
                         <h3 class="card-title">Trip List Table</h3>
                     </div>
                     <div class="table-responsive">
-                        <table class="table card-table table-vcenter">
+                        <table class="table card-table">
                             <thead>
                                 <tr>
-                                    <th>Sl.</th>
-                                    <th>Trip Date</th>
-                                    <th>Trip Type</th>
-                                    <th>Vehicle Regi. No.</th>
-                                    <th>Company Name</th>
-                                    <th>Driver Name</th>
-                                    <th>Helper Name</th>
-                                    <th>Trip Location</th>
-                                    <th>Trip Details</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th width="2%">Sl.</th>
+                                    <th width="5%">Trip Date</th>
+                                    <th width="5%">Trip Type</th>
+                                    <th width="5%">Vehicle Regi. No.</th>
+                                    <th width="5%">Company Name</th>
+                                    <th width="5%">Driver Name</th>
+                                    <th width="5%">Helper Name</th>
+                                    <th width="14%">Trip From</th>
+                                    <th width="14%">Trip To</th>
+                                    <th width="10%">Trip Details</th>
+                                    <th width="5%">Start Time</th>
+                                    <th width="5%">End Time</th>
+                                    <th width="5%">Status</th>
+                                    <th width="15%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -63,10 +64,11 @@
                                         }
                                         ?>
                                     </td>
-                                    <td>{{ $data->trip_from }} to {{ $data->trip_to }}</td>
+                                    <td>{{ $data->trip_from }}</td>
+                                    <td>{{ $data->trip_to }}</td>
                                     <td>{{ $data->trip_details }}</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>@if($data->trip_start_datetime) {{ date('d/m/Y  H:i:s A', strtotime($data->trip_start_datetime)) }} @endif</td>
+                                    <td>@if($data->	trip_end_datetime) {{ date('d/m/Y H:i:s A', strtotime($data->	trip_end_datetime)) }} @endif</td>
                                     <td>@if($data->trip_status == 1) Yet to Start @elseif($data->trip_status == 2) Started @else Completed @endif</td>
                                     <td>
                                         <div class="btn-list">
@@ -85,7 +87,7 @@
                     </div>
                     <div class="m-2 d-flex justify-content-center">
                         {!! $datas->render() !!}
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div>

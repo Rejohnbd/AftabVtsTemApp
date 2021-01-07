@@ -3,7 +3,7 @@
 @section('title', 'Expenses List')
 
 @section('content')
-<div class="container-fluid  content-area">
+<div class="container  content-area">
     <div class="section">
         <div class="page-header">
             <ol class="breadcrumb">
@@ -26,17 +26,17 @@
                         <h3 class="card-title">Expenses Table</h3>
                     </div>
                     <div class="table-responsive">
-                        <table class="table card-table table-vcenter text-nowrap">
+                        <table class="table card-table">
                             <thead>
                                 <tr>
-                                    <th>Sl.</th>
-                                    <th>Vehicle No</th>
-                                    <th>Trip Date</th>
-                                    <th>Trip Location</th>
-                                    <th>Expenses Description</th>
-                                    <th>Expenses Amount</th>
-                                    <th>Expenses Added By</th>
-                                    <th>Action</th>
+                                    <th width="5%">Sl.</th>
+                                    <th width="15%">Vehicle No</th>
+                                    <th width="10%">Trip Date</th>
+                                    <th width="30%">Trip Location</th>
+                                    <th width="15%">Expenses Description</th>
+                                    <th width="5%">Expenses Amount</th>
+                                    <th width="5%">Expenses Added By</th>
+                                    <th width="20%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
