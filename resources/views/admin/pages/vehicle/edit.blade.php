@@ -23,7 +23,23 @@
                             @csrf
                             @method('PUT')
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label mt-0">Select Company</label>
+                                        <select name="company_id" class="form-control @error('company_id') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
+                                            <option label="Choose one"></option>
+                                            @foreach($allCompanies as $company)
+                                            <option value="{{ $company->company_id }}" @if($vehicle->company_id == $company->company_id) selected @endif>{{ $company->company_name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('company_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label mt-0">Vehicle Type</label>
                                         <select name="vehicle_type_id" class="form-control @error('vehicle_type_id') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
@@ -39,22 +55,6 @@
                                         @enderror
                                     </div>
                                 </div>
-                                {{-- <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label mt-0">Vehicle User</label>
-                                        <select name="customer_user_id" class="form-control @error('customer_user_id') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
-                                            <option label="Choose one"></option>
-                                            @foreach($allCustomer as $customer)
-                                            <option value="{{ $customer->customer_id }}" @if($vehicle->customer_user_id == $customer->customer_id) selected @endif>{{ $customer->customer_first_name }} {{ $customer->customer_last_name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('customer_user_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
-                                </div> --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Vehicle System Code</label>

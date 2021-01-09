@@ -45,7 +45,7 @@
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ findVehileForExpense($data->trip_id) }}</td>
                                     <td>{{ date('d/m/Y', strtotime($data->trip->trip_date)) }}</td>
-                                    <td>{{ $data->trip->trip_from }} to {{ $data->trip->trip_to }}</td>
+                                    <td>{{ str_replace(',', ', ', $data->trip->trip_from) }} to {{ str_replace(',', ', ', $data->trip->trip_to) }}</td>
                                     <td>{{ $data->expense_description }}</td>
                                     <td>{{ $data->total_expense_amount }}</td>
                                     <td>{{ ucfirst($data->user->type) }}</td>

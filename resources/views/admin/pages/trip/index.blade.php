@@ -64,9 +64,9 @@
                                         }
                                         ?>
                                     </td>
-                                    <td>{{ $data->trip_from }}</td>
-                                    <td>{{ $data->trip_to }}</td>
-                                    <td>{{ $data->trip_details }}</td>
+                                    <td>{{ str_replace(',', ', ', $data->trip_from) }}</td>
+                                    <td>{{ str_replace(',', ', ', $data->trip_to) }}</td>
+                                    <td>{{ str_replace(',', ', ', $data->trip_details) }}</td>
                                     <td>@if($data->trip_start_datetime) {{ date('d/m/Y  H:i:s A', strtotime($data->trip_start_datetime)) }} @endif</td>
                                     <td>@if($data->	trip_end_datetime) {{ date('d/m/Y H:i:s A', strtotime($data->	trip_end_datetime)) }} @endif</td>
                                     <td>@if($data->trip_status == 1) Yet to Start @elseif($data->trip_status == 2) Started @else Completed @endif</td>

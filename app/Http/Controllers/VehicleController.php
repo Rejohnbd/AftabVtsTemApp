@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Vehicle\StoreVehicleRequest;
 use App\Http\Requests\Vehicle\UpdateVehicleRequest;
+use App\Models\Company;
 use App\Models\Customer;
 use App\Models\Vehicle;
 use App\Models\VehicleDevice;
@@ -32,7 +33,8 @@ class VehicleController extends Controller
     {
         $allActiveVehicleType = VehicleType::where('status', 1)->get();
         $allCustomer = Customer::all();
-        return view('admin.pages.vehicle.create')->with('allActiveVehicleType', $allActiveVehicleType)->with('allCustomer', $allCustomer);
+        $allCompanies = Company::all();
+        return view('admin.pages.vehicle.create')->with('allActiveVehicleType', $allActiveVehicleType)->with('allCustomer', $allCustomer)->with('allCompanies', $allCompanies);
     }
 
     /**
@@ -45,7 +47,7 @@ class VehicleController extends Controller
     {
         $newVehicle = new Vehicle;
         $newVehicle->vehicle_type_id                    = $request->vehicle_type_id;
-        // $newVehicle->customer_user_id                   = $request->customer_user_id;
+        $newVehicle->company_id                         = $request->company_id;
         $newVehicle->vehicle_system_code                = $request->vehicle_system_code;
         $newVehicle->vehicle_ownership_type             = $request->vehicle_ownership_type;
         $newVehicle->vehicle_plate_number               = $request->vehicle_plate_number;
@@ -93,7 +95,8 @@ class VehicleController extends Controller
     {
         $allActiveVehicleType = VehicleType::where('status', 1)->get();
         $allCustomer = Customer::all();
-        return view('admin.pages.vehicle.edit')->with('vehicle', $vehicle)->with('allActiveVehicleType', $allActiveVehicleType)->with('allCustomer', $allCustomer);
+        $allCompanies = Company::all();
+        return view('admin.pages.vehicle.edit')->with('vehicle', $vehicle)->with('allActiveVehicleType', $allActiveVehicleType)->with('allCustomer', $allCustomer)->with('allCompanies', $allCompanies);
     }
 
     /**
@@ -107,7 +110,7 @@ class VehicleController extends Controller
     {
         $updateVehile = $vehicle->update([
             'vehicle_type_id'                    => $request->vehicle_type_id,
-            // 'customer_user_id'                   => $request->customer_user_id,
+            'company_id'                         => $request->company_id,
             'vehicle_system_code'                => $request->vehicle_system_code,
             'vehicle_ownership_type'             => $request->vehicle_ownership_type,
             'vehicle_plate_number'               => $request->vehicle_plate_number,

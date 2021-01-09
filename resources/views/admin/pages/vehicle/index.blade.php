@@ -30,6 +30,7 @@
                             <thead>
                                 <tr>
                                     <th>Sl.</th>
+                                    <th>Company Name</th>
                                     <th>Vehicle Type</th>
                                     <th>Vehicle Number</th>
                                     <th>Insurance Expire</th>
@@ -42,6 +43,7 @@
                                 @forelse($datas as $data)
                                 <tr id="vehicleId-{{ $data->vehicle_id }}">
                                     <th scope="row">{{ $loop->iteration }}</th>
+                                    <td>@if($data->company_id){{ $data->company->company_name }} @endif</td>
                                     <td>{{ $data->vehicleType->vehicle_type_name }}</td>
                                     <td>{{ $data->vehicle_plate_number }}</td>
                                     <td>{{ date('d/m/Y', strtotime($data->vehicle_insurance_expire_date)) }}</td>

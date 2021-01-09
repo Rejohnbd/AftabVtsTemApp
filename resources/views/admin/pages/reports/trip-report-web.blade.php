@@ -19,8 +19,8 @@
             <th>{{ date('d/m/Y', strtotime($data->trip_date)) }}</th>
             <th>{{$data->driver->driver_first_name}} {{ $data->driver->driver_last_name }}</th>
             {{-- <th>{{ findDriverNameForTripReport($data->driver_user_id) }}</th> --}}
-            <th>@if($data->helper_id){{ findHelperNameForTripReport($data->helper_id) }} @endif</th>
-            <th>{{ $data->trip_from }} to {{ $data->trip_to }}</th>
+            <th>@if($data->helper_id){{ findHelperNameForTripReport( $data->helper_id) }} @endif</th>
+            <th>{{ str_replace(',', ', ', $data->trip_from) }} to {{ str_replace(',', ', ',$data->trip_to) }}</th>
             <th>{{ $data->trip_details }}</th>
             <th>@if($data->trip_start_datetime){{ date('d/m/Y g:i a', strtotime($data->trip_start_datetime)) }}@endif</th>
             <th>{{ $data->trip_start_kilometer }}</th>

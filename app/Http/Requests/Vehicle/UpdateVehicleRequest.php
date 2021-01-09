@@ -25,7 +25,7 @@ class UpdateVehicleRequest extends FormRequest
     {
         return [
             'vehicle_type_id'                   => 'required|numeric',
-            // 'customer_user_id'                  => 'required|numeric',
+            'company_id'                        => 'required|numeric',
             'vehicle_plate_number'              => 'required|string',
             'vehicle_kpl'                       => 'required|between:0,99.99',
             'vehicle_brand'                     => 'required|string',
@@ -43,8 +43,8 @@ class UpdateVehicleRequest extends FormRequest
         return [
             'vehicle_type_id.required'                      => 'Vehicle Type is Required',
             'vehicle_type_id.numeric'                       => 'Provide Valid Vehicle Type',
-            // 'customer_user_id.required'                     => 'Vehicle User is Required',
-            // 'customer_user_id.numeric'                      => 'Provide Valid Vehicle User',
+            'company_id.required'                           => 'Company Select is Required',
+            'company_id.numeric'                            => 'Provide Valid Company Name',
             'vehicle_plate_number.required'                 => 'Registration Number is Required',
             'vehicle_plate_number.string'                   => 'Provide Valid Registration Number',
             'vehicle_kpl.required'                          => 'Fuel Consumption is Required',

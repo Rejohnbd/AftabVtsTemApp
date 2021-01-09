@@ -24,4 +24,10 @@ class Vehicle extends Model
     {
         return $this->belongsTo(Device::class, 'device_id', 'device_id');
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'company_id');
+    }
+
 }
