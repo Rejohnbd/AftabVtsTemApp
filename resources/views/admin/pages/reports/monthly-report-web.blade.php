@@ -13,19 +13,24 @@
         $loopDatedArray = array();
         $dateArrayIndex = 0;
         $subTotal = 0;
+        $subTotalFuel = 0;
         for ($i = 0; $i < count($datas); $i++) {
             if ($loopDate == date('Y-m-d', strtotime($datas[$i]->created_at))) {
-                $loopDatedArray[$dateArrayIndex] = [$datas[$i]->distance, $datas[$i]->status, $datas[$i]->speed];
+                $loopDatedArray[$dateArrayIndex] = [$datas[$i]->distance, $datas[$i]->status, $datas[$i]->speed, $datas[$i]->fuel_use];
                 if ($i == (count($datas) - 1)) {
-                    $subTotal = $subTotal + showRow($loopDate, $loopDatedArray);
+                    $returnedValue = showRow($loopDate, $loopDatedArray);
+                    $subTotal = $subTotal + $returnedValue[0];
+                    $subTotalFuel = $subTotalFuel + $returnedValue[1];
                 }
                 $dateArrayIndex++;
             } else {
-                $subTotal = $subTotal + showRow($loopDate, $loopDatedArray);
+                $returnedValue = showRow($loopDate, $loopDatedArray);
+                $subTotal = $subTotal + $returnedValue[0];
+                $subTotalFuel = $subTotalFuel + $returnedValue[1];
                 $loopDate = date('Y-m-d', strtotime($datas[$i]->created_at));
                 $loopDatedArray = null;
                 $dateArrayIndex = 0;
-                $loopDatedArray[$dateArrayIndex] = [$datas[$i]->distance, $datas[$i]->status, $datas[$i]->speed];
+                $loopDatedArray[$dateArrayIndex] = [$datas[$i]->distance, $datas[$i]->status, $datas[$i]->speed, $datas[$i]->fuel_use];
                 $dateArrayIndex++;
             }
         }
@@ -40,30 +45,39 @@
                     $oldLat = null;
                     $oldLng = null;
                     $totalKm = 0;
+                    $totalFuel = 0;
                     $dataIndex = 0;
                     for ($dataIndex; $dataIndex < count($data); $dataIndex++) {
                         if ($data[$dataIndex][1] == 0 && $data[$dataIndex][2] <= 1) {
                             $totalKm += $data[$dataIndex][0];
+                            $totalFuel += $data[$dataIndex][3]; 
                         } else if ($data[$dataIndex][1] == 1) {
                             $totalKm += $data[$dataIndex][0];
+                            $totalFuel += $data[$dataIndex][3]; 
                         }
                     }
                     echo  round($totalKm, 2) . ' KM';
-                    $retotal = round($totalKm, 2);
+                    $retotalKm = round($totalKm, 2);
                     $totalKm = 0;
                     $dataIndex = 0;
                     ?>
                 </td>
-                <td></td>
+                <td>
+                    <?php
+                        echo round($totalFuel, 2) . ' Ltr';
+                        $retotalFuel = round($totalFuel, 2);
+                        $totalFuel = 0;
+                    ?>
+                </td>
             </tr>
         <?php
-        return $retotal;
+        return array($retotalKm, $retotalFuel);
         }
         ?>
         <tr>
             <th>Total</th>
             <th><?php echo $subTotal . ' Km'; ?></th>
-            <th></th>
+            <th><?php echo $subTotalFuel . ' Ltr'; ?></th>
         </tr>
     </tbody>
 </table>

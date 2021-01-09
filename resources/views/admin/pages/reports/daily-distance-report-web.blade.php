@@ -12,10 +12,13 @@
         $oldLat = null;
         $oldLng = null;
         $totalKm = 0;
+        $totalFuel = 0;
         $i = 0;
         $hour = 0;
         $subTotalKm = array();
         $subTotalKmIndex = 0;
+        $subTotalFuel = array();
+        $subTotalFuelIndex = 0;
         while ($hour < 24) {
         ?>
             <tr>
@@ -35,8 +38,10 @@
                         if (strtotime(date('G:i', mktime($hour, 0, 0))) <= strtotime(date('G:i', strtotime($datas[$i]->created_at))) && strtotime(date('G:i', strtotime($datas[$i]->created_at))) < strtotime(date('G:i', mktime($hour + 1, 0, 0)))) {
                             if ($datas[$i]->status == 0 && $datas[$i]->speed <= 1) {
                                 $totalKm += $datas[$i]->distance;
+                                $totalFuel += $datas[$i]->fuel_use; 
                             } else if ($datas[$i]->status == 1) {
                                 $totalKm += $datas[$i]->distance;
+                                $totalFuel += $datas[$i]->fuel_use; 
                             }
                         } else {
                             echo  round($totalKm, 2) . ' KM';
@@ -48,7 +53,14 @@
                     }
                     ?>
                 </td>
-                <td></td>
+                <td>
+                    <?php
+                        echo round($totalFuel, 2) . ' Ltr';
+                        $subTotalFuel[$subTotalFuelIndex] = $totalFuel;
+                        $subTotalFuelIndex++;
+                        $totalFuel = 0;
+                    ?>
+                </td>
             </tr>
         <?php
             $hour++;
@@ -57,7 +69,7 @@
         <tr>
             <th colspan="2">Total</th>
             <th><?php echo array_sum($subTotalKm) . ' Km'; ?></th>
-            <th></th>
+            <th><?php echo array_sum($subTotalFuel) . ' Ltr'; ?></th>
         </tr>
     </tbody>
 </table>
