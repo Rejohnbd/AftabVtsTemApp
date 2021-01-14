@@ -38,10 +38,10 @@
                         if (strtotime(date('G:i', mktime($hour, 0, 0))) <= strtotime(date('G:i', strtotime($datas[$i]->created_at))) && strtotime(date('G:i', strtotime($datas[$i]->created_at))) < strtotime(date('G:i', mktime($hour + 1, 0, 0)))) {
                             if ($datas[$i]->status == 0 && $datas[$i]->speed <= 1) {
                                 $totalKm += $datas[$i]->distance;
-                                $totalFuel += $datas[$i]->fuel_use; 
+                                $totalFuel += $datas[$i]->fuel_use;
                             } else if ($datas[$i]->status == 1) {
                                 $totalKm += $datas[$i]->distance;
-                                $totalFuel += $datas[$i]->fuel_use; 
+                                $totalFuel += $datas[$i]->fuel_use;
                             }
                         } else {
                             echo  round($totalKm, 2) . ' KM';
@@ -55,10 +55,10 @@
                 </td>
                 <td>
                     <?php
-                        echo round($totalFuel, 2) . ' Ltr';
-                        $subTotalFuel[$subTotalFuelIndex] = $totalFuel;
-                        $subTotalFuelIndex++;
-                        $totalFuel = 0;
+                    echo round($totalFuel, 2) . ' Ltr';
+                    $subTotalFuel[$subTotalFuelIndex] = $totalFuel;
+                    $subTotalFuelIndex++;
+                    $totalFuel = 0;
                     ?>
                 </td>
             </tr>

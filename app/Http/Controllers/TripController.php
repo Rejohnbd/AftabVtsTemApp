@@ -11,6 +11,7 @@ use App\Models\Helper;
 use App\Models\Trip;
 use App\Models\TripType;
 use App\Models\Vehicle;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TripController extends Controller
@@ -28,6 +29,7 @@ class TripController extends Controller
         foreach ($allHelper as $value) {
             $helpers[$value->helper_id] = $value;
         }
+        // dd($datas);
         return view('admin.pages.trip.index')->with('datas', $datas)->with('allHelper', $helpers);
     }
 
@@ -171,6 +173,30 @@ class TripController extends Controller
         } else {
             Trip::where('trip_id', $request->tripId)->delete();
             return response(['result' => true]);
+        }
+    }
+
+    public function startTrip(Request $request)
+    {
+        Trip::findOrFail($request->tripId);
+        $presetDateTime = Carbon::now();
+        $startTrip = Trip::where('trip_id', $request->tripId)->update(['trip_status' => 2, 'trip_start_kilometer' => $request->tripStartKm, 'trip_start_datetime' => $presetDateTime]);
+        if ($startTrip == 1) {
+            return response(['result' => true]);
+        } else {
+            return response(['result' => false]);
+        }
+    }
+
+    public function stopTrip(Request $request)
+    {
+        Trip::findOrFail($request->tripId);
+        $presetDateTime = Carbon::now();
+        $startTrip = Trip::where('trip_id', $request->tripId)->update(['trip_status' => 3, 'trip_end_kilometer' => $request->tripEndkm,  'trip_end_datetime' => $presetDateTime]);
+        if ($startTrip == 1) {
+            return response(['result' => true]);
+        } else {
+            return response(['result' => false]);
         }
     }
 }

@@ -95,6 +95,7 @@
     // Get Data from Firebase
     database.ref('Devices/').once('value').then(function(snapshot) {
         var allDevicesInfo = snapshot.val();
+
         var i = 0;
         for (var key in allDevicesInfo) {
             if (allDevicesInfo.hasOwnProperty(key)) {
@@ -110,7 +111,9 @@
         }
 
         for (index in deviceOldData) {
-            myMarkers[index] = [addMarker(map, deviceOldData[index]), [deviceOldData[index].imei]]
+            // myMarkers[index] = [addMarker(map, deviceOldData[index]), [deviceOldData[index].imei]]
+            console.log(deviceOldData[index]);
+            addMarker(map, deviceOldData[index]);
         };
 
     });
@@ -126,7 +129,7 @@
     }
     // console.log(myMarkers)
 
-    database.ref('Devices/').on('child_changed', function(snapshot) {
+    /*database.ref('Devices/').on('child_changed', function(snapshot) {
         var changeData = snapshot.val();
         // console.log(snapshot.ref.key);
         $.each(deviceOldData, function(key, data) {
@@ -158,10 +161,10 @@
 
         // var result = [oldLat, oldLng, changeMyMarker]
         // transition(result);
-    });
+    }); */
 
     // Variable for Transition or Move marker
-    var numDeltas = 100;
+    /*var numDeltas = 100;
     var delay = 10; //milliseconds
     var i = 0;
     var deltaLat;
@@ -183,7 +186,7 @@
             i++;
             setTimeout(moveMarker, delay);
         }
-    }
+    }*/
 </script>
 
 @if(session('error'))

@@ -37,6 +37,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('helpers', 'HelperController');
     Route::resource('trips', 'TripController');
     Route::post('trips-delete', 'TripController@destroyTrip')->name('trips-delete');
+    Route::post('admin-trip-start', 'TripController@startTrip')->name('admin-trip-start');
+    Route::post('admin-trip-stop', 'TripController@stopTrip')->name('admin-trip-stop');
     Route::resource('maintenance-type', 'MaintenanceTypeController');
     Route::resource('maintenance', 'MaintenanceController');
     Route::resource('trip-type', 'TripTypeController');
