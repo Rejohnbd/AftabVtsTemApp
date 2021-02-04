@@ -11,55 +11,26 @@
                 <li class="breadcrumb-item" aria-current="page">All Vehicle Reports</li>
             </ol>
         </div>
-
         <div class="row">
-            @forelse($datas as $data)
-            <div class="col-sm-12 col-md-6 col-xl-4">
+            <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">{{ $data->vehicle_plate_number }}</h3>
-                        <div class="card-options">
-                            <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
-                            <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
-                        </div>
-                    </div>
                     <div class="card-body">
-                        <ul class="list-group">
-                            <li class="list-group-item">VEHICLE TYPE <span class="float-right">{{ $data->vehicleType->vehicle_type_name }}</span></li>
-                            <li class="list-group-item">INSURANCE EXPIRE <span class="float-right">{{ date('d/m/Y', strtotime($data->vehicle_insurance_expire_date)) }}</span></li>
-                            <li class="list-group-item">REGISTRATION EXPIRE <span class="float-right">{{ date('d/m/Y', strtotime($data->vehicle_registration_expire_date)) }}</span></li>
-                            <li class="list-group-item">TAX TOKEN EXPIRE <span class="float-right">{{ date('d/m/Y', strtotime($data->vehicle_tax_token_expire_date)) }}</span></li>
-                        </ul>
-                    </div>
-                    <div class="card-footer">
-                        <div class="card-options">
-                            {{-- <a href="{{ route('vehicle-location', $data->vehicle_id) }}" class="btn btn-secondary btn-sm">Location</a> --}}
-                            <a href="{{ route('vehicle-reports', $data->vehicle_id) }}" class="btn btn-primary btn-sm ml-2">GPS Report</a>
-                            <?php
-                            $deviceInfo = findVehicleAttachTemDevice($data->vehicle_id);
-                            // dd($deviceInfo);
-                            if ($deviceInfo['exist']) {
-                            ?>
-                                <a href="{{ route('temp-device-report', $deviceInfo['device_id'] ) }}" class="btn btn-info btn-sm ml-2">Temp. Report</a>
-                            <?php
-                            }
-                            ?>
+                        <div class="form-group">
+                            <label class="form-label">Choose Company Name</label>
+                            <select id="companyName" name="status" class="form-control select2 custom-select" data-placeholder="Choose one" required>
+                                <option label="Choose one"></option>
+                                @foreach($allCompanies as $company)
+                                <option value="{{ $company->company_id }}">{{ $company->company_name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
-            @empty
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title">No Vehicle Reports Exist</div>
-                    </div>
-                    <div class="card-body">
-                        <p class="">With supporting text below as a natural lead-in to additional content.</p>
-                    </div>
-                </div>
-            </div>
-            @endforelse
+        </div>
+
+        <div id="vehicleItems">
+            @include('admin.pages.nav-reports.single-item')
         </div>
     </div>
 </div>
@@ -67,10 +38,57 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('plugins/sweet-alert/sweetalert.css') }}" />
+<link rel="stylesheet" href="{{ asset('plugins/select2/select2.min.css') }}" />
 @endsection
 
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="{{ asset('plugins/select2/select2.full.min.js') }}"></script>
+<script src="{{ asset('js/select2.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        companyId = null;
+
+        $(document).on('click', '.page-link', function(event) {
+            event.preventDefault();
+            console.log('called');
+            page = $(this).attr('href').split('page=')[1];
+            fetch_data(page);
+
+        });
+
+        function fetch_data(page) {
+            $.ajax({
+                url: "{{ route('report-paginate-render') }}",
+                method: 'POST',
+                data: {
+                    _token: "{{csrf_token()}}",
+                    page: page,
+                    companyId: companyId,
+                },
+                success: function(participants) {
+                    $('#vehicleItems').html(participants)
+                }
+            })
+        }
+
+        $('#companyName').on('change', function() {
+            companyId = this.value;
+            $.ajax({
+                url: "{{ route('report-by-company') }}",
+                method: 'POST',
+                data: {
+                    companyId: companyId,
+                    _token: '{{csrf_token()}}',
+                },
+                success: function(response) {
+                    $('#vehicleItems').html(response);
+                }
+            })
+        });
+    })
+</script>
+
 @if(session('error'))
 <script>
     $(document).ready(function() {

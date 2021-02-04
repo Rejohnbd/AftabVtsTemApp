@@ -159,7 +159,32 @@ class VehicleController extends Controller
 
     public function navReports()
     {
-        $datas = Vehicle::all();
-        return view('admin.pages.nav-reports.index', compact('datas'));
+        $allCompanies = Company::all();
+        $datas = Vehicle::paginate(6);
+        return view('admin.pages.nav-reports.index')
+            ->with('datas', $datas)
+            ->with('allCompanies', $allCompanies);
+    }
+
+    public function reportPaginateRender(Request $request)
+    {
+        // dd($request->all());
+        $allCompanies = Company::all();
+        if (!empty($request->companyId)) {
+            $datas = Vehicle::where('company_id', $request->companyId)->paginate(6);
+        } else {
+            $datas = Vehicle::paginate(6);
+        }
+        if ($request->ajax()) {
+            return view('admin.pages.nav-reports.single-item', compact('datas'))->render();
+        }
+    }
+
+
+    public function reportByCompany(Request $request)
+    {
+        $allCompanies = Company::all();
+        $datas = Vehicle::where('company_id', $request->companyId)->paginate(6);
+        return view('admin.pages.nav-reports.single-item', compact('datas'))->render();
     }
 }
