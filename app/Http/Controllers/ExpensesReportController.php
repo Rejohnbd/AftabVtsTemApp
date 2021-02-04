@@ -72,7 +72,6 @@ class ExpensesReportController extends Controller
             ->select('companies.company_name', 'vehicles.vehicle_plate_number', 'trips.trip_details', 'expense_types.expense_type_name', 'expenses_items.expense_date', 'expenses.expense_description', 'expenses_items.expense_amount')
             ->orderBy('expenses.created_at', 'desc')
             ->get();
-    return response()->json($datas);
-        return response()->view('admin.pages.reports.expense-report-web', compact('datas'));
+        return response()->json($datas);
     }
 }

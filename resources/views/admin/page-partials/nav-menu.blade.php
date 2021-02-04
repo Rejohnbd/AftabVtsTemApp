@@ -35,6 +35,7 @@
                                 <ul class="sub-menu">
                                     <li aria-haspopup="true"><a href="{{ route('maintenance-type.index') }}">Maintenance Type</a></li>
                                     <li aria-haspopup="true"><a href="{{ route('maintenance.index') }}">All Maintenance</a></li>
+                                    <li aria-haspopup="true"><a href="{{ route('maintenance-reports') }}">Maintenance Report</a></li>
                                 </ul>
                             </li>
                         </ul>

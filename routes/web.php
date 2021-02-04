@@ -73,6 +73,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('expenses-reports', 'ExpensesReportController@index')->name('expenses-reports');
     Route::post('expenses-reports-by-expense-type', 'ExpensesReportController@reportByExpenseType')->name('expenses-reports-by-expense-type');
     Route::post('expenses-reports-download', 'ExpensesReportController@reportDownload')->name('expenses-reports-download');
+
+    // Maintanance Report
+    Route::get('maintenance-reports', 'MaintenanceReportController@index')->name('maintenance-reports');
+    Route::post('maintenance-reports-generate', 'MaintenanceReportController@maintenanceReportGenerate')->name('maintenance-reports-generate');
+    Route::post('maintenance-reports-download', 'MaintenanceReportController@maintenanceReportDownload')->name('maintenance-reports-download');
+
     // Trip Report
     Route::get('trip-reports', 'TripReportController@index')->name('trip-reports');
     Route::post('trip-reports-by-vehicle', 'TripReportController@reportByVehicle')->name('trip-reports-by-vehicle');
