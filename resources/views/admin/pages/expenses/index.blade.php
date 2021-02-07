@@ -3,7 +3,7 @@
 @section('title', 'Expenses List')
 
 @section('content')
-<div class="container  content-area">
+<div class="container-fluid  content-area">
     <div class="section">
         <div class="page-header">
             <ol class="breadcrumb">
@@ -30,7 +30,8 @@
                             <thead>
                                 <tr>
                                     <th width="5%">Sl.</th>
-                                    <th width="15%">Vehicle No</th>
+                                    <th width="5%">Expense Category</th>
+                                    <th width="10%">Vehicle No</th>
                                     <th width="10%">Trip Date</th>
                                     <th width="30%">Trip Location</th>
                                     <th width="15%">Expenses Description</th>
@@ -43,9 +44,10 @@
                                 @forelse($datas as $data)
                                 <tr id="expensesId-{{ $data->expense_id }}">
                                     <th scope="row">{{ $loop->iteration }}</th>
-                                    <td>{{ findVehileForExpense($data->trip_id) }}</td>
-                                    <td>{{ date('d/m/Y', strtotime($data->trip->trip_date)) }}</td>
-                                    <td>{{ str_replace(',', ', ', $data->trip->trip_from) }} to {{ str_replace(',', ', ', $data->trip->trip_to) }}</td>
+                                    <td>{{ ucfirst($data->expense_category) }}</td>
+                                    <td>@if($data->trip_id) {{ findVehileForExpense($data->trip_id) }} @else {{ findVehicleById($data->vehicle_id) }} @endif</td>
+                                    <td>@if($data->trip_id) {{ date('d/m/Y', strtotime($data->trip->trip_date)) }} @endif</td>
+                                    <td>@if($data->trip_id) {{ str_replace(',', ', ', $data->trip->trip_from) }} to {{ str_replace(',', ', ', $data->trip->trip_to) }} @endif</td>
                                     <td>{{ $data->expense_description }}</td>
                                     <td>{{ $data->total_expense_amount }}</td>
                                     <td>{{ ucfirst($data->user->type) }}</td>
