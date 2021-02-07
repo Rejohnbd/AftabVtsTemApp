@@ -22,12 +22,28 @@
                             @csrf
                             <div id="errorResult"></div>
                             <div class="alert alert-danger" style="display:none"></div>
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
+                                        <label class="form-label mt-0">Select Expense Category</label>
+                                        <select id="expenseCategory" name="expense_category" class="form-control @error('expense_category') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
+                                            <option label="Choose one"></option>
+                                            <option value="general">General</option>
+                                            <option value="trip">Tip</option>
+                                        </select>
+                                        @error('expense_category')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-12 select-trip">
+                                    <div class="form-group">
                                         <label class="form-label mt-0">Select Trip</label>
                                         <select name="trip_id" class="form-control @error('trip_id') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
-                                            <option label="Choose one"></option>
+                                            <option label="Choose one" value="0"></option>
                                             @foreach($allTrip as $trip)
                                             <option value="{{ $trip->trip_id }}"> {{ findVehicleById($trip->vehicle_id) }}
                                                 -::- {{ $trip->trip_from }} to {{ $trip->trip_to }}
@@ -36,6 +52,22 @@
                                             @endforeach
                                         </select>
                                         @error('trip_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-12 select-vehicle">
+                                    <div class="form-group">
+                                        <label class="form-label mt-0">Select Vehicle</label>
+                                        <select name="vehicle_id" class="form-control @error('vehicle_id') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
+                                            <option label="Choose one" value="0"></option>
+                                            @foreach($allVehicles as $vehicle)
+                                            <option value="{{ $vehicle->vehicle_id }}">{{ $vehicle->vehicle_plate_number  }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('expense_category')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -133,26 +165,28 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('plugins/sweet-alert/sweetalert.css') }}" />
-<!-- <link rel="stylesheet" href="{{ asset('plugins/select2/select2.min.css') }}" /> -->
-<!-- <link rel="stylesheet" href="{{ asset('plugins/date-picker/date-picker.css') }}" /> -->
 @endsection
 
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<!-- <script src="{{ asset('plugins/date-picker/date-picker.js') }}"></script> -->
-<!-- <script src="{{ asset('plugins/date-picker/jquery-ui.js') }}"></script> -->
-<!-- <script src="{{ asset('plugins/select2/select2.full.min.js') }}"></script> -->
-<!-- <script src="{{ asset('js/select2.js') }}"></script> -->
 
 <script>
     $(document).ready(function() {
-        /*$('.fc-datepicker').datepicker({
-            altFormat: "dd-mm-yy",
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            changeYear: true,
-            changeMonth: true
-        });*/
+        $('.select-trip').hide();
+        $('.select-vehicle').hide();
+
+        $('#expenseCategory').on('change', function() {
+            if (this.value === 'general') {
+                $('.select-trip').hide();
+                $('.select-vehicle').show();
+            } else if (this.value === 'trip') {
+                $('.select-trip').show();
+                $('.select-vehicle').hide();
+            } else {
+                $('.select-trip').hide();
+                $('.select-vehicle').hide();
+            }
+        });
 
         $('#btnAddExpense').on('click', function() {
             $('.addExpenses').clone().appendTo('#newExpense').removeClass('addExpenses');
@@ -166,6 +200,7 @@
             $('.alert-danger').hide();
             $('.alert-danger').html('');
             var formData = new FormData(this);
+
             $.ajax({
                 type: 'POST',
                 url: "{{ route('all-expenses.store') }}",
@@ -173,6 +208,7 @@
                 contentType: false,
                 data: formData,
                 success: function(response) {
+                    console.log(response.status)
                     if (response.status === 200) {
                         Swal.fire('Congratulations!', "Expenses Added Successfully", 'success');
                     }
@@ -197,6 +233,7 @@
                     $('#errorResult').html('');
                 }
             })
+
         });
     });
 </script>

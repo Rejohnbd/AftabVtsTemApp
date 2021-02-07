@@ -24,37 +24,41 @@ class StoreExpensesRequest extends FormRequest
     public function rules()
     {
         return [
+            // 'expense_category'      => 'required|in:general,trip',
             'expense_type_id.*'     => 'required|numeric',
             'trip_id'               => 'required|numeric',
             'expense_amount.*'      => 'required|numeric|min:0',
             'expense_date.*'        => 'required|date_format:Y-m-d',
-            'expense_description'   => 'required|string'
+            // 'expense_description'   => 'required|string'
         ];
     }
 
     public function attributes()
     {
         return [
-            'expense_type_id.*' => 'Expenses Type',
-            'expense_amount.*'  => 'Expenses Amount',
-            'expense_date.*'    => 'Expenses Date',
+            // 'expense_category'      => 'Expenses Category',
+            'expense_type_id.*'     => 'Expenses Type',
+            'expense_amount.*'      => 'Expenses Amount',
+            'expense_date.*'        => 'Expenses Date',
         ];
     }
 
     public function messages()
     {
         return [
+            // 'expense_category.required'     => 'Please Select Expenses Category',
+            // 'expense_category.in'           => 'Please Select Proper Expenses Category',
             'expense_type_id.required.*'    => 'Expenses Type is Required',
             'expense_type_id.numeric.*'     => 'Provide Valid Expenses Type',
-            'trip_id.required'              => 'Trip Select is Required',
-            'trip_id.numeric'               => 'Provide Valid Trip',
+            // 'trip_id.required'              => 'Trip Select is Required',
+            // 'trip_id.numeric'               => 'Provide Valid Trip',
             'expense_amount.required.*'     => 'Expenses Amount is Required',
             'expense_amount.numeric.*'      => 'Expenses Amount is Numeric',
             'expense_amount.min.*'          => 'Provide Valid Expenses Amount',
             'expense_date.required.*'       => 'Expenses Date is Required',
             'expense_date.date_format.*'    => 'Provide Valid Expenses Date',
-            'expense_description.required'  => 'Expenses Description is Required',
-            'expense_description.string'    => 'Provide Valid Expenses Description'
+            // 'expense_description.required'  => 'Expenses Description is Required',
+            // 'expense_description.string'    => 'Provide Valid Expenses Description'
         ];
     }
 }
