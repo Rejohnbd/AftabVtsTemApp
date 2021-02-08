@@ -20,16 +20,31 @@
                     <div class="card-body">
                         <form id="expensesUpdateForm" method="POST" action="javascript:void(0)">
                             @csrf
-
                             <div id="errorResult"></div>
                             <div class="alert alert-danger" style="display:none"></div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
+                                        <label class="form-label mt-0">Select Expense Category</label>
+                                        <select id="expenseCategory" name="expense_category" class="form-control @error('expense_category') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
+                                            <option label="Choose one"></option>
+                                            <option value="general" @if($expenses->expense_category === 'general') selected @endif>General</option>
+                                            <option value="trip" @if($expenses->expense_category === 'trip') selected @endif>Tip</option>
+                                        </select>
+                                        @error('expense_category')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 select-trip">
+                                    <div class="form-group">
                                         <input name="expense_id" type="hidden" value="{{  $expenses->expense_id}}" />
                                         <label class="form-label mt-0">Select Trip</label>
                                         <select name="trip_id" class="form-control @error('trip_id') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
-                                            <option label="Choose one"></option>
+                                            <option label="Choose one" value="0"></option>
                                             @foreach($allTrip as $trip)
                                             <option value="{{ $trip->trip_id }}" @if($expenses->trip_id == $trip->trip_id) selected @endif> {{ findVehicleById($trip->vehicle_id) }}
                                                 -::- {{ $trip->trip_from }} to {{ $trip->trip_to }}
@@ -37,6 +52,23 @@
                                             @endforeach
                                         </select>
                                         @error('trip_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 select-vehicle">
+                                    <div class="form-group">
+                                        <label class="form-label mt-0">Select Vehicle</label>
+                                        <select name="vehicle_id" class="form-control @error('vehicle_id') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
+                                            <option label="Choose one" value="0"></option>
+                                            @foreach($allVehicles as $vehicle)
+                                            <option value="{{ $vehicle->vehicle_id }}" @if($expenses->vehicle_id == $vehicle->vehicle_id) selected @endif>{{ $vehicle->vehicle_plate_number  }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('expense_category')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -200,13 +232,28 @@
 <!-- <script src="{{ asset('js/select2.js') }}"></script> -->
 <script>
     $(document).ready(function() {
-        // $('.fc-datepicker').datepicker({
-        //     altFormat: "dd-mm-yy",
-        //     showOtherMonths: true,
-        //     selectOtherMonths: true,
-        //     changeYear: true,
-        //     changeMonth: true
-        // });
+        let categoryStatus = "{{ $expenses->expense_category  }}";
+
+        if (categoryStatus === 'general') {
+            $('.select-trip').hide();
+            $('.select-vehicle').show();
+        } else {
+            $('.select-trip').show();
+            $('.select-vehicle').hide();
+        }
+
+        $('#expenseCategory').on('change', function() {
+            if (this.value === 'general') {
+                $('.select-trip').hide();
+                $('.select-vehicle').show();
+            } else if (this.value === 'trip') {
+                $('.select-trip').show();
+                $('.select-vehicle').hide();
+            } else {
+                $('.select-trip').hide();
+                $('.select-vehicle').hide();
+            }
+        });
 
         $('#btnAddExpense').on('click', function() {
             $('.addExpenses').clone().appendTo('#newExpense').removeClass('addExpenses');

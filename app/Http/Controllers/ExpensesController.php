@@ -112,10 +112,16 @@ class ExpensesController extends Controller
     public function edit($id)
     {
         $expenses = Expenses::findOrFail($id);
-        $allTrip = Trip::all();
+        $allTrip = Trip::where('trip_status', '!=', 3)->orderBy('created_at', 'desc')->get();
         $allExpensesType = ExpensesType::all();
         $expensesItems = DB::table('expenses_items')->where('expense_id', $id)->get();
-        return view('admin.pages.expenses.edit')->with('expenses', $expenses)->with('allTrip', $allTrip)->with('allExpensesType', $allExpensesType)->with('expensesItems', $expensesItems);
+        $allVehicles = Vehicle::all();
+        return view('admin.pages.expenses.edit')
+            ->with('expenses', $expenses)
+            ->with('allTrip', $allTrip)
+            ->with('allExpensesType', $allExpensesType)
+            ->with('expensesItems', $expensesItems)
+            ->with('allVehicles', $allVehicles);
     }
 
     /**
@@ -125,8 +131,46 @@ class ExpensesController extends Controller
      * @param  \App\Models\Expenses  $expenses
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateExpensesRequest $request)
+    public function update(Request $request)
     {
+        $expenseCategoryRules = $this->expenseCategoryRules();
+        $validator = $this->checkValidity($request, $expenseCategoryRules);
+
+        if ($request->expense_category == 'general') {
+            $vehicleSelectRules = $this->vehicleSelectRules();
+            $validator = $this->checkValidity($request, $vehicleSelectRules);
+
+            $expenseTypeAmountDateRules = $this->expenseTypeAmountDateRules();
+            $validator = Validator::make($request->all(), $expenseTypeAmountDateRules);
+            $validator->setAttributeNames($this->expenseTypeAmountDateAttribues());
+            $validator->validate();
+
+            $updateGeneralExp = $this->updateGeneralExpense($request);
+            if ($updateGeneralExp) {
+                return response()->json(['status' => 200]);
+            } else {
+                return response()->json(['status' => 400]);
+            }
+        } else if ($request->expense_category == 'trip') {
+            $tripSelectRules = $this->tripSelectRules();
+            $validator = $this->checkValidity($request, $tripSelectRules);
+
+            $expenseTypeAmountDateRules = $this->expenseTypeAmountDateRules();
+            $validator = Validator::make($request->all(), $expenseTypeAmountDateRules);
+            $validator->setAttributeNames($this->expenseTypeAmountDateAttribues());
+            $validator->validate();
+
+            $updateTripExp = $this->updateTripExpense($request);
+            if ($updateTripExp) {
+                return response()->json(['status' => 200]);
+            } else {
+                return response()->json(['status' => 400]);
+            }
+        } else {
+            return response()->json(['status' => 400]);
+        }
+
+        // Changed from here
         if (count($request->expense_type_id) == count($request->expense_amount) && count($request->expense_amount) == count($request->expense_date)) {
             $updateExpense = Expenses::where('expense_id', $request->expense_id)
                 ->update([
@@ -301,6 +345,73 @@ class ExpensesController extends Controller
             }
             $saveInfo =  Expenses::where('expense_id', $expense_id)->update(['total_expense_amount' => $totalExpenses]);
             if ($saveInfo) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function updateGeneralExpense($request)
+    {
+        if (count($request->expense_type_id) == count($request->expense_amount) && count($request->expense_amount) == count($request->expense_date)) {
+            $updateExpense = Expenses::where('expense_id', $request->expense_id)
+                ->update([
+                    'trip_id'               => null,
+                    'expense_category'      => 'general',
+                    'expense_description'   => $request->expense_description,
+                    'vehicle_id'            => $request->vehicle_id,
+                    'expense_added_by'      => Auth::user()->id
+                ]);
+            DB::table('expenses_items')->where('expense_id', $request->expense_id)->delete();
+            $totalExpenses = null;
+            for ($i = 0; $i < count($request->expense_type_id); $i++) {
+                DB::table('expenses_items')->insert([
+                    'expense_id'        => $request->expense_id,
+                    'expense_type_id'   => $request->expense_type_id[$i],
+                    'expense_amount'    => $request->expense_amount[$i],
+                    'expense_date'      => date('Y-m-d', strtotime($request->expense_date[$i]))
+                ]);
+                $totalExpenses += $request->expense_amount[$i];
+            }
+            $updateExpense =  Expenses::where('expense_id', $request->expense_id)->update(['total_expense_amount' => $totalExpenses]);
+            if ($updateExpense) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function updateTripExpense($request)
+    {
+        $vehicleId = $this->findVehicleId($request->trip_id);
+        if (count($request->expense_type_id) == count($request->expense_amount) && count($request->expense_amount) == count($request->expense_date)) {
+            $updateExpense = Expenses::where('expense_id', $request->expense_id)
+                ->update([
+                    'trip_id'               => $request->trip_id,
+                    'expense_category'      => 'trip',
+                    'expense_description'   => $request->expense_description,
+                    'vehicle_id'            => $vehicleId,
+                    'expense_added_by'      => Auth::user()->id
+                ]);
+            DB::table('expenses_items')->where('expense_id', $request->expense_id)->delete();
+            $totalExpenses = null;
+            for ($i = 0; $i < count($request->expense_type_id); $i++) {
+                DB::table('expenses_items')->insert([
+                    'expense_id'        => $request->expense_id,
+                    'expense_type_id'   => $request->expense_type_id[$i],
+                    'expense_amount'    => $request->expense_amount[$i],
+                    'expense_date'      => date('Y-m-d', strtotime($request->expense_date[$i]))
+                ]);
+                $totalExpenses += $request->expense_amount[$i];
+            }
+            $updateExpense =  Expenses::where('expense_id', $request->expense_id)->update(['total_expense_amount' => $totalExpenses]);
+            if ($updateExpense) {
                 return true;
             } else {
                 return false;
