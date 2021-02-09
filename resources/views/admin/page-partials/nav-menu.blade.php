@@ -12,6 +12,7 @@
                     </li>
                     <li aria-haspopup="true"><a href="#" class="sub-icon "><i class="fe fe-users"></i> Users <i class="fa fa-angle-down horizontal-icon"></i></a>
                         <ul class="sub-menu">
+                            <li aria-haspopup="true"><a href="{{ route('users.index') }}">Users</a></li>
                             <li aria-haspopup="true"><a href="{{ route('drivers.index') }}">Drivers</a></li>
                             <li aria-haspopup="true"><a href="{{ route('helpers.index') }}">Helpers</a></li>
                         </ul>

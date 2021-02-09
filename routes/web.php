@@ -98,6 +98,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('trip-old', 'DriverTripController@oldTrip')->name('trip-old');
     Route::post('trip-start', 'DriverTripController@startTrip')->name('trip-start');
     Route::post('trip-stop', 'DriverTripController@stopTrip')->name('trip-stop');
+
+    // User
+    Route::resource('users', 'UserController');
+    Route::post('user-delete', 'UserController@destroyUser')->name('user-delete');
 });
 
 Route::get('/all-clear', function () {
