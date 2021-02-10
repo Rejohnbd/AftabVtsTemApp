@@ -32,7 +32,7 @@ class StoreTripsRequest extends FormRequest
             'trip_to'           => 'required|string',
             'trip_details'      => 'required|string',
             'trip_date'         => 'required|date_format:m/d/Y',
-            'trip_status'       => 'required|in:1,2,3'
+            'trip_status'       => 'required|in:0,1,2,3'
         ];
     }
 

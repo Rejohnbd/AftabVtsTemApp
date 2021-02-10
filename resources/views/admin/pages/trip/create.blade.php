@@ -159,7 +159,8 @@
                                         <label class="form-label mt-0">Trip Status</label>
                                         <select name="trip_status" class="form-control @error('trip_status') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
                                             <option label="Choose one"></option>
-                                            <option value="1">Yet to Start</option>
+                                            <option value="0">Wait for Start</option>
+                                            <option value="1">Start</option>
                                             <option value="2">Started</option>
                                             <option value="3">Completed</option>
                                         </select>

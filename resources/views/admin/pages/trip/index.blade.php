@@ -69,7 +69,7 @@
                                     <td>{{ str_replace(',', ', ', $data->trip_details) }}</td>
                                     <td>@if($data->trip_start_datetime) {{ date('d/m/Y  H:i:s A', strtotime($data->trip_start_datetime)) }} @endif</td>
                                     <td>@if($data-> trip_end_datetime) {{ date('d/m/Y H:i:s A', strtotime($data->	trip_end_datetime)) }} @endif</td>
-                                    <td>@if($data->trip_status == 1) Yet to Start @elseif($data->trip_status == 2) Started @else Completed @endif</td>
+                                    <td>@if($data->trip_status == 1) Start @elseif($data->trip_status == 2) Started @elseif($data->trip_status == 3) Completed @else Wait for Start @endif</td>
                                     <td>
                                         <div class="btn-list">
                                             <a href="{{ route('trips.edit', $data->trip_id) }}" class="btn btn-icon btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Trip"><i class="fe fe-edit"></i></a>

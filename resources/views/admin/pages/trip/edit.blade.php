@@ -161,7 +161,8 @@
                                         <label class="form-label mt-0">Trip Status</label>
                                         <select name="trip_status" class="form-control @error('trip_status') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
                                             <option label="Choose one"></option>
-                                            <option value="1" @if($trip->trip_status == 1) selected @endif>Yet to Start</option>
+                                            <option value="0" @if($trip->trip_status == 0) selected @endif>Wait for Start</option>
+                                            <option value="1" @if($trip->trip_status == 1) selected @endif>Start</option>
                                             <option value="2" @if($trip->trip_status == 2) selected @endif>Started</option>
                                             <option value="3" @if($trip->trip_status == 3) selected @endif>Completed</option>
                                         </select>
