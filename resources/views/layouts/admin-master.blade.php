@@ -28,7 +28,7 @@
     <div class="page">
         <div class="page-main">
             @include('admin.page-partials.nav-top')
-            @if(Auth::user()->type == 'admin')
+            @if(Auth::user()->type == 'super_admin' || Auth::user()->type == 'expense_trip' || Auth::user()->type == 'maintenance' || Auth::user()->type == 'dashboard_report')
             @include('admin.page-partials.nav-menu')
             @elseif(Auth::user()->type == 'driver')
             @include('driver.page-partials.nav-menu')

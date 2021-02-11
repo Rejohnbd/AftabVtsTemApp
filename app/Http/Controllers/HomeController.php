@@ -25,7 +25,13 @@ class HomeController extends Controller
     public function index()
     {
         // return view('home');
-        if (Auth::user()->type == 'admin') :
+        if (Auth::user()->type == 'super_admin') :
+            return redirect()->route('all-vehicle-location');
+        elseif (Auth::user()->type == 'expense_trip') :
+            return redirect()->route('trips.index');
+        elseif (Auth::user()->type == 'maintenance') :
+            return redirect()->route('vehicles.index');
+        elseif (Auth::user()->type == 'dashboard_report') :
             return redirect()->route('all-vehicle-location');
         else :
             return redirect()->route('driver-dashboard');
