@@ -97,7 +97,7 @@ class UserController extends Controller
             ->update([
                 'email'     => $request->email,
                 'type'      => $request->type,
-                'password'  => Hash::make($request->type)
+                'password'  => Hash::make($request->password)
             ]);
 
         if ($userUpdate) {
