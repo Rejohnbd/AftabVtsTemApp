@@ -3,7 +3,7 @@
         <div class="horizontal-mainwrapper container clearfix">
             <nav class="horizontalMenu clearfix">
                 <ul class="horizontalMenu-list">
-                    @if(Auth::user()->type == 'super_admin' || Auth::user()->type == 'dashboard_report')
+                    @if(Auth::user()->type == 'super_admin' || Auth::user()->type == 'dashboard_report' || Auth::user()->type == 'expense_trip')
                     <li aria-haspopup="true"><a href="{{ route('all-vehicle-location') }}" class=""><i class="fe fe-home"></i> Dashboard</a></li>
                     @endif
                     @if(Auth::user()->type == 'super_admin')
@@ -67,7 +67,7 @@
                         </ul>
                     </li>
                     @endif
-                    @if(Auth::user()->type == 'super_admin' || Auth::user()->type == 'dashboard_report')
+                    @if(Auth::user()->type == 'super_admin' || Auth::user()->type == 'dashboard_report' || Auth::user()->type == 'expense_trip')
                     <li aria-haspopup="true"><a href="#" class="sub-icon"><i class="fe fe-layers"></i>Reports <i class="fa fa-angle-down horizontal-icon"></i></a>
                         <ul class="sub-menu">
                             <li aria-haspopup="true"><a href="{{ route('all-reports') }}">Reports</a></li>
