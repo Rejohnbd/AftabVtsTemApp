@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('all-expenses-view/{id}', 'ExpensesController@show')->name('all-expenses-view');
     Route::post('all-expenses-update', 'ExpensesController@update')->name('all-expenses-update');
     Route::post('all-expenses-delete', 'ExpensesController@destroyAllExpenses')->name('all-expenses-delete');
+    Route::post('all-expenses-check-expense', 'ExpensesController@checkExpense')->name('all-expenses-check-expense');
     Route::resource('drivers', 'DriverController');
     Route::post('driver-delete', 'DriverController@destroyDriver')->name('driver-delete');
     Route::resource('helpers', 'HelperController');

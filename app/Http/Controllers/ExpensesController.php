@@ -34,7 +34,7 @@ class ExpensesController extends Controller
      */
     public function create()
     {
-        $allTrip = Trip::where('trip_status', '!=', 3)->orderBy('created_at', 'desc')->get();
+        $allTrip = Trip::orderBy('created_at', 'desc')->get();
         $allVehicles = Vehicle::all();
         $allExpensesType = ExpensesType::all();
         return view('admin.pages.expenses.create')->with('allTrip', $allTrip)->with('allExpensesType', $allExpensesType)->with('allVehicles', $allVehicles);
@@ -418,6 +418,16 @@ class ExpensesController extends Controller
             }
         } else {
             return false;
+        }
+    }
+
+    public function checkExpense(Request $request)
+    {
+        $expense = Expenses::where('trip_id', $request->tripId)->first();
+        if ($expense != null) {
+            return response(['result' => true, 'url' => route('all-expenses.edit', $expense->expense_id)]);
+        } else {
+            return response(['result' => false]);
         }
     }
 }

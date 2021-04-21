@@ -29,7 +29,7 @@
                                         <select id="expenseCategory" name="expense_category" class="form-control @error('expense_category') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
                                             <option label="Choose one"></option>
                                             <option value="general">General</option>
-                                            <option value="trip">Tip</option>
+                                            <option value="trip">Trip</option>
                                         </select>
                                         @error('expense_category')
                                         <span class="invalid-feedback" role="alert">
@@ -41,8 +41,8 @@
                                 <div class="col-md-12 select-trip">
                                     <div class="form-group">
                                         <label class="form-label mt-0">Select Trip</label>
-                                        <select name="trip_id" class="form-control @error('trip_id') is-invalid @enderror select2 custom-select" data-placeholder="Choose one" required>
-                                            <option label="Choose one" value="0"></option>
+                                        <select id="tripChange" name="trip_id" class="form-control @error('trip_id') is-invalid @enderror select2-show-search" data-placeholder="Choose one" required>
+                                            <option value="0">Choose one</option>
                                             @foreach($allTrip as $trip)
                                             <option value="{{ $trip->trip_id }}"> {{ findVehicleById($trip->vehicle_id) }}
                                                 -::- {{ $trip->trip_from }} to {{ $trip->trip_to }}
@@ -73,6 +73,8 @@
                                         @enderror
                                     </div>
                                 </div>
+                            </div>
+                            <div id="newExpense">
                             </div>
                             <div class="addExpenses">
                                 <div class="row">
@@ -122,16 +124,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="newExpense">
-                            </div>
                             <div class="row">
                                 <div class="col-md-12 d-flex  justify-content-end">
                                     <div class="btn-list ">
                                         <button type="button" id="btnAddExpense" class="btn btn-icon btn-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add More Expenses"><i class="fa fa-plus"></i></button>
-                                        <button type="button" id="btnRemoveExpense" class="btn btn-icon btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove One"><i class="fe fe-trash"></i></button>
+                                        <!-- <button type="button" id="btnRemoveExpense" class="btn btn-icon btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove One"><i class="fe fe-trash"></i></button> -->
                                     </div>
                                 </div>
                             </div>
+
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group mt-2">
@@ -164,13 +166,19 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('plugins/sweet-alert/sweetalert.css') }}" />
+<link rel="stylesheet" href="{{ asset('plugins/select2/select2.min.css') }}" />
 @endsection
 
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="{{ asset('plugins/select2/select2.full.min.js') }}"></script>
 
 <script>
     $(document).ready(function() {
+        $('.select2-show-search').select2({
+            minimumResultsForSearch: '',
+            width: '100%'
+        });
         $('.select-trip').hide();
         $('.select-vehicle').hide();
 
@@ -188,11 +196,51 @@
         });
 
         $('#btnAddExpense').on('click', function() {
-            $('.addExpenses').clone().appendTo('#newExpense').removeClass('addExpenses');
+            $('.addExpenses').clone().appendTo('#newExpense').removeClass('addExpenses').append("<div class='text-right rmv-div'><button type='button' class='btn btn-icon btn-danger' data-toggle='tooltip' data-placement='top' data-original-title='Remove One'><i class='fe fe-trash'></i></button> </div>");
         });
+
+        $('#newExpense').on('click', '.rmv-div', function() {
+            console.log('clicked')
+            $(this).parent('div').remove()
+        })
 
         $('#btnRemoveExpense').on('click', function() {
             $('#newExpense > div').last().remove();
+        });
+        // Add for temporary
+        $('#tripChange').on('change', function() {
+            let tripId = this.value;
+            if (tripId == 0) {
+                Swal.fire({
+                    title: "Alert",
+                    text: "Please Select Proper Trip",
+                    icon: "error",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            } else {
+                console.log(tripId)
+                $.ajax({
+                    method: 'POST',
+                    url: "{{ route('all-expenses-check-expense') }}",
+                    data: {
+                        tripId: tripId,
+                        _token: '{{csrf_token()}}',
+                    },
+                    success: function(response) {
+                        if (response.result) {
+                            window.location.href = response.url;
+                            Swal.fire({
+                                title: "Alert",
+                                text: "This Trip Already Added Expenses",
+                                icon: "error",
+                                showConfirmButton: false,
+                                timer: 2500
+                            });
+                        }
+                    }
+                });
+            }
         });
 
         $('#expensesAddForm').submit(function() {
