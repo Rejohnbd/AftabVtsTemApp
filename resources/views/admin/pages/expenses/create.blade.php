@@ -74,8 +74,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="newExpense">
-                            </div>
+                            
                             <div class="addExpenses">
                                 <div class="row">
                                     <div class="col-md-4">
@@ -133,7 +132,9 @@
                                 </div>
                             </div>
 
-
+                            <div id="newExpense">
+                            </div>
+                            
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group mt-2">
