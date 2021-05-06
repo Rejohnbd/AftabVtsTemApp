@@ -196,12 +196,12 @@
         });
 
         $('#btnAddExpense').on('click', function() {
-            $('.addExpenses').clone().appendTo('#newExpense').removeClass('addExpenses').append("<div class='text-right rmv-div'><button type='button' class='btn btn-icon btn-danger' data-toggle='tooltip' data-placement='top' data-original-title='Remove One'><i class='fe fe-trash'></i></button> </div>");
+            $('.addExpenses').clone().appendTo('#newExpense').removeClass('addExpenses').append("<button type='button' class='btn btn-icon btn-danger rmv-div' data-toggle='tooltip' data-placement='top' data-original-title='Remove One'><i class='fe fe-trash'></i></button>");
         });
 
         $('#newExpense').on('click', '.rmv-div', function() {
             console.log('clicked')
-            $(this).parent('div').remove()
+            $(this).parent().remove()
         })
 
         $('#btnRemoveExpense').on('click', function() {
