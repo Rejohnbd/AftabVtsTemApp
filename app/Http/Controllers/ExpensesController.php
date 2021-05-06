@@ -23,7 +23,7 @@ class ExpensesController extends Controller
      */
     public function index()
     {
-        $datas = Expenses::all();
+        $datas = Expenses::orderBy('created_at', 'desc')->paginate(10);
         return view('admin.pages.expenses.index')->with('datas', $datas);
     }
 
