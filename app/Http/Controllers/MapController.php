@@ -24,8 +24,9 @@ class MapController extends Controller
             ->join('vehicle_devices', 'devices.device_id', '=', 'vehicle_devices.device_id')
             ->join('vehicles', 'vehicle_devices.vehicle_id', '=', 'vehicles.vehicle_id')
             ->where('device_type_id', 5)
-            ->select('devices.device_id', 'vehicles.vehicle_id', 'vehicles.vehicle_brand', 'vehicles.vehicle_model', 'vehicles.vehicle_model_year', 'vehicles.vehicle_plate_number')
+            ->select('devices.device_id', 'vehicles.vehicle_id', 'vehicles.vehicle_plate_number')
             ->get();
+        // dd($datas);
         return view('admin.pages.map.index', compact('datas'));
     }
 

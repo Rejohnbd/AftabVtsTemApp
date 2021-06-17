@@ -144,3 +144,32 @@ function findCompanyForExpenseReport($id)
 //     }
 //     return implode(',', $helpers);
 // }
+
+/**
+ * method findVehicleLastGprsDataByVehicleId() use in map.index.blade.php 
+ */
+function findVehicleLastGprsDataByVehicleId($vehicleId)
+{
+    $lastGprsData =  DB::table('device_data')->orderBy('data_id', 'desc')->select('latitude', 'longitude', 'status', 'speed')->where('vehicle_id', $vehicleId)->first();
+    return $lastGprsData;
+}
+
+function findLastTempHumidityDataByVehicleId($vehicleId)
+{
+    $tempDeviceInfo = DB::table('vehicle_devices')
+        ->join('devices', 'vehicle_devices.device_id', '=', 'devices.device_id')
+        ->where('vehicle_devices.vehicle_id', $vehicleId)
+        ->where('device_type_id', 6)
+        ->select('devices.device_id', 'devices.device_unique_id')
+        ->first();
+
+    $lastTempData = DB::table('temperature_device_data')->orderBy('id', 'desc')->select('temperature', 'humidity', 'comp_status')->where('device_id', $tempDeviceInfo->device_unique_id)->first();
+    $tempData = array(
+        'device_id' => $tempDeviceInfo->device_id,
+        'temp'      => $lastTempData->temperature,
+        'humidity'  => $lastTempData->humidity,
+        'comp'      => $lastTempData->comp_status,
+    );
+
+    return $tempData;
+}

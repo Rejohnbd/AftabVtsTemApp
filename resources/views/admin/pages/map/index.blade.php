@@ -12,24 +12,63 @@
                         <div class="card-header">
                             <div class="card-title"> All Vehicle</div>
                         </div>
-                        <div class="card-body p-0">
+                        <div class="card-body p-2">
                             <div class="content vscroll" style="height: 67vh !important;">
-                                <div class="list-group list-lg-group list-group-flush br-4">
-                                    @foreach($datas as $data)
-                                    <a class="list-group-item list-group-item-action p-3" href="{{ route('vehicle-location', $data->vehicle_id) }}">
-                                        <div class="media mt-0">
-                                            <span class="avatar brround cover-image"></span>
-                                            <div class="media-body ml-2">
-                                                <div class="d-md-flex align-items-center">
-                                                    <div>
-                                                        <h5 class="mb-0 mt-2 text-dark">{{ $data->vehicle_plate_number }}</h5>
-                                                    </div>
-                                                </div>
+                                @foreach($datas as $data)
+                                <?php
+                                $gprsData = findVehicleLastGprsDataByVehicleId($data->vehicle_id);
+                                $tempData = findLastTempHumidityDataByVehicleId($data->vehicle_id);
+                                ?>
+                                <div class="card">
+                                    <div class="card-header bg-primary">
+                                        <h3 class="card-title text-white">{{ $data->vehicle_plate_number }}</h3>
+                                        <div class="card-options">
+                                            <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                            <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x "></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row dash1">
+                                            <div class="col  border-right">
+                                                <h6 class="font-weight-500 number-font1 mb-0">Engine Status</h6>
+                                                <span class="text-muted">@if($gprsData->speed == 0) Off @else On @endif</span>
+                                            </div>
+                                            <div class="col  border-right">
+                                                <h6 class="font-weight-500 number-font1 mb-0">Speed</h6>
+                                                <span class="text-muted">{{ $gprsData->speed }}</span>
+                                            </div>
+                                            <div class="col ">
+                                                <p class="font-weight-500 number-font1 mb-0">Location</p>
+                                                <span class="text-muted"></span>
                                             </div>
                                         </div>
-                                    </a>
-                                    @endforeach
+                                        <div class="row mt-4 dash1">
+                                            <div class="col  border-right">
+                                                <h6 class="font-weight-500 number-font1 mb-0">Temperature</h6>
+                                                <span class="text-muted">{{ $tempData['temp'] }} <sup>o</sup>C</span>
+                                            </div>
+                                            <div class="col  border-right">
+                                                <h6 class="font-weight-500 number-font1 mb-0">Humidity</h6>
+                                                <span class="text-muted">{{ $tempData['humidity'] }}</span>
+                                            </div>
+                                            <div class="col ">
+                                                <p class="font-weight-500 number-font1 mb-0">Comp. Status</p>
+                                                <span class="text-muted">@if($tempData['comp'] == 0) Off @else On @endif</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer text-center p-1">
+                                        <div class="row user-social-detail">
+                                            <div class="col-lg-6 col-sm-6 col-6">
+                                                <a href="{{ route('vehicle-location', $data->vehicle_id) }}" class="btn btn-icon btn-danger"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-6">
+                                                <a href="{{ route('device-temp-data', $tempData['device_id']) }}" class="btn btn-icon btn-purple"><i class="fa fa-thermometer-4" aria-hidden="true"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -112,7 +151,7 @@
 
         for (index in deviceOldData) {
             // myMarkers[index] = [addMarker(map, deviceOldData[index]), [deviceOldData[index].imei]]
-            console.log(deviceOldData[index]);
+            // console.log(deviceOldData[index]);
             addMarker(map, deviceOldData[index]);
         };
 
