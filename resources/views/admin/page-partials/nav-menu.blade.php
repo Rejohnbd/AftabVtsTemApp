@@ -55,6 +55,7 @@
                                     <li aria-haspopup="true"><a href="{{ route('trip-type.index') }}">Trip Types</a></li>
                                     <li aria-haspopup="true"><a href="{{ route('trips.index') }}">All Trips</a></li>
                                     <li aria-haspopup="true"><a href="{{ route('trip-reports') }}">Trips Reports</a></li>
+                                    <li aria-haspopup="true"><a href="{{ route('trip-bill.index') }}">Trips Bill</a></li>
                                 </ul>
                             </li>
                             <li aria-haspopup="true" class="sub-menu-sub"><a href="#">Expenses</a>

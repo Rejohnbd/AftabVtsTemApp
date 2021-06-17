@@ -59,7 +59,7 @@
                                         if ($data->helper_id) {
                                             $helperIds = explode(',', $data->helper_id);
                                             foreach ($helperIds as $helperId) {
-                                                echo $allHelper[$helperId]->helper_name . '<br/>';
+                                                echo $allHelper[$helperId]->helper_name . ',<br/>';
                                             }
                                         }
                                         ?>

@@ -133,3 +133,14 @@ function findCompanyForExpenseReport($id)
         return '';
     }
 }
+
+// function findHelperNameForTripInfo($ids)
+// {
+//     $helpers = array();
+//     $helperIds = explode(',', $ids);
+//     for ($i = 0; $i < count($helperIds); $i++) {
+//         $helper = DB::table('helpers')->select('helper_name')->where('helper_id', $ids[$i])->first();
+//         $helpers[$i] = $helper->helper_name;
+//     }
+//     return implode(',', $helpers);
+// }

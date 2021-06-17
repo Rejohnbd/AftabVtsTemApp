@@ -103,6 +103,10 @@ Route::middleware(['auth'])->group(function () {
     // User
     Route::resource('users', 'UserController');
     Route::post('user-delete', 'UserController@destroyUser')->name('user-delete');
+
+    // Trip Bill
+    Route::resource('trip-bill', 'TripBillController');
+    Route::post('trip-info', 'TripBillController@getTripInfo')->name('trip-info');
 });
 
 Route::get('/all-clear', function () {
