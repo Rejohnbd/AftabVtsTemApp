@@ -176,7 +176,6 @@
             // if the marker already exists, move it (set its position)
             marker.setPosition(position);
         } else {
-
             // create a new marker, keeping a reference
             marker = new google.maps.Marker({
                 map: map,
@@ -188,7 +187,6 @@
             });
         }
     }
-
 
     function geocodeLatLng(geocoder, map, infowindow) {
         const latlng = {
@@ -210,7 +208,6 @@
                 window.alert("Geocoder failed due to: " + status);
             }
         });
-
     }
     // decode data
     function dex_to_degrees(dex) {

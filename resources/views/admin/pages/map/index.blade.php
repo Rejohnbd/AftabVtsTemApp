@@ -5,7 +5,7 @@
 @section('content')
 <div class="container-fluid content-area">
     <div class="row" style="margin-left: 0px !important; margin-right: 0px !important">
-        <div class="col-lg-12 col-xl-3">
+        <div class="col-lg-12 col-xl-4">
             <div class="row">
                 <div class="col-md-12 col-lg-6 col-xl-12">
                     <div class="card" style="margin-top: 120px;">
@@ -24,7 +24,7 @@
                                         <h3 class="card-title text-white">{{ $data->vehicle_plate_number }}</h3>
                                         <div class="card-options">
                                             <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
-                                            <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x "></i></a>
+                                            <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
                                         </div>
                                     </div>
                                     <div class="card-body">
@@ -39,7 +39,7 @@
                                             </div>
                                             <div class="col ">
                                                 <p class="font-weight-500 number-font1 mb-0">Location</p>
-                                                <span class="text-muted"></span>
+                                                <span class="text-muted" id="{{ $data->device_unique_id }}"></span>
                                             </div>
                                         </div>
                                         <div class="row mt-4 dash1">
@@ -75,7 +75,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-12 col-xl-9">
+        <div class="col-lg-12 col-xl-8">
             <div class="map-header" style="height: 100vh !important;">
                 <div class="map-header-layer" id="map"></div>
             </div>
@@ -100,6 +100,8 @@
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
 <script>
+    let vehicleArray = <?= json_encode($vehicleArray) ?>
+
     var deviceOldData = {};
     var myMarkers = new Array();
     var deviceNewData = {};
@@ -134,7 +136,6 @@
     // Get Data from Firebase
     database.ref('Devices/').once('value').then(function(snapshot) {
         var allDevicesInfo = snapshot.val();
-
         var i = 0;
         for (var key in allDevicesInfo) {
             if (allDevicesInfo.hasOwnProperty(key)) {
@@ -153,19 +154,36 @@
             // myMarkers[index] = [addMarker(map, deviceOldData[index]), [deviceOldData[index].imei]]
             // console.log(deviceOldData[index]);
             addMarker(map, deviceOldData[index]);
+            // geocodeLatLng(deviceOldData[index].imei, deviceOldData[index].lat, deviceOldData[index].lng);
         };
 
     });
-    // console.log(deviceOldData, 'deviceOldData');
 
     function addMarker(map, data) {
+        const vehicleNumber = vehicleArray[data.imei];
+
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(data.lat, data.lng),
             icon: "{{ asset('img/van.png') }}",
             map: map
         });
+        attachVehicleInfo(map, marker, vehicleNumber);
         return marker;
     }
+
+    function attachVehicleInfo(map, marker, vehicleNumber) {
+        const infowindow = new google.maps.InfoWindow({
+            content: vehicleNumber
+        });
+
+        marker.addListener("click", () => {
+            infowindow.open(marker.get("map"), marker)
+        });
+    }
+
+
+
+
     // console.log(myMarkers)
 
     /*database.ref('Devices/').on('child_changed', function(snapshot) {
