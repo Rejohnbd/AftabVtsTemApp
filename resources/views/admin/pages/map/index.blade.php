@@ -100,12 +100,12 @@
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
 <script>
-    let vehicleArray = <?= json_encode($vehicleArray) ?>
-
+    let vehicleArray = <?= json_encode($vehicleArray); ?>;
     var deviceOldData = {};
-    var myMarkers = new Array();
-    var deviceNewData = {};
-    var changeMyMarker = [];
+    // var myMarkers = new Array();
+    // var deviceNewData = {};
+    // var changeMyMarker = [];
+
     // map initialize
     function initMap() {
         var mapOptions = {
@@ -150,100 +150,77 @@
             i++;
         }
 
-        for (index in deviceOldData) {
-            // myMarkers[index] = [addMarker(map, deviceOldData[index]), [deviceOldData[index].imei]]
-            // console.log(deviceOldData[index]);
-            addMarker(map, deviceOldData[index]);
-            // geocodeLatLng(deviceOldData[index].imei, deviceOldData[index].lat, deviceOldData[index].lng);
-        };
+        var cli = 0;
 
+        function customLoop() {
+            setTimeout(function() {
+                cli++;
+                if (cli <= Object.keys(deviceOldData).length) {
+                    customLoop();
+                    addMarker(map, deviceOldData[cli - 1]);
+                }
+            }, 1500);
+        }
+
+        customLoop();
     });
 
     function addMarker(map, data) {
-        const vehicleNumber = vehicleArray[data.imei];
-
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(data.lat, data.lng),
             icon: "{{ asset('img/van.png') }}",
             map: map
         });
-        attachVehicleInfo(map, marker, vehicleNumber);
+
+        attachVehicleInfo(marker, data.imei, data.lat, data.lng, data.speed, data.status);
         return marker;
     }
 
-    function attachVehicleInfo(map, marker, vehicleNumber) {
-        const infowindow = new google.maps.InfoWindow({
-            content: vehicleNumber
-        });
 
-        marker.addListener("click", () => {
-            infowindow.open(marker.get("map"), marker)
-        });
-    }
-
-
-
-
-    // console.log(myMarkers)
-
-    /*database.ref('Devices/').on('child_changed', function(snapshot) {
-        var changeData = snapshot.val();
-        // console.log(snapshot.ref.key);
-        $.each(deviceOldData, function(key, data) {
-            deviceNewData[key] = data;
-            if (data.imei == snapshot.ref.key) {
-                oldLat = data.lat;
-                oldLng = data.lng;
-                changeImei = data.imei;
-
-                deviceNewData[key] = {
-                    'imei': data.imei,
-                    'lat': dex_to_degrees(changeData.Data.lat),
-                    'lng': dex_to_degrees(changeData.Data.lng),
-                    'speed': changeData.Data.speed,
-                    'status': changeData.Data.status,
-                };
-                position = [dex_to_degrees(changeData.Data.lat), dex_to_degrees(changeData.Data.lng)];
-            }
-        });
-
-        $.each(myMarkers, function(key, data) {
-            if (changeImei == data[1]) {
-                // console.log(key)
-                // console.log(data[1])
-                changeMyMarker = myMarkers[key];
-            }
-        })
-        // console.log(changeMyMarker, 'changed marker');
-
-        // var result = [oldLat, oldLng, changeMyMarker]
-        // transition(result);
-    }); */
-
-    // Variable for Transition or Move marker
-    /*var numDeltas = 100;
-    var delay = 10; //milliseconds
-    var i = 0;
-    var deltaLat;
-    var deltaLng;
-
-    function transition(result) {
-        i = 0;
-        deltaLat = (result[0] - position[0]) / numDeltas;
-        deltaLng = (result[1] - position[1]) / numDeltas;
-        moveMarker(result[2]);
-    }
-
-    function moveMarker(result) {
-        position[0] += deltaLat;
-        position[1] += deltaLng;
-        var latlng = new google.maps.LatLng(position[0], position[1]);
-        result.setPosition(latlng);
-        if (i != numDeltas) {
-            i++;
-            setTimeout(moveMarker, delay);
+    function attachVehicleInfo(marker, imei, lat, lng, speed, status) {
+        const vehicleNumber = vehicleArray[imei];
+        var latlng = new google.maps.LatLng(lat, lng);
+        var geocoder = new google.maps.Geocoder()
+        var engStatus;
+        if (status == 1) {
+            engStatus = "On";
+        } else {
+            engStatus = "Off";
         }
-    }*/
+        geocoder.geocode({
+            location: latlng
+        }, function(results, status) {
+            if (status === 'OK') {
+                if (results[0]) {
+                    locationAddress = results[0].formatted_address;
+                    $('#' + imei).text(results[0].formatted_address);
+                    const contentString =
+                        '<div>' +
+                        '<p class="text-center"><b>' + vehicleNumber + '</b></p>' +
+                        '<div class="d-flex justify-content-between">' +
+                        '<div><b>Speed: </b>' + speed + ' km</div>' +
+                        '<div><b>Engine Status: </b>' + engStatus + '</div>' +
+                        '</div>' +
+                        '<br/>' +
+                        '<div>' +
+                        locationAddress +
+                        '<div>' +
+                        '</div>';
+                    const infowindow = new google.maps.InfoWindow({
+                        content: contentString
+                    });
+                    marker.addListener("click", () => {
+                        infowindow.open(marker.get("map"), marker)
+                    });
+                    console.log(locationAddress, '1st')
+                } else {
+                    window.alert("No results found");
+                }
+            } else {
+                window.alert("Geocoder failed due to: " + status);
+            }
+        });
+    }
 </script>
 
 @if(session('error'))

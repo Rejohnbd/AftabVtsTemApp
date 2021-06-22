@@ -19,5 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('device-api-data', 'DeviceDataController@deviceApiPostData');
-
 Route::get('device-temp-data/{id}/{temp}/{humi}/{status}', 'TemperatureDeviceDataController@tempDeviceApiData');
