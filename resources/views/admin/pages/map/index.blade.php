@@ -20,7 +20,7 @@
                                 $tempData = findLastTempHumidityDataByVehicleId($data->vehicle_id);
                                 ?>
                                 <div class="card">
-                                    <div class="card-header bg-primary">
+                                    <div class="card-header bg-primary" style="min-height: 0px !important;">
                                         <h3 class="card-title text-white">{{ $data->vehicle_plate_number }}</h3>
                                         <div class="card-options">
                                             <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
@@ -28,33 +28,41 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <div class="row dash1">
-                                            <div class="col  border-right">
-                                                <h6 class="font-weight-500 number-font1 mb-0">Engine Status</h6>
+                                        <div class="row dash1 text-center">
+                                            <div class="col border-right">
+                                                <div>
+                                                    <button type="button" class="btn btn-icon @if($gprsData->speed == 0) btn-danger @else btn-success @endif" data-toggle="tooltip" data-placement="top" title="" data-original-title="Engine Status"><i class="mdi mdi-truck"></i></button>
+                                                </div>
                                                 <span class="text-muted">@if($gprsData->speed == 0) Off @else On @endif</span>
                                             </div>
-                                            <div class="col  border-right">
-                                                <h6 class="font-weight-500 number-font1 mb-0">Speed</h6>
+                                            <div class="col border-right">
+                                                <div>
+                                                    <button type="button" class="btn btn-icon btn-warning"><i class=" fa fa-spinner" data-toggle="tooltip" data-placement="top" title="" data-original-title="Speed"></i></button>
+                                                </div>
                                                 <span class="text-muted">{{ $gprsData->speed }}</span>
                                             </div>
-                                            <div class="col ">
-                                                <p class="font-weight-500 number-font1 mb-0">Location</p>
-                                                <span class="text-muted" id="{{ $data->device_unique_id }}"></span>
-                                            </div>
-                                        </div>
-                                        <div class="row mt-4 dash1">
-                                            <div class="col  border-right">
-                                                <h6 class="font-weight-500 number-font1 mb-0">Temperature</h6>
-                                                <span class="text-muted">{{ $tempData['temp'] }} <sup>o</sup>C</span>
-                                            </div>
-                                            <div class="col  border-right">
-                                                <h6 class="font-weight-500 number-font1 mb-0">Humidity</h6>
-                                                <span class="text-muted">{{ $tempData['humidity'] }}</span>
-                                            </div>
-                                            <div class="col ">
-                                                <p class="font-weight-500 number-font1 mb-0">Comp. Status</p>
+                                            <div class="col border-right">
+                                                <div>
+                                                    <button type="button" class="btn btn-icon @if($tempData['comp'] == 0) btn-danger @else btn-success @endif" data-toggle="tooltip" data-placement="top" title="" data-original-title="Compessor Status"><i class=" fa fa-plug"></i></button>
+                                                </div>
                                                 <span class="text-muted">@if($tempData['comp'] == 0) Off @else On @endif</span>
                                             </div>
+                                            <div class="col border-right">
+                                                <div>
+                                                    <button type="button" class="btn btn-icon btn-purple" data-toggle="tooltip" data-placement="top" title="" data-original-title="Temperature"><i class="wi wi-thermometer"></i></button>
+                                                </div>
+                                                <span class="text-muted">{{ $tempData['temp'] }} <sup>o</sup>C </span>
+                                            </div>
+                                            <div class="col">
+                                                <div>
+                                                    <button type="button" class="btn btn-icon btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Humidity"><i class="wi wi-sandstorm"></i></button>
+                                                </div>
+                                                <span class="text-muted">{{ $tempData['humidity'] }}</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="font-weight-500 number-font1 mb-0">Location</p>
+                                            <span class="text-muted" id="{{ $data->device_unique_id }}"></span>
                                         </div>
                                     </div>
                                     <div class="card-footer text-center p-1">
@@ -102,9 +110,6 @@
 <script>
     let vehicleArray = <?= json_encode($vehicleArray); ?>;
     var deviceOldData = {};
-    // var myMarkers = new Array();
-    // var deviceNewData = {};
-    // var changeMyMarker = [];
 
     // map initialize
     function initMap() {
@@ -212,7 +217,6 @@
                     marker.addListener("click", () => {
                         infowindow.open(marker.get("map"), marker)
                     });
-                    console.log(locationAddress, '1st')
                 } else {
                     window.alert("No results found");
                 }
