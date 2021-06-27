@@ -79,9 +79,10 @@ class TemperatureDeviceDataController extends Controller
         $comp_status = $status;
 
         $settingsData = array_column(Settings::all()->toArray(), 'value', 'name');
+        $vehicleInfo = findVehicleRegiNo($device_id);
 
         if ($temperature < $settingsData['alert_min_temp'] || $temperature > $settingsData['alert_max_temp'] ||  $humidity < $settingsData['alert_min_humidity'] || $humidity > $settingsData['alert_max_humidity']) {
-            $vehicleInfo = findVehicleRegiNo($device_id);
+
 
             $tripInfo = Trip::where('vehicle_id', $vehicleInfo->vehicle_id)->orderBy('created_at', 'desc')->first();
 
@@ -129,10 +130,12 @@ class TemperatureDeviceDataController extends Controller
         }
 
         $saveData = TemperatureDeviceData::create([
-            'device_id' => $device_id,
-            'temperature' => $temperature,
-            'humidity' => $humidity,
-            'comp_status' => $comp_status,
+            'dev_id'        => $vehicleInfo->device_id,
+            'vehicle_id'    => $vehicleInfo->vehicle_id,
+            'device_id'     => $device_id,
+            'temperature'   => $temperature,
+            'humidity'      => $humidity,
+            'comp_status'   => $comp_status,
         ]);
 
         if ($saveData) {
@@ -164,6 +167,8 @@ class TemperatureDeviceDataController extends Controller
         $status         = $status;
 
         $saveData = TemperatureDeviceData::create([
+            'dev_id'        => 0,
+            'vehicle_id'    => 0,
             'device_id'     => $device_id,
             'voltage'       => $voltage,
             'temperature'   => $temperature,

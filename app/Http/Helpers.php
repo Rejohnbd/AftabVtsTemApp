@@ -81,7 +81,7 @@ function findVehicleRegiNo($deviceId)
         ->join('vehicle_devices', 'vehicle_devices.vehicle_id', '=', 'vehicles.vehicle_id')
         ->join('devices', 'devices.device_id', '=', 'vehicle_devices.device_id')
         ->where('devices.device_unique_id', $deviceId)
-        ->select('vehicles.vehicle_plate_number', 'vehicles.vehicle_id')
+        ->select('vehicles.vehicle_plate_number', 'vehicles.vehicle_id', 'devices.device_id')
         ->first();
     return $vehicleInfo;
 }
