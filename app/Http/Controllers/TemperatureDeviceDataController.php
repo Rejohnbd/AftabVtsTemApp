@@ -149,4 +149,41 @@ class TemperatureDeviceDataController extends Controller
             return response($data);
         }
     }
+
+    public function iotDeviceApiData($id, $temp, $comp, $status)
+    {
+        if ($comp === 0.00) {
+            $comp_status = 0;
+        } else {
+            $comp_status = 1;
+        }
+        $device_id      = $id;
+        $voltage        = $comp;
+        $temperature    = $temp;
+        $humidity       = NULL;
+        $status         = $status;
+
+        $saveData = TemperatureDeviceData::create([
+            'device_id'     => $device_id,
+            'voltage'       => $voltage,
+            'temperature'   => $temperature,
+            'humidity'      => $humidity,
+            'comp_status'   => $comp_status,
+            'status'        => $status,
+        ]);
+
+        if ($saveData) {
+            $data = array(
+                'status' => 201,
+                'message' => 'Created Successfully'
+            );
+            return response($data);
+        } else {
+            $data = array(
+                'status' => 304,
+                'message' => 'Failed'
+            );
+            return response($data);
+        }
+    }
 }
