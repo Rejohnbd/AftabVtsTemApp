@@ -59,6 +59,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('device-temp-data-paginate', 'TemperatureDeviceDataController@tempDeviceDataPaginate')->name('device-temp-data-paginate');
     Route::post('device-temp-dated-data', 'TemperatureDeviceDataController@tempDeviceDatedData')->name('device-temp-dated-data');
     Route::post('device-temp-export-as-excel', 'TemperatureDeviceDataController@tempDeviceDataExcelExport')->name('device-temp-export-as-excel');
+    Route::get('vehicle-temp-report/{id}', 'TemperatureDeviceDataController@vehicleTempReport')->name('vehicle-temp-report');
+    Route::post('vehicle-temp-data-paginate', 'TemperatureDeviceDataController@vehicleTempDataPaginate')->name('vehicle-temp-data-paginate');
+    Route::post('vehicle-temp-dated-data', 'TemperatureDeviceDataController@vehicleTempDatedData')->name('vehicle-temp-dated-data');
+    Route::post('vehicle-temp-export-as-excel', 'TemperatureDeviceDataController@vehicleTempDataExcelExport')->name('vehicle-temp-export-as-excel');
     Route::get('all-reports', 'VehicleController@navReports')->name('all-reports');
     Route::post('report-paginate-render', 'VehicleController@reportPaginateRender')->name('report-paginate-render');
     Route::post('report-by-company', 'VehicleController@reportByCompany')->name('report-by-company');

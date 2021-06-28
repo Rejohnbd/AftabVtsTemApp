@@ -18,18 +18,9 @@
                 </ul>
             </div>
             <div class="card-footer">
-                <div class="card-options">
-                    {{-- <a href="{{ route('vehicle-location', $data->vehicle_id) }}" class="btn btn-secondary btn-sm">Location</a> --}}
+                <div class="card-options d-flex justify-content-between">
                     <a href="{{ route('vehicle-reports', $data->vehicle_id) }}" class="btn btn-primary btn-sm ml-2">GPS Report</a>
-                    <?php
-                    $deviceInfo = findVehicleAttachTemDevice($data->vehicle_id);
-                    // dd($deviceInfo);
-                    if ($deviceInfo['exist']) {
-                    ?>
-                        <a href="{{ route('temp-device-report', $deviceInfo['device_id'] ) }}" class="btn btn-info btn-sm ml-2">Temp. Report</a>
-                    <?php
-                    }
-                    ?>
+                    <a href="{{ route('vehicle-temp-report', $data->vehicle_id) }}" class="btn btn-info btn-sm ml-2">Temp. Report</a>
                 </div>
             </div>
         </div>

@@ -7,6 +7,7 @@ use App\Models\Device;
 use App\Models\Settings;
 use App\Models\TemperatureDeviceData;
 use App\Models\Trip;
+use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -64,6 +65,47 @@ class TemperatureDeviceDataController extends Controller
         $deviceId = $tempDeviceInfo->device_unique_id;
         $datas = TemperatureDeviceData::select('temperature', 'humidity', 'comp_status', 'created_at AS date', 'created_at AS time')->where('device_id', $tempDeviceInfo->device_unique_id)->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59'])->get();
         $info['deviceId']  = $deviceId;
+        $info['startDate'] = $startDate;
+        $info['endDate']   = $endDate;
+        $overAllData['info'] = $info;
+        $overAllData['datas'] = $datas;
+        return response()->json($overAllData);
+    }
+
+    public function vehicleTempReport($id)
+    {
+        $vehicleInfo = Vehicle::findOrFail($id);
+        // dd($vehicleInfo);
+        $today = date('Y-m-d');
+        $reports = TemperatureDeviceData::where('vehicle_id', $vehicleInfo->vehicle_id)->whereDate('created_at', $today)->orderBy('created_at', 'desc')->paginate(60);
+        return view('admin.pages.temperature.reportbyvehicle')->with('vehicleInfo', $vehicleInfo)->with('reports', $reports);
+    }
+
+    public function vehicleTempDataPaginate(Request $request)
+    {
+        $deviceInfo = Vehicle::findOrFail($request->vehicleId);
+        $date = $request->selectedDate;
+        $reports = TemperatureDeviceData::where('vehicle_id', $deviceInfo->vehicle_id)->whereDate('created_at', $date)->orderBy('created_at', 'desc')->paginate(60);
+        return view('admin.pages.temperature.report-single', compact('reports'))->render();
+    }
+
+    public function vehicleTempDatedData(Request $request)
+    {
+        $deviceInfo = Vehicle::findOrFail($request->vehicleId);
+        $date = $request->selectedDate;
+        $reports = TemperatureDeviceData::where('vehicle_id', $deviceInfo->vehicle_id)->whereDate('created_at', $date)->orderBy('created_at', 'desc')->paginate(60);
+        return view('admin.pages.temperature.report-single', compact('reports'))->render();
+    }
+
+    public function vehicleTempDataExcelExport(Request $request)
+    {
+
+        $deviceInfo = Vehicle::findOrFail($request->vehicleId);
+        $startDate = $request->startDate;
+        $endDate = $request->endDate;
+        $vehicleNumber = $deviceInfo->vehicle_plate_number;
+        $datas = TemperatureDeviceData::select('temperature', 'humidity', 'comp_status', 'created_at AS date', 'created_at AS time')->where('vehicle_id', $deviceInfo->vehicle_id)->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59'])->get();
+        $info['vehicleNumber']  = $vehicleNumber;
         $info['startDate'] = $startDate;
         $info['endDate']   = $endDate;
         $overAllData['info'] = $info;

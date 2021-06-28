@@ -71,7 +71,7 @@
                                                 <a href="{{ route('vehicle-location', $data->vehicle_id) }}" class="btn btn-icon btn-danger"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
                                             </div>
                                             <div class="col-lg-6 col-sm-6 col-6">
-                                                <a href="{{ route('device-temp-data', $tempData['device_id']) }}" class="btn btn-icon btn-purple"><i class="fa fa-thermometer-4" aria-hidden="true"></i></a>
+                                                <a href="{{ route('vehicle-temp-report', $data->vehicle_id) }}" class="btn btn-icon btn-purple"><i class="fa fa-thermometer-4" aria-hidden="true"></i></a>
                                             </div>
                                         </div>
                                     </div>
