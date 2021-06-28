@@ -50,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('device-location/{id}', 'MapController@deviceLocation')->name('device-location');
     Route::get('vehicle-device', 'VehicleDeviceController@index')->name('vehicle-device');
     Route::get('vehicle-device-create/{id}', 'VehicleDeviceController@create')->name('vehicle-device-create');
+    Route::post('vehicle-device-unassgin', 'VehicleDeviceController@vehicleDeviceUnassign')->name('vehicle-device-unassgin');
     Route::post('vehicle-device-store', 'VehicleDeviceController@store')->name('vehicle-device-store');
     Route::get('vehicle-device-edit/{id}', 'VehicleDeviceController@edit')->name('vehicle-device-edit');
     Route::post('vehicle-device-update', 'VehicleDeviceController@update')->name('vehicle-device-update');

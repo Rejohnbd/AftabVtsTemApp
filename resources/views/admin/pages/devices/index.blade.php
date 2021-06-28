@@ -41,7 +41,7 @@
                             </thead>
                             <tbody>
                                 @forelse($allDevices as $device)
-                                <tr id="deviceId-{{$device->device_id}}">
+                                <tr id="deviceId-{{$device->device_id}}" @if($device->use_status === 2) class="bg-danger" @endif>
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $device->deviceType->device_type_name }}</td>
                                     <td>{{ $device->device_unique_id }}</td>

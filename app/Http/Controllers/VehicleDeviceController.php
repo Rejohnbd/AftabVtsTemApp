@@ -106,4 +106,11 @@ class VehicleDeviceController extends Controller
     {
         //
     }
+
+    public function vehicleDeviceUnassign(Request $request)
+    {
+        Device::where('device_id', $request->deviceId)->update(['use_status' => 2]);
+        VehicleDevice::where('device_id', $request->deviceId)->delete();
+        return response(['result' => true]);
+    }
 }
