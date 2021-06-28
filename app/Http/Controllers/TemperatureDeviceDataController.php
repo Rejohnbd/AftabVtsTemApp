@@ -197,34 +197,45 @@ class TemperatureDeviceDataController extends Controller
 
     public function iotDeviceApiData($id, $temp, $comp, $status)
     {
-        if ($comp === 0.00) {
-            $comp_status = 0;
-        } else {
-            $comp_status = 1;
-        }
-        $device_id      = $id;
-        $voltage        = $comp;
-        $temperature    = $temp;
-        $humidity       = NULL;
-        $status         = $status;
+        $deviceInfo = Device::select('device_id')->where('device_unique_id', $id)->first();
+        if ($deviceInfo) {
+            $vehicleInfo = findVehicleRegiNo($id);
 
-        $saveData = TemperatureDeviceData::create([
-            'dev_id'        => 0,
-            'vehicle_id'    => 0,
-            'device_id'     => $device_id,
-            'voltage'       => $voltage,
-            'temperature'   => $temperature,
-            'humidity'      => $humidity,
-            'comp_status'   => $comp_status,
-            'status'        => $status,
-        ]);
+            if ($comp === 0.00) {
+                $comp_status = 0;
+            } else {
+                $comp_status = 1;
+            }
+            $device_id      = $id;
+            $voltage        = $comp;
+            $temperature    = $temp;
+            $humidity       = NULL;
+            $status         = $status;
 
-        if ($saveData) {
-            $data = array(
-                'status' => 201,
-                'message' => 'Created Successfully'
-            );
-            return response($data);
+            $saveData = TemperatureDeviceData::create([
+                'dev_id'        => $deviceInfo->device_id,
+                'vehicle_id'    => $vehicleInfo->vehicle_id,
+                'device_id'     => $device_id,
+                'voltage'       => $voltage,
+                'temperature'   => $temperature,
+                'humidity'      => $humidity,
+                'comp_status'   => $comp_status,
+                'status'        => $status,
+            ]);
+
+            if ($saveData) {
+                $data = array(
+                    'status' => 201,
+                    'message' => 'Created Successfully'
+                );
+                return response($data);
+            } else {
+                $data = array(
+                    'status' => 304,
+                    'message' => 'Failed'
+                );
+                return response($data);
+            }
         } else {
             $data = array(
                 'status' => 304,
