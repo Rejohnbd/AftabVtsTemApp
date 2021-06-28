@@ -8,7 +8,7 @@
         <div class="page-header">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}"><i class="fe fe-life-buoy mr-1"></i> Dashboard</a></li>
-                <li class="breadcrumb-item" aria-current="page">Temperature Device Preset Data</li>
+                <li class="breadcrumb-item" aria-current="page">Present Temperature Data of Device {{ $tempDeviceInfo->device_unique_id }}</li>
             </ol>
             <div class="ml-auto">
                 <a href="{{ route('temp-device-report', $tempDeviceInfo->device_id) }}" class="btn btn-primary btn-icon btn-sm text-white mr-2">
