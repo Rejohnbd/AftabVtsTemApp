@@ -201,7 +201,7 @@ class TemperatureDeviceDataController extends Controller
         if ($deviceInfo) {
             $vehicleInfo = findVehicleRegiNo($id);
 
-            if ($comp === 0.00) {
+            if ($comp == 0.00) {
                 $comp_status = 0;
             } else {
                 $comp_status = 1;
@@ -211,6 +211,8 @@ class TemperatureDeviceDataController extends Controller
             $temperature    = $temp;
             $humidity       = NULL;
             $status         = $status;
+
+            dd($deviceInfo->device_id, $vehicleInfo->vehicle_id, $device_id, $voltage, $temperature, $humidity, $comp_status, $status);
 
             $saveData = TemperatureDeviceData::create([
                 'dev_id'        => $deviceInfo->device_id,
