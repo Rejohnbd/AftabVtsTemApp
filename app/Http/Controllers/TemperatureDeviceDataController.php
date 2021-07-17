@@ -198,8 +198,9 @@ class TemperatureDeviceDataController extends Controller
     public function iotDeviceApiData($id, $temp, $comp, $status)
     {
         $deviceInfo = Device::select('device_id')->where('device_unique_id', $id)->first();
-        if ($deviceInfo) {
-            $vehicleInfo = findVehicleRegiNo($id);
+        $vehicleInfo = findVehicleRegiNo($id);
+
+        if ($vehicleInfo) {
 
             if ($comp == 0.00) {
                 $comp_status = 0;
@@ -237,8 +238,8 @@ class TemperatureDeviceDataController extends Controller
                 return response($data);
             }
         } else {
-           if ($comp == 0.00) {
-               $comp_status = 0;
+            if ($comp == 0.00) {
+                $comp_status = 0;
             } else {
                 $comp_status = 1;
             }
