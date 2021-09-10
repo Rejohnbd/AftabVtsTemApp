@@ -31,9 +31,9 @@
                                         <div class="row dash1 text-center">
                                             <div class="col border-right">
                                                 <div>
-                                                    <button type="button" class="btn btn-icon @if($gprsData->speed == 0) btn-danger @else btn-success @endif" data-toggle="tooltip" data-placement="top" title="" data-original-title="Engine Status"><i class="mdi mdi-truck"></i></button>
+                                                    <button type="button" class="btn btn-icon @if($gprsData->status == 0) btn-danger @else btn-success @endif" data-toggle="tooltip" data-placement="top" title="" data-original-title="Engine Status"><i class="mdi mdi-truck"></i></button>
                                                 </div>
-                                                <span class="text-muted">@if($gprsData->speed == 0) Off @else On @endif</span>
+                                                <span class="text-muted">@if($gprsData->status == 0) Off @else On @endif</span>
                                             </div>
                                             <div class="col border-right">
                                                 <div>
