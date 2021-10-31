@@ -196,30 +196,37 @@
             location: latlng
         }, function(results, status) {
             if (status === 'OK') {
-                if (results[0]) {
-                    locationAddress = results[0].formatted_address;
-                    $('#' + imei).text(results[0].formatted_address);
-                    const contentString =
-                        '<div>' +
-                        '<p class="text-center"><b>' + vehicleNumber + '</b></p>' +
-                        '<div class="d-flex justify-content-between">' +
-                        '<div><b>Speed: </b>' + speed + ' km</div>' +
-                        '<div><b>Engine Status: </b>' + engStatus + '</div>' +
-                        '</div>' +
-                        '<br/>' +
-                        '<div>' +
-                        locationAddress +
-                        '<div>' +
-                        '</div>';
-                    const infowindow = new google.maps.InfoWindow({
-                        content: contentString
-                    });
-                    marker.addListener("click", () => {
-                        infowindow.open(marker.get("map"), marker)
-                    });
-                } else {
-                    window.alert("No results found");
+                var locationAddress = "";
+                for (var ri = 0; ri < results.length; ri++) {
+                    if (ri == 0) {
+                        locationAddress = results[ri].formatted_address;
+                    } else {
+                        if (locationAddress.length < results[ri].formatted_address.length) {
+                            locationAddress = results[ri].formatted_address;
+                        }
+                    }
                 }
+
+                $('#' + imei).text(locationAddress);
+                const contentString =
+                    '<div>' +
+                    '<p class="text-center"><b>' + vehicleNumber + '</b></p>' +
+                    '<div class="d-flex justify-content-between">' +
+                    '<div><b>Speed: </b>' + speed + ' km</div>' +
+                    '<div><b>Engine Status: </b>' + engStatus + '</div>' +
+                    '</div>' +
+                    '<br/>' +
+                    '<div>' +
+                    locationAddress +
+                    '<div>' +
+                    '</div>';
+                const infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+                marker.addListener("click", () => {
+                    infowindow.open(marker.get("map"), marker)
+                });
+
             } else {
                 window.alert("Geocoder failed due to: " + status);
             }
