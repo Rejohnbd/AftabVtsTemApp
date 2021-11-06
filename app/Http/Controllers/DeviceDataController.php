@@ -7,6 +7,7 @@ use App\Models\DeviceData;
 use App\Models\Vehicle;
 use App\Models\VehicleDevice;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
@@ -146,5 +147,60 @@ class DeviceDataController extends Controller
             );
             return response($data);
         }
+    }
+
+    /**
+     * Test Api Create for Check
+     * 
+     */
+    public function apiDailyResport(Request $request)
+    {
+        $date = $request->selectedDate;
+        $datas = DB::table('device_data')->select('device_id', 'vehicle_id', 'latitude', 'longitude', 'status', 'speed', 'distance', 'fuel_use', 'created_at')->where('vehicle_id', $request->vehicleId)->whereDate('created_at', $date)->get();
+
+        $dataArray = array();
+        $totalKm = 0;
+        $totalFuel = 0;
+        $i = 0;
+        $hour = 0;
+        $subTotalKm = array();
+        $subTotalKmIndex = 0;
+        $subTotalFuel = array();
+        $subTotalFuelIndex = 0;
+        while ($hour < 24) {
+
+            for ($i; $i < count($datas); $i++) {
+                if (strtotime(date('G:i', mktime($hour, 0, 0))) <= strtotime(date('G:i', strtotime($datas[$i]->created_at))) && strtotime(date('G:i', strtotime($datas[$i]->created_at))) < strtotime(date('G:i', mktime($hour + 1, 0, 0)))) {
+                    if ($datas[$i]->status == 0 && $datas[$i]->speed <= 1) {
+                        $totalKm += $datas[$i]->distance;
+                        $totalFuel += $datas[$i]->fuel_use;
+                    } else if ($datas[$i]->status == 1) {
+                        $totalKm += $datas[$i]->distance;
+                        $totalFuel += $datas[$i]->fuel_use;
+                    }
+                } else {
+                    $resultKm = round($totalKm, 2);
+                    $subTotalKm[$subTotalKmIndex] = $totalKm;
+                    $subTotalKmIndex++;
+                    $totalKm = 0;
+                    break;
+                }
+            }
+
+            $dataArray[] = [
+                'time_segment'  => date('G:iA', mktime($hour, 0, 0)) . '-' . date('G:iA', mktime($hour + 1, 0, 0)),
+                'time_slot'     => $hour + 1,
+                'distance'      => $resultKm,
+                'fuel'          => round($totalFuel, 2)
+            ];
+
+            $subTotalFuel[$subTotalFuelIndex] = $totalFuel;
+            $subTotalFuelIndex++;
+            $totalFuel = 0;
+
+            $hour++;
+        }
+
+        return response()->json($dataArray, 200);
     }
 }
