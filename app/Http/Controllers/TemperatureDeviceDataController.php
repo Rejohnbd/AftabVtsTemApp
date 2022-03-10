@@ -276,4 +276,111 @@ class TemperatureDeviceDataController extends Controller
             }
         }
     }
+
+    public function deviceDataWithFailData(Request $request)
+    {
+        $device_data_json = trim(file_get_contents("php://input"));
+        DB::table('test_data')->insert([
+            'test_data'     => json_encode($device_data_json),
+            'created_at'    => now(),
+            'updated_at'    => now(),
+        ]);
+        $dataArray = explode(';', $device_data_json);
+
+        if (isset($dataArray[0]) && isset($dataArray[1]) && isset($dataArray[2]) && isset($dataArray[3]) && isset($dataArray[4])) {
+            $id     = $dataArray[0];
+            $temp   = $dataArray[1];
+            $comp   = $dataArray[2];
+            $status = $dataArray[4];
+            $date   = $dataArray[3];
+
+            $deviceInfo = Device::select('device_id')->where('device_unique_id', $id)->first();
+            $vehicleInfo = findVehicleRegiNo($id);
+
+            if ($vehicleInfo) {
+
+                if ($comp == 0.00) {
+                    $comp_status = 0;
+                } else {
+                    $comp_status = 1;
+                }
+                $device_id      = $id;
+                $voltage        = $comp;
+                $temperature    = $temp;
+                $humidity       = NULL;
+                $status         = $status;
+
+                $saveData = TemperatureDeviceData::create([
+                    'dev_id'        => $deviceInfo->device_id,
+                    'vehicle_id'    => $vehicleInfo->vehicle_id,
+                    'device_id'     => $device_id,
+                    'voltage'       => $voltage,
+                    'temperature'   => $temperature,
+                    'humidity'      => $humidity,
+                    'comp_status'   => $comp_status,
+                    'status'        => $status,
+                    'created_at'    => $date
+                ]);
+
+                if ($saveData) {
+                    $data = array(
+                        'status' => 201,
+                        'message' => 'Created Successfully'
+                    );
+                    return response($data);
+                } else {
+                    $data = array(
+                        'status' => 304,
+                        'message' => 'Failed'
+                    );
+                    return response($data);
+                }
+            } else {
+                dd("e");
+                if ($comp == 0.00) {
+                    $comp_status = 0;
+                } else {
+                    $comp_status = 1;
+                }
+
+                $device_id      = $id;
+                $voltage        = $comp;
+                $temperature    = $temp;
+                $humidity       = NULL;
+                $status         = $status;
+
+                $saveData = TemperatureDeviceData::create([
+                    'dev_id'        => 0,
+                    'vehicle_id'    => 0,
+                    'device_id'     => $device_id,
+                    'voltage'       => $voltage,
+                    'temperature'   => $temperature,
+                    'humidity'      => $humidity,
+                    'comp_status'   => $comp_status,
+                    'status'        => $status,
+                    'created_at'    => $date
+                ]);
+
+                if ($saveData) {
+                    $data = array(
+                        'status' => 201,
+                        'message' => 'Created Successfully'
+                    );
+                    return response($data);
+                } else {
+                    $data = array(
+                        'status' => 304,
+                        'message' => 'Failed'
+                    );
+                    return response($data);
+                }
+            }
+        } else {
+            $data = array(
+                'status' => 304,
+                'message' => 'Failed'
+            );
+            return response()->json($data);
+        }
+    }
 }

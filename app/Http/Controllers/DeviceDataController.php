@@ -188,7 +188,9 @@ class DeviceDataController extends Controller
             }
 
             $dataArray[] = [
-                'time_segment'  => date('G:iA', mktime($hour, 0, 0)) . '-' . date('G:iA', mktime($hour + 1, 0, 0)),
+                // 'time_segment'  => date('G:iA', mktime($hour, 0, 0)) . '-' . date('G:iA', mktime($hour + 1, 0, 0)),
+                'start_time'    => date('G:iA', mktime($hour, 0, 0)),
+                'end_time'      => date('G:iA', mktime($hour + 1, 0, 0)),
                 'time_slot'     => $hour + 1,
                 'distance'      => $resultKm,
                 'fuel'          => round($totalFuel, 2)

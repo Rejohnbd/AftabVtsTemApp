@@ -21,4 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('device-api-data', 'DeviceDataController@deviceApiPostData');
 Route::get('device-temp-data/{id}/{temp}/{humi}/{status}', 'TemperatureDeviceDataController@tempDeviceApiData');
 Route::get('iot_device/{id}/{temp}/{comp}/{status}', 'TemperatureDeviceDataController@iotDeviceApiData');
-Route::post('daily-data', 'DeviceDataController@apiDailyResport');
+Route::post('device-data-with-fail', 'TemperatureDeviceDataController@deviceDataWithFailData');
+// Route::post('daily-data', 'DeviceDataController@apiDailyResport');
