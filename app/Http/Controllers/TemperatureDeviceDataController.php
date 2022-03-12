@@ -285,6 +285,7 @@ class TemperatureDeviceDataController extends Controller
             'created_at'    => now(),
             'updated_at'    => now(),
         ]);
+
         $dataArray = explode(';', $device_data_json);
 
         if (isset($dataArray[0]) && isset($dataArray[1]) && isset($dataArray[2]) && isset($dataArray[3]) && isset($dataArray[4])) {
@@ -336,7 +337,7 @@ class TemperatureDeviceDataController extends Controller
                     return response($data);
                 }
             } else {
-                dd("e");
+
                 if ($comp == 0.00) {
                     $comp_status = 0;
                 } else {
